@@ -4,8 +4,8 @@ from hello_world_dummy import views
 
 from .views import hello
 
-app_name = 'hello_world_dummy'
+app_name = "hello_world_dummy"
 
-urlpatterns = [
-    path('', hello, name="hello")
-]
+urlpatterns = [path("", hello, name="hello")]
+
+x = "12"
