@@ -10,7 +10,7 @@ test:
     - pip install --upgrade pip
     - pip install -r requirements.txt
     - python manage.py makemigrations
-    - python manage.py collectstatic --no-input
+    # - python manage.py collectstatic --no-input
     - python manage.py runserver 8000 &
   script:
     - echo "Starting Linter"
