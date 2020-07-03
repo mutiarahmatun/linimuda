@@ -1,3 +1,8 @@
+README.md
+Dockerfile*
+.dockerignore
+.gitignore
+
 .venv/
 .env/
 venv/
@@ -12,5 +17,7 @@ db.sqlite3
 db.sqlite3-journal
 
 setup.sh
+
+.vscode/
 .coverage
 coverage.xml

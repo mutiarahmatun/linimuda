@@ -1,2 +1,4 @@
+# Only add direct dependency.
+# Do not add dependency of direct dependency.
 Django==3.0.8
 black==19.10b0
