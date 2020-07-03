@@ -14,7 +14,7 @@ test:
     - python manage.py runserver 8000 &
   script:
     - echo "Starting Linter"
-    - blake --check .
+    - black --check .
     - echo "Starting Test"
     - coverage run --include="./*" --omit="manage.py" manage.py test
     - coverage report -m
