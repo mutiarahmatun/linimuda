@@ -24,6 +24,7 @@ services:
       - MYSQL_HOST=mysql
       - MYSQL_DATABASE=django
       - MYSQL_PORT=3306
+      - USE_MYSQL=1
     depends_on:
       - mysql
     ports:

@@ -1,6 +1,7 @@
 stages:
   - test
-  - deploy
+  # Heroku required credit card on mysql add on :(
+  # - deploy
 
 test:
   stage: test
@@ -8,10 +9,17 @@ test:
   before_script:
     - pip install --upgrade pip
     - pip install -r requirements.txt
+    - python manage.py makemigrations
+    - python manage.py collectstatic --no-input
+    - python manage.py runserver 8000 &
   script:
+    - echo "Starting Linter"
+    - blake --check .
+    - echo "Starting Test"
     - coverage run --include="./*" --omit="manage.py" manage.py test
     - coverage report -m
-    - coverage xml
+    - coverage xml -i
+    - coverage report -m
   artifacts:
     paths:
-      - backend/coverage.xml
+      - coverage.xml
