@@ -1,0 +1,17 @@
+stages:
+  - test
+  - deploy
+
+test:
+  stage: test
+  image: python:3.8
+  before_script:
+    - pip install --upgrade pip
+    - pip install -r requirements.txt
+  script:
+    - coverage run --include="./*" --omit="manage.py" manage.py test
+    - coverage report -m
+    - coverage xml
+  artifacts:
+    paths:
+      - backend/coverage.xml

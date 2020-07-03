@@ -1,0 +1,21 @@
+version: "3"
+
+services:
+  mysql:
+    image: "mysql:8"
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+
+  django:
+    build:
+      dockerfile: Dockerfile
+      context: .
+    volumes:
+      - .:/app
+    environment:
+      - MYSQL_USER=root
+      - MYSQL_PASSWORD=root
+      - MYSQL_HOST=mysql
+      - MYSQL_DATABASE=django
+      - MYSQL_PORT=3306

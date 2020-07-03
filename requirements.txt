@@ -2,3 +2,5 @@
 # Do not add dependency of direct dependency.
 Django==3.0.8
 black==19.10b0
+coverage==5.1
+mysqlclient==2.0.1
