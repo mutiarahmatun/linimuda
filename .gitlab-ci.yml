@@ -1,7 +1,6 @@
 stages:
   - test
-  # Heroku required credit card on mysql add on :(
-  # - deploy
+  - deploy
 
 test:
   stage: test
@@ -24,3 +23,12 @@ test:
   artifacts:
     paths:
       - coverage.xml
+
+deploy:
+  image: ruby:2.7
+  stage: deploy
+  before_script:
+    - gem install dpl
+    - wget -qO- https://cli-assets.heroku.com/install-ubuntu.sh | sh
+  script:
+    - dpl --provider=heroku --app=$HEROKU_APPNAME --api-key=$HEROKU_APIKEY
