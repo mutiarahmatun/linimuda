@@ -1,31 +1,13 @@
 version: "3"
 
 services:
-  mysql:
-    image: "mysql:8"
-    command: --default-authentication-plugin=mysql_native_password
-    restart: always
-    environment:
-      MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: django
-      MYSQL_USER: coba
-      MYSQL_PASSWORD: coba
-
   django:
     build:
       dockerfile: Dockerfile
       context: .
     volumes:
-      - .:/app
+      - .:/code
+    command: bash -c "python manage.py makemigrations && python manage.py migrate && python manage.py collectstatic --noinput && python manage.py runserver"
     restart: always
-    environment:
-      - MYSQL_USER=coba
-      - MYSQL_PASSWORD=coba
-      - MYSQL_HOST=mysql
-      - MYSQL_DATABASE=django
-      - MYSQL_PORT=3306
-      - USE_MYSQL=1
-    depends_on:
-      - mysql
     ports:
       - "8000:8000"

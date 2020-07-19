@@ -10,11 +10,12 @@ test:
     - pip install --upgrade pip
     - pip install -r requirements.txt
     - python manage.py makemigrations
-    # - python manage.py collectstatic --no-input
+    - python manage.py migrate
+    - python manage.py collectstatic --no-input
     - python manage.py runserver 8000 &
   script:
     - echo "Starting Linter"
-    - black --check .
+    - flake8 .
     - echo "Starting Test"
     - coverage run --include="./*" --omit="manage.py" manage.py test
     - coverage report -m

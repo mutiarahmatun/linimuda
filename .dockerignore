@@ -2,6 +2,7 @@ README.md
 Dockerfile*
 .dockerignore
 .gitignore
+.flake8
 
 .venv/
 .env/
@@ -13,8 +14,6 @@ env/
 *.pyc
 __pycache__/
 local_settings.py
-db.sqlite3
-db.sqlite3-journal
 
 setup.sh
 
