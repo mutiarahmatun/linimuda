@@ -50,5 +50,5 @@ share/python-wheels/
 *.egg
 MANIFEST
 
-static/*
-!static/dummy.txt
+staticfiles/*
+!staticfiles/dummy.txt
