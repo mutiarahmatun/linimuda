@@ -1,2 +1,2 @@
-release: python manage.py migrate --noinput
-web: gunicorn website_insanq.wsgi:application
+release: python manage.py migrate
+web: gunicorn website_insanq.wsgi --log-file -
