@@ -12,8 +12,10 @@ DEBUG = True
 ALLOWED_HOSTS = ["*"]
 
 # Heroku postgresql
-DATABASES = {}
-DATABASES["default"] = dj_database_url.config(conn_max_age=600)
+PRODUCTION = os.environ.get("DATABASE_URL")
+if PRODUCTION:
+    DATABASES = {}
+    DATABASES["default"] = dj_database_url.config(conn_max_age=600)
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = os.environ["SECRET_KEY"]
