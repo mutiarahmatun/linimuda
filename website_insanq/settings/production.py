@@ -8,7 +8,7 @@ from .base import *
 # ALLOWED_HOSTS = os.environ["ALLOWED_HOSTS"].split(";")
 
 DEBUG = True
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["*"]
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = os.environ["SECRET_KEY"]
