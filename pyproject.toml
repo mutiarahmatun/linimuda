@@ -1,0 +1,18 @@
+[tool.black]
+include = '\.pyi?$'
+exclude = '''
+/(
+    \.git
+  | \.hg
+  | \.mypy_cache
+  | \.tox
+  | \.venv
+  | \.env
+  | venv
+  | env
+  | _build
+  | buck-out
+  | build
+  | dist
+)/
+'''

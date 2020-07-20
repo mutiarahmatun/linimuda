@@ -1,0 +1,13 @@
+version: "3"
+
+services:
+  django:
+    build:
+      dockerfile: Dockerfile
+      context: .
+    volumes:
+      - .:/code
+    command: bash -c "python manage.py makemigrations && python manage.py migrate && python manage.py collectstatic --noinput && python manage.py runserver"
+    restart: always
+    ports:
+      - "8000:8000"

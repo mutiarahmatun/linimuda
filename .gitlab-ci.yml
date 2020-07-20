@@ -1,0 +1,34 @@
+stages:
+  - test
+  - deploy
+
+test:
+  stage: test
+  image: python:3.8
+  before_script:
+    - pip install --upgrade pip
+    - pip install -r requirements.txt
+    - python manage.py makemigrations
+    - python manage.py migrate
+    - python manage.py collectstatic --no-input
+    - python manage.py runserver 8000 &
+  script:
+    - echo "Starting Linter"
+    - flake8 .
+    - echo "Starting Test"
+    - coverage run --include="./*" --omit="manage.py" manage.py test
+    - coverage report -m
+    - coverage xml -i
+    - coverage report -m
+  artifacts:
+    paths:
+      - coverage.xml
+
+deploy:
+  image: ruby:2.7
+  stage: deploy
+  before_script:
+    - gem install dpl
+    - wget -qO- https://cli-assets.heroku.com/install-ubuntu.sh | sh
+  script:
+    - dpl --provider=heroku --app=$HEROKU_APPNAME --api-key=$HEROKU_APIKEY
