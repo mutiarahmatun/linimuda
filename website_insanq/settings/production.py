@@ -1,4 +1,5 @@
 import os
+import dj_database_url
 from .base import *
 
 # -- HEROKU NEEDS DEBUG = TRUE --
@@ -9,6 +10,10 @@ from .base import *
 
 DEBUG = True
 ALLOWED_HOSTS = ["*"]
+
+# Heroku postgresql
+DATABASES = {}
+DATABASES["default"] = dj_database_url.config(conn_max_age=600)
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = os.environ["SECRET_KEY"]
