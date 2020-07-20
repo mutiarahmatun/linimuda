@@ -1,15 +1,23 @@
+from __future__ import absolute_import, unicode_literals
+from .base import *
 import os
 import dj_database_url
-from .base import *
 
-# -- HEROKU NEEDS DEBUG = TRUE --
+# -- HEROKU NEEDS DEBUG = TRUE (NOW TRY DEBUF = FALSE) --
 # DEBUG = False
 
 # # SECURITY WARNING: define the correct hosts in production!
 # ALLOWED_HOSTS = os.environ["ALLOWED_HOSTS"].split(";")
 
-DEBUG = True
+DEBUG = False
 ALLOWED_HOSTS = ["*"]
+
+COMPRESS_OFFLINE = True
+COMPRESS_CSS_FILTERS = [
+    "compressor.filters.css_default.CssAbsoluteFilter",
+    "compressor.filters.cssmin.CSSMinFilter",
+]
+COMPRESS_CSS_HASHING_METHOD = "content"
 
 # Heroku postgresql
 PRODUCTION = os.environ.get("DATABASE_URL")
