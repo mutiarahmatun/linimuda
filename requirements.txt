@@ -9,7 +9,7 @@ coverage==5.1
 
 # Heroku
 django-toolbelt==0.0.1
-psycopg2==2.8.5
+psycopg2-binary==2.8.5
 dj-database-url==0.5.0
 
 # mysqlclient==2.0.1

@@ -3,25 +3,19 @@ from .base import *
 import os
 import dj_database_url
 
-# -- HEROKU NEEDS DEBUG = TRUE (NOW TRY DEBUF = FALSE) --
+# -- HEROKU NEEDS DEBUG = TRUE --
 # DEBUG = False
 
 # # SECURITY WARNING: define the correct hosts in production!
 # ALLOWED_HOSTS = os.environ["ALLOWED_HOSTS"].split(";")
 
-DEBUG = False
+DEBUG = True
 ALLOWED_HOSTS = ["*"]
-
-COMPRESS_OFFLINE = True
-COMPRESS_CSS_FILTERS = [
-    "compressor.filters.css_default.CssAbsoluteFilter",
-    "compressor.filters.cssmin.CSSMinFilter",
-]
-COMPRESS_CSS_HASHING_METHOD = "content"
 
 # Heroku postgresql
 PRODUCTION = os.environ.get("DATABASE_URL")
 if PRODUCTION:
+    print("This is production")
     DATABASES = {}
     DATABASES["default"] = dj_database_url.config()
 SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
