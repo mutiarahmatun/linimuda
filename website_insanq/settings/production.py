@@ -12,8 +12,10 @@ import dj_database_url
 DEBUG = True
 ALLOWED_HOSTS = ["*"]
 
+print("CEK CEK CEK CEK")
 # Heroku postgresql
 PRODUCTION = os.environ.get("DATABASE_URL")
+print(PRODUCTION)
 if PRODUCTION:
     print("This is production")
     DATABASES = {}
