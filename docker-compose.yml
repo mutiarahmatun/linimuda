@@ -7,7 +7,7 @@ services:
       context: .
     volumes:
       - .:/code
-    command: bash -c "python manage.py makemigrations && python manage.py migrate && python manage.py collectstatic --noinput && python manage.py runserver"
+    command: bash -c "python manage.py makemigrations && python manage.py migrate && python manage.py collectstatic --noinput && python manage.py runserver 0.0.0.0:8000"
     restart: always
     ports:
       - "8000:8000"

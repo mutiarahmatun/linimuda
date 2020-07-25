@@ -1,5 +1,5 @@
 [flake8]
-ignore = E501, E302, W391, F403, F401, E113, E231
+ignore = E501, E302, W391, F405, F403, F401, E113, E231
 exclude = .git,.hg,.mypy_cache,.tox,.venv,.env,venv,env,_build,buck-out,build,dist
 max-line-length = 88
 max-complexity = 18
