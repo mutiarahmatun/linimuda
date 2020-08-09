@@ -57,7 +57,11 @@ class ContactUsPage(CoderedFormPage):
             FormSubmissionsPanel(),
             InlinePanel("confirmation_emails", label=_("Confirmation Emails")),
         ]
-        + [ReadOnlyPanel("hits", heading="Hits")]
+        + [
+            MultiFieldPanel(
+                [ReadOnlyPanel("hits", heading="Hits")], _("Publication Info")
+            )
+        ]
     )
 
     layout_panels = []
