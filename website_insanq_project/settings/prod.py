@@ -7,15 +7,23 @@ DEBUG = False
 SECRET_KEY = os.environ["SECRET_KEY"]
 
 # Add your site's domain name(s) here.
-ALLOWED_HOSTS = ["www.insanq.co.id"]
+ALLOWED_HOSTS = ["*"]
+# ALLOWED_HOSTS = ["www.insanq.co.id"]
 
 # To send email from the server, we recommend django_sendmail_backend
 # Or specify your own email backend such as an SMTP server.
 # https://docs.djangoproject.com/en/3.0/ref/settings/#email-backend
-EMAIL_BACKEND = "django_sendmail_backend.backends.EmailBackend"
 
-# Default email address used to send messages from the website.
-DEFAULT_FROM_EMAIL = "Insanq <info@insanq.co.id>"
+
+EMAIL_BACKEND = "django.core.mail.backends.filebased.EmailBackend"
+EMAIL_FILE_PATH = "/tmp/app-messages"
+# EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+# EMAIL_HOST:  'localhost'
+# EMAIL_PORT: 25
+# EMAIL_HOST_USER: (Empty string)
+# EMAIL_HOST_PASSWORD: (Empty string)
+# -- Default email address used to send messages from the website. ==
+# DEFAULT_FROM_EMAIL = "Insanq <info@insanq.co.id>"
 
 # A list of people who get error notifications.
 ADMINS = [

@@ -6,10 +6,6 @@ gunicorn==20.0.4
 whitenoise==5.1.0
 coverage==5.1
 
-# django_sendmail_backend enables sending email from your web host server.
-# Remove this if using a different email backend.
-django_sendmail_backend==0.1.2
-
 # Heroku
 django-toolbelt==0.0.1
 psycopg2-binary==2.8.5

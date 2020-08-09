@@ -1,3 +1,4 @@
+from coderedcms.models import CoderedWebPage
 from django.db import models
 
 from modelcluster.fields import ParentalKey
@@ -11,15 +12,26 @@ from wagtail.images.edit_handlers import ImageChooserPanel
 
 
 class LayananBlock(blocks.StructBlock):
+
     title = blocks.CharBlock()
     content = blocks.RichTextBlock()
     thumbnail = ImageChooserBlock()
 
 
-class HomePage(Page):
+class HomePage(CoderedWebPage):
+    class Meta:
+        verbose_name = "Home"
+
+    ###############
+    # Panels
+    ###############
+    layout_panels = []
+    settings_panels = Page.settings_panels
+
+    # section layanan
     section_layanan = StreamField([("Layanan", LayananBlock())], blank=True)
     content_panels = Page.content_panels + [
-        InlinePanel("cover_images", label="cover images"),
+        InlinePanel("cover_images", label="Cover Images"),
         StreamFieldPanel("section_layanan"),
     ]
 
