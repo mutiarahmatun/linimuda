@@ -1,9 +1,20 @@
+# ----- ONLY USING GIT BASH -----
+
+# -- first time after creating virtual environment --
+# python -m pip install --upgrade pip
+
 MAKEMIGRATIONS="python manage.py makemigrations"
 MIGRATE="python manage.py migrate"
 RUNSERVER="python manage.py runserver"
-# COLLECTSTATIC="python manage.py collectstatic"
+UPDATEINDEX="python manage.py update_index"
+COLLECTSTATIC="python manage.py collectstatic"
 
-# formatter
-black .
+# -- linter --
+# flake8 .
 
-$MAKEMIGRATIONS && $MIGRATE && $RUNSERVER
+# -- formatter --
+# black .
+
+$MAKEMIGRATIONS && $MIGRATE && $UPDATEINDEX && $RUNSERVER
+# -- collectstatic, do this if you want --
+# $COLLECTSTATIC

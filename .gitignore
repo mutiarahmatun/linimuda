@@ -52,3 +52,9 @@ MANIFEST
 
 staticfiles/*
 !staticfiles/dummy.txt
+
+search_index
+
+.vs_code/
+media
+tmp

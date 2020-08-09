@@ -20,3 +20,6 @@ setup.sh
 .vscode/
 .coverage
 coverage.xml
+
+media
+tmp

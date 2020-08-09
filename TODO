@@ -1,0 +1,2 @@
+1. Dont forget set up cron job on web hosting => python manage.py update_index
+2. Handle hits page on template
