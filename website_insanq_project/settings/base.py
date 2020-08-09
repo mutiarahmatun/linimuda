@@ -28,6 +28,7 @@ INSTALLED_APPS = [
     # This project
     "website_insanq_project.apps.home",
     "website_insanq_project.apps.article",
+    "website_insanq_project.apps.contact_us",
     "website_insanq_project.apps.override_dashboard_admin",
     "website_insanq_project.apps.website",
     # CodeRed
@@ -203,3 +204,4 @@ BOOTSTRAP4 = {
 # Tags
 
 TAGGIT_CASE_INSENSITIVE = True
+

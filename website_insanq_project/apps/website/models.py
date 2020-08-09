@@ -5,14 +5,11 @@ Createable pages used in CodeRed CMS.
 from django.utils.html import format_html
 from wagtail.admin.edit_handlers import EditHandler
 
-import json
 from django.db import models
 from django.utils.translation import gettext_lazy as _
-from wagtail.admin.edit_handlers import HelpPanel, FieldPanel, MultiFieldPanel
-from wagtail.images.edit_handlers import ImageChooserPanel
+from wagtail.admin.edit_handlers import FieldPanel, MultiFieldPanel
 from wagtail.contrib.settings.models import BaseSetting, register_setting
 
-from coderedcms.settings import cr_settings
 from wagtail.core import hooks
 from modelcluster.fields import ParentalKey
 from coderedcms.forms import CoderedFormField
@@ -97,13 +94,14 @@ class Profile(BaseSetting):
     company_name = models.CharField(
         max_length=255, blank=True, verbose_name=_("Company Name")
     )
+    email = models.EmailField(max_length=255, blank=True, verbose_name=_("Email"))
     telephone_number = models.CharField(
         max_length=255, blank=True, verbose_name=_("Telephone Number")
     )
     handphone_number = models.CharField(
         max_length=255, blank=True, verbose_name=_("Handphone / WhatsApp Number")
     )
-    email = models.EmailField(max_length=255, blank=True, verbose_name=_("Email"))
+    alamat = models.CharField(max_length=511, blank=True, verbose_name=_("Alamat"))
 
     panels = [
         MultiFieldPanel(
@@ -112,6 +110,7 @@ class Profile(BaseSetting):
                 FieldPanel("email"),
                 FieldPanel("telephone_number"),
                 FieldPanel("handphone_number"),
+                FieldPanel("alamat"),
             ],
             _("Profile"),
         )

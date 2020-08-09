@@ -60,60 +60,6 @@ class ArticlePage(CoderedArticlePage):
     template = "coderedcms/pages/article_page.html"
     search_template = "coderedcms/pages/article_page.search.html"
 
-    # Panel
-
-    # TODO -- Not needed to override right now, delete after accepted
-    # bottom_content_panels = []
-
-    # classify_panels = [
-    #     FieldPanel("classifier_terms", widget=ClassifierSelectWidget()),
-    #     FieldPanel("tags"),
-    # ]
-
-    # promote_panels = [
-    #     MultiFieldPanel(
-    #         [
-    #             FieldPanel("slug"),
-    #             FieldPanel("seo_title"),
-    #             FieldPanel("search_description"),
-    #             ImageChooserPanel("og_image"),
-    #         ],
-    #         _("Page Meta Data"),
-    #     ),
-    #     MultiFieldPanel(
-    #         [
-    #             HelpPanel(
-    #                 heading=_("About Organization Structured Data"),
-    #                 content=_(
-    #                     """The fields below help define brand, contact, and storefront
-    #                 information to search engines. This information should be filled out on
-    #                 the site’s root page (Home Page). If your organization has multiple locations,
-    #                 then also fill this info out on each location page using that particular
-    #                 location’s info."""
-    #                 ),
-    #             ),
-    #             FieldPanel("struct_org_type"),
-    #             FieldPanel("struct_org_name"),
-    #             ImageChooserPanel("struct_org_logo"),
-    #             ImageChooserPanel("struct_org_image"),
-    #             FieldPanel("struct_org_phone"),
-    #             FieldPanel("struct_org_address_street"),
-    #             FieldPanel("struct_org_address_locality"),
-    #             FieldPanel("struct_org_address_region"),
-    #             FieldPanel("struct_org_address_postal"),
-    #             FieldPanel("struct_org_address_country"),
-    #             FieldPanel("struct_org_geo_lat"),
-    #             FieldPanel("struct_org_geo_lng"),
-    #             StreamFieldPanel("struct_org_hours"),
-    #             StreamFieldPanel("struct_org_actions"),
-    #             FieldPanel("struct_org_extra_json"),
-    #         ],
-    #         _("Structured Data - Organization"),
-    #     ),
-    # ]
-
-    # integration_panels = []
-
     # Override to become empty
     layout_panels = []
 
@@ -184,6 +130,10 @@ class ArticleIndexPage(CoderedArticleIndexPage):
     hits = models.IntegerField(default=0, editable=False)
     body = None
 
+    def add_hits(self):
+        self.hits += 1
+        self.save()
+
     # Panel
 
     # Override to not contain template form
@@ -228,20 +178,3 @@ class ArticleIndexPage(CoderedArticleIndexPage):
     subpage_types = ["article.ArticlePage"]
 
     template = "coderedcms/pages/article_index_page.html"
-
-
-# class ArticleIndexPage(CoderedArticleIndexPage):
-#     """
-#     Shows a list of article sub-pages.
-#     """
-
-#     class Meta:
-#         verbose_name = "Article Landing Page"
-
-#     # Override to specify custom index ordering choice/default.
-#     index_query_pagemodel = "article.ArticlePage"
-
-#     # Only allow ArticlePages beneath this page.
-#     subpage_types = ["article.ArticlePage"]
-
-#     template = "coderedcms/pages/article_index_page.html"
