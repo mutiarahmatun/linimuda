@@ -29,6 +29,7 @@ INSTALLED_APPS = [
     "website_insanq_project.apps.home",
     "website_insanq_project.apps.article",
     "website_insanq_project.apps.contact_us",
+    "website_insanq_project.apps.event",
     "website_insanq_project.apps.override_dashboard_admin",
     "website_insanq_project.apps.website",
     # CodeRed

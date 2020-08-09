@@ -13,6 +13,7 @@ from wagtail.admin.edit_handlers import (
     ObjectList,
     FieldRowPanel,
 )
+from website_insanq_project.apps.website.models import ReadOnlyPanel
 from coderedcms.forms import CoderedFormField
 from coderedcms.models import (
     CoderedEmail,
@@ -56,6 +57,7 @@ class ContactUsPage(CoderedFormPage):
             FormSubmissionsPanel(),
             InlinePanel("confirmation_emails", label=_("Confirmation Emails")),
         ]
+        + [ReadOnlyPanel("hits", heading="Hits")]
     )
 
     layout_panels = []
