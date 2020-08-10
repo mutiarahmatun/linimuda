@@ -1,7 +1,3 @@
-"""
-Createable pages used in CodeRed CMS.
-"""
-# ReadOnly Field Stuff
 from django.utils.html import format_html
 from wagtail.admin.edit_handlers import EditHandler
 
@@ -9,64 +5,7 @@ from django.db import models
 from django.utils.translation import gettext_lazy as _
 from wagtail.admin.edit_handlers import FieldPanel, MultiFieldPanel
 from wagtail.contrib.settings.models import BaseSetting, register_setting
-
 from wagtail.core import hooks
-from modelcluster.fields import ParentalKey
-from coderedcms.forms import CoderedFormField
-from coderedcms.models import (
-    CoderedEmail,
-    CoderedFormPage,
-    CoderedWebPage,
-)
-
-
-class FormPage(CoderedFormPage):
-    """
-    A page with an html <form>.
-    """
-
-    class Meta:
-        verbose_name = "Form"
-
-    template = "coderedcms/pages/form_page.html"
-
-
-class FormPageField(CoderedFormField):
-    """
-    A field that links to a FormPage.
-    """
-
-    class Meta:
-        ordering = ["sort_order"]
-
-    page = ParentalKey("FormPage", related_name="form_fields")
-
-
-class FormConfirmEmail(CoderedEmail):
-    """
-    Sends a confirmation email after submitting a FormPage.
-    """
-
-    page = ParentalKey("FormPage", related_name="confirmation_emails")
-
-
-class WebPage(CoderedWebPage):
-    """
-    General use page with featureful streamfield and SEO attributes.
-    Template renders all Navbar and Footer snippets in existance.
-    """
-
-    class Meta:
-        verbose_name = "Web Page"
-
-    template = "coderedcms/pages/web_page.html"
-
-
-"""
-Custom wagtail settings used by CodeRed CMS.
-Settings are user-configurable on a per-site basis (multisite).
-Global project or developer settings should be defined in coderedcms.settings.py .
-"""
 
 
 @hooks.register("construct_settings_menu")
@@ -95,13 +34,17 @@ class Profile(BaseSetting):
         max_length=255, blank=True, verbose_name=_("Company Name")
     )
     email = models.EmailField(max_length=255, blank=True, verbose_name=_("Email"))
-    telephone_number = models.CharField(
-        max_length=255, blank=True, verbose_name=_("Telephone Number")
+    telephone_number = models.BigIntegerField(
+        blank=True,
+        verbose_name=_("Telephone Number"),
+        help_text=_("Don't forget with country code. Example: 62215678901"),
     )
-    handphone_number = models.CharField(
-        max_length=255, blank=True, verbose_name=_("Handphone / WhatsApp Number")
+    handphone_number = models.BigIntegerField(
+        blank=True,
+        verbose_name=_("Handphone / WhatsApp Number"),
+        help_text=_("Don't forget with country code. Example: 6281234567890"),
     )
-    alamat = models.CharField(max_length=511, blank=True, verbose_name=_("Alamat"))
+    address = models.CharField(max_length=511, blank=True, verbose_name=_("Address"))
 
     panels = [
         MultiFieldPanel(
@@ -110,7 +53,7 @@ class Profile(BaseSetting):
                 FieldPanel("email"),
                 FieldPanel("telephone_number"),
                 FieldPanel("handphone_number"),
-                FieldPanel("alamat"),
+                FieldPanel("address"),
             ],
             _("Profile"),
         )

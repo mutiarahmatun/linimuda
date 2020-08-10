@@ -25,4 +25,4 @@ USER myuser
 EXPOSE 8000
 
 # --PRODUCTION--
-CMD exec gunicorn website_insanq.wsgi:application --bind 0.0.0.0:8000 --workers 3
+CMD exec gunicorn website_insanq_project.wsgi:application --bind 0.0.0.0:8000 --workers 3
