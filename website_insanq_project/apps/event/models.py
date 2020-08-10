@@ -19,6 +19,7 @@ from website_insanq_project.apps.website.models import ReadOnlyPanel
 from coderedcms.forms import CoderedFormField
 from coderedcms.models import (
     CoderedEmail,
+    CoderedWebPage,
     CoderedFormPage,
 )
 from datetime import date, time
@@ -54,7 +55,13 @@ class EventPage(CoderedFormPage):
     template = "coderedcms/pages/form_page.html"
 
     body_content_panels = (
-        [InlinePanel("form_fields", label="Form fields"),]
+        [
+            InlinePanel(
+                "form_fields",
+                label="Form fields registration event",
+                help_text="Don't forget to specify date and time registrant choice's",
+            )
+        ]
         + [
             MultiFieldPanel(
                 [
@@ -166,6 +173,10 @@ class EventPage(CoderedFormPage):
         index.SearchField("long_description", partial_match=True),
     ]
 
+    # Only allow this page to be created beneath an EventIndexPage.
+    parent_page_types = ["event.EventIndexPage"]
+    subpage_types = []
+
 
 class EventPageField(CoderedFormField):
     """
@@ -184,3 +195,79 @@ class EventConfirmEmail(CoderedEmail):
     """
 
     page = ParentalKey("EventPage", related_name="confirmation_emails")
+
+
+class EventIndexPage(CoderedWebPage):
+    """
+    Shows a list of event sub-pages.
+    """
+
+    class Meta:
+        verbose_name = "Event Landing Page"
+
+    hits = models.IntegerField(default=0, editable=False)
+    body = None
+
+    def add_hits(self):
+        self.hits += 1
+        self.save()
+        return ""
+
+    # Panel
+
+    # Override to not contain template form
+    layout_panels = []
+
+    # Override to become empty
+    body_content_panels = []
+
+    # Override without content walls
+    settings_panels = Page.settings_panels
+
+    # Override with additional hits attribute
+    content_panels = Page.content_panels + [
+        MultiFieldPanel(
+            [ReadOnlyPanel("hits", heading="Hits"),], _("Publication Info"),
+        ),
+    ]
+
+    @cached_classmethod
+    def get_edit_handler(cls):  # noqa
+        """
+        Override to "lazy load" the panels overriden by subclasses.
+        """
+        panels = [
+            ObjectList(
+                cls.content_panels
+                + cls.body_content_panels
+                + cls.bottom_content_panels,
+                heading=_("Content"),
+            ),
+            ObjectList(cls.classify_panels, heading=_("Classify")),
+            ObjectList(cls.promote_panels, heading=_("SEO"), classname="seo"),
+            ObjectList(
+                cls.settings_panels, heading=_("Settings"), classname="settings"
+            ),
+        ]
+
+        if cls.integration_panels:
+            panels.append(
+                ObjectList(
+                    cls.integration_panels,
+                    heading="Integrations",
+                    classname="integrations",
+                )
+            )
+
+        return TabbedInterface(panels).bind_to(model=cls)
+
+    # template = "coderedcms/pages/form_index_page.html"
+    template = "coderedcms/pages/article_index_page.html"
+
+    index_show_subpages_default = True
+    index_order_by_default = "title"
+    index_query_pagemodel = "event.EventPage"
+
+    # Only allow EventPages beneath this page.
+    subpage_types = ["event.EventPage"]
+
