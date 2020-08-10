@@ -1,9 +1,7 @@
-from django.utils.html import format_html
-from wagtail.admin.edit_handlers import EditHandler
-
 from django.db import models
+from django.utils.html import format_html
 from django.utils.translation import gettext_lazy as _
-from wagtail.admin.edit_handlers import FieldPanel, MultiFieldPanel
+from wagtail.admin.edit_handlers import EditHandler, FieldPanel, MultiFieldPanel
 from wagtail.contrib.settings.models import BaseSetting, register_setting
 from wagtail.core import hooks
 
@@ -28,6 +26,7 @@ class Profile(BaseSetting):
     """
 
     class Meta:
+
         verbose_name = _("Profile")
 
     company_name = models.CharField(
@@ -100,4 +99,3 @@ class ReadOnlyPanel(EditHandler):
             ":",
             self.render(),
         )
-

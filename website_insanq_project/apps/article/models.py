@@ -1,7 +1,6 @@
 from datetime import date
 
-from coderedcms.models import CoderedArticlePage, CoderedArticleIndexPage
-from django import forms
+from coderedcms.models import CoderedArticleIndexPage, CoderedArticlePage
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 from wagtail.admin.edit_handlers import (
@@ -10,12 +9,13 @@ from wagtail.admin.edit_handlers import (
     ObjectList,
     TabbedInterface,
 )
-from wagtail.core.models import Page
 from wagtail.core.fields import RichTextField
+from wagtail.core.models import Page
 from wagtail.images.edit_handlers import ImageChooserPanel
+from wagtail.search import index
+from wagtail.utils.decorators import cached_classmethod
 
 from website_insanq_project.apps.website.models import ReadOnlyPanel
-from wagtail.utils.decorators import cached_classmethod
 
 
 class ArticlePage(CoderedArticlePage):
@@ -52,10 +52,7 @@ class ArticlePage(CoderedArticlePage):
     def add_hits(self):
         self.hits += 1
         self.save()
-
-    # Only allow this page to be created beneath an ArticleIndexPage.
-    parent_page_types = ["article.ArticleIndexPage"]
-    subpage_types = []
+        return ""
 
     template = "coderedcms/pages/article_page.html"
     search_template = "coderedcms/pages/article_page.search.html"
@@ -118,6 +115,14 @@ class ArticlePage(CoderedArticlePage):
 
         return TabbedInterface(panels).bind_to(model=cls)
 
+    search_fields = CoderedArticlePage.search_fields + [
+        index.SearchField("body", partial_match=True)
+    ]
+
+    # Only allow this page to be created beneath an ArticleIndexPage.
+    parent_page_types = ["article.ArticleIndexPage"]
+    subpage_types = []
+
 
 class ArticleIndexPage(CoderedArticleIndexPage):
     """
@@ -133,30 +138,12 @@ class ArticleIndexPage(CoderedArticleIndexPage):
     def add_hits(self):
         self.hits += 1
         self.save()
+        return ""
 
     # Panel
 
     # Override to not contain template form
-    layout_panels = [
-        MultiFieldPanel(
-            [
-                FieldPanel("index_show_subpages"),
-                FieldPanel("index_num_per_page"),
-                FieldPanel("index_order_by"),
-                FieldPanel("index_classifiers", widget=forms.CheckboxSelectMultiple()),
-            ],
-            heading=_("Show Child Pages"),
-        ),
-        MultiFieldPanel(
-            [
-                FieldPanel("show_images"),
-                FieldPanel("show_captions"),
-                FieldPanel("show_meta"),
-                FieldPanel("show_preview_text"),
-            ],
-            heading=_("Child page display"),
-        ),
-    ]
+    layout_panels = []
 
     # Override to become empty
     body_content_panels = []
@@ -174,7 +161,37 @@ class ArticleIndexPage(CoderedArticleIndexPage):
     # Override to specify custom index ordering choice/default.
     index_query_pagemodel = "article.ArticlePage"
 
+    template = "coderedcms/pages/article_index_page.html"
+
+    @cached_classmethod
+    def get_edit_handler(cls):  # noqa
+        """
+        Override to "lazy load" the panels overriden by subclasses.
+        """
+        panels = [
+            ObjectList(
+                cls.content_panels
+                + cls.body_content_panels
+                + cls.bottom_content_panels,
+                heading=_("Content"),
+            ),
+            ObjectList(cls.classify_panels, heading=_("Classify")),
+            ObjectList(cls.promote_panels, heading=_("SEO"), classname="seo"),
+            ObjectList(
+                cls.settings_panels, heading=_("Settings"), classname="settings"
+            ),
+        ]
+
+        if cls.integration_panels:
+            panels.append(
+                ObjectList(
+                    cls.integration_panels,
+                    heading="Integrations",
+                    classname="integrations",
+                )
+            )
+
+        return TabbedInterface(panels).bind_to(model=cls)
+
     # Only allow ArticlePages beneath this page.
     subpage_types = ["article.ArticlePage"]
-
-    template = "coderedcms/pages/article_index_page.html"

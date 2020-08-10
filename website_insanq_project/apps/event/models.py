@@ -14,6 +14,7 @@ from wagtail.admin.edit_handlers import (
     ObjectList,
     FieldRowPanel,
 )
+from wagtail.search import index
 from website_insanq_project.apps.website.models import ReadOnlyPanel
 from coderedcms.forms import CoderedFormField
 from coderedcms.models import (
@@ -48,6 +49,7 @@ class EventPage(CoderedFormPage):
     def add_hits(self):
         self.hits += 1
         self.save()
+        return ""
 
     template = "coderedcms/pages/form_page.html"
 
@@ -110,7 +112,7 @@ class EventPage(CoderedFormPage):
             )
         ]
     )
-
+    content_panels = Page.content_panels
     layout_panels = []
 
     integration_panels = []
@@ -158,6 +160,11 @@ class EventPage(CoderedFormPage):
             )
 
         return TabbedInterface(panels).bind_to(model=cls)
+
+    search_fields = CoderedFormPage.search_fields + [
+        index.SearchField("short_description", partial_match=True),
+        index.SearchField("long_description", partial_match=True),
+    ]
 
 
 class EventPageField(CoderedFormField):

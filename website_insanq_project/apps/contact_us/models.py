@@ -1,24 +1,22 @@
+from coderedcms.forms import CoderedFormField
+from coderedcms.models import CoderedEmail, CoderedFormPage
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 from modelcluster.fields import ParentalKey
-from wagtail.contrib.forms.edit_handlers import FormSubmissionsPanel
-from wagtail.utils.decorators import cached_classmethod
-from wagtail.core.models import Page
 from wagtail.admin.edit_handlers import (
     FieldPanel,
-    MultiFieldPanel,
+    FieldRowPanel,
     InlinePanel,
+    MultiFieldPanel,
+    ObjectList,
     PageChooserPanel,
     TabbedInterface,
-    ObjectList,
-    FieldRowPanel,
 )
+from wagtail.contrib.forms.edit_handlers import FormSubmissionsPanel
+from wagtail.core.models import Page
+from wagtail.utils.decorators import cached_classmethod
+
 from website_insanq_project.apps.website.models import ReadOnlyPanel
-from coderedcms.forms import CoderedFormField
-from coderedcms.models import (
-    CoderedEmail,
-    CoderedFormPage,
-)
 
 
 class ContactUsPage(CoderedFormPage):
@@ -35,6 +33,7 @@ class ContactUsPage(CoderedFormPage):
     def add_hits(self):
         self.hits += 1
         self.save()
+        return ""
 
     template = "coderedcms/pages/form_page.html"
 
@@ -52,11 +51,9 @@ class ContactUsPage(CoderedFormPage):
                 ],
                 _("Form Submissions"),
             ),
-        ]
-        + [
             FormSubmissionsPanel(),
-            InlinePanel("confirmation_emails", label=_("Confirmation Emails")),
         ]
+        + [InlinePanel("confirmation_emails", label=_("Confirmation Emails")),]
         + [
             MultiFieldPanel(
                 [ReadOnlyPanel("hits", heading="Hits")], _("Publication Info")
