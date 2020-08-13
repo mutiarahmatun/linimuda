@@ -28,7 +28,7 @@ class ContactUsPage(CoderedFormPage):
         verbose_name = "Contact Us Page"
 
     hits = models.IntegerField(default=0, editable=False)
-    url_embedded_maps = models.URLField(max_length=511, blank=True)
+    HTML_embedded_maps = models.URLField(max_length=511, blank=True)
 
     def add_hits(self):
         self.hits += 1
@@ -38,7 +38,7 @@ class ContactUsPage(CoderedFormPage):
     template = "coderedcms/pages/form_page.html"
 
     body_content_panels = (
-        [FieldPanel("url_embedded_maps")]
+        [FieldPanel("HTML_embedded_maps")]
         + [InlinePanel("form_fields", label="Form fields"),]
         + [
             MultiFieldPanel(
@@ -53,7 +53,6 @@ class ContactUsPage(CoderedFormPage):
             ),
             FormSubmissionsPanel(),
         ]
-        + [InlinePanel("confirmation_emails", label=_("Confirmation Emails")),]
         + [
             MultiFieldPanel(
                 [ReadOnlyPanel("hits", heading="Hits")], _("Publication Info")

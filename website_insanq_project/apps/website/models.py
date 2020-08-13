@@ -34,11 +34,13 @@ class Profile(BaseSetting):
     )
     email = models.EmailField(max_length=255, blank=True, verbose_name=_("Email"))
     telephone_number = models.BigIntegerField(
+        null=True,
         blank=True,
         verbose_name=_("Telephone Number"),
         help_text=_("Don't forget with country code. Example: 62215678901"),
     )
     handphone_number = models.BigIntegerField(
+        null=True,
         blank=True,
         verbose_name=_("Handphone / WhatsApp Number"),
         help_text=_("Don't forget with country code. Example: 6281234567890"),

@@ -7,6 +7,7 @@ from wagtail.admin.edit_handlers import (
     ObjectList,
     StreamFieldPanel,
     TabbedInterface,
+    MultiFieldPanel,
 )
 from wagtail.core import blocks
 from wagtail.core.fields import StreamField
@@ -14,17 +15,28 @@ from wagtail.core.models import Orderable, Page
 from wagtail.images.blocks import ImageChooserBlock
 from wagtail.images.edit_handlers import ImageChooserPanel
 from wagtail.utils.decorators import cached_classmethod
+from wagtail.core.blocks import PageChooserBlock
+
+from website_insanq_project.apps.website.models import ReadOnlyPanel
 
 
 class LayananBlock(blocks.StructBlock):
     title = blocks.CharBlock()
     content = blocks.RichTextBlock()
     thumbnail = ImageChooserBlock()
+    related_page = PageChooserBlock(required=False)
 
 
 class HomePage(CoderedWebPage):
     class Meta:
         verbose_name = "Home"
+
+    hits = models.IntegerField(default=0, editable=False)
+
+    def add_hits(self):
+        self.hits += 1
+        self.save()
+        return ""
 
     ###############
     # Panels
@@ -35,8 +47,11 @@ class HomePage(CoderedWebPage):
     # section layanan
     section_layanan = StreamField([("Layanan", LayananBlock())], blank=True)
     content_panels = Page.content_panels + [
-        InlinePanel("cover_images", label="Cover Images"),
+        InlinePanel("main_images", label="Main Images"),
         StreamFieldPanel("section_layanan"),
+        MultiFieldPanel(
+            [ReadOnlyPanel("hits", heading="Hits"),], _("Publication Info"),
+        ),
     ]
 
     @cached_classmethod
@@ -71,10 +86,8 @@ class HomePage(CoderedWebPage):
 
 
 class HomePageGalleryImage(Orderable):
-    page = ParentalKey(HomePage, on_delete=models.CASCADE, related_name="cover_images")
+    page = ParentalKey(HomePage, on_delete=models.CASCADE, related_name="main_images")
     image = models.ForeignKey(
         "wagtailimages.Image", on_delete=models.CASCADE, related_name="+"
     )
-    panels = [
-        ImageChooserPanel("image"),
-    ]
+    panels = [ImageChooserPanel("image")]

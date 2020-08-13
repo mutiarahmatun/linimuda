@@ -109,10 +109,7 @@ class EventPage(CoderedFormPage):
                 _("Form Submissions"),
             ),
         ]
-        + [
-            FormSubmissionsPanel(),
-            InlinePanel("confirmation_emails", label=_("Confirmation Emails")),
-        ]
+        + [FormSubmissionsPanel(),]
         + [
             MultiFieldPanel(
                 [ReadOnlyPanel("hits", heading="Hits")], _("Publication Info")
