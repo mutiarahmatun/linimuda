@@ -30,6 +30,7 @@ INSTALLED_APPS = [
     "website_insanq_project.apps.article",
     "website_insanq_project.apps.contact_us",
     "website_insanq_project.apps.event",
+    "website_insanq_project.apps.information",
     "website_insanq_project.apps.override_dashboard_admin",
     "website_insanq_project.apps.website",
     # CodeRed
@@ -171,11 +172,10 @@ MEDIA_URL = "/media/"
 LOGIN_URL = "wagtailadmin_login"
 LOGIN_REDIRECT_URL = "wagtailadmin_home"
 
-
 # Wagtail settings
 
 WAGTAIL_SITE_NAME = "Insanq"
-WAGTAIL_CACHE = True
+WAGTAIL_CACHE = False
 WAGTAIL_ENABLE_UPDATE_CHECK = False
 
 # Base URL to use when referring to full URLs within the Wagtail admin backend -

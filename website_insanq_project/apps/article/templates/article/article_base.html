@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+
+{% load static coderedcms_tags i18n wagtailcore_tags wagtailimages_tags wagtailsettings_tags wagtailuserbar %}
+{% block isi_page %}
+<div class="section-fluid gray-text">
+    {% include 'navbar-primary.html' %}
+    <div class="navbar-space"></div>
+</div>
+<div class="section-fluid gray-text">
+    <div class="content-width">
+        <div class="row section-kontainer">
+            <div class="col-md-9 artikel-kontainer">
+                <div class="px-5 px-md-0">
+                    <div class="content-kontainer warna-teks-primary-dark">
+                        <div class="fill-space-kontainer">
+                            <div class="artikel-tanggal">
+                                <p>{{ page.get_pub_date }}</p>
+                                <!-- TANGGAL ARTIKEL DI SINI -->
+                            </div>
+                            <div class="fill-space">
+                                <div class="underline-short ul-primary-light ul-thin mar-auto"></div>
+                            </div>
+                        </div>
+                        <h2>{{ page.title }}</h2>
+                        <!-- JUDUL ARTIKEL DI SINI -->
+                    </div>
+                    <div class="pad-horizontal-sm">
+                        <div class="ratio-16-9">
+                            <div class="fill-ratio">
+                                {% block cover %}
+                                {% endblock %}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="content-kontainer">
+                        <div class="artikel-konten">
+                            <!-- ISI KONTEN ARTIKEL DI SINI -->
+                            {% block isi_artikel %}
+                            {% endblock %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% block other_article %}
+            {% endblock %}
+        </div>
+    </div>
+</div>
+{% endblock %}

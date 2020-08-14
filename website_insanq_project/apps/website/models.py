@@ -39,10 +39,16 @@ class Profile(BaseSetting):
         verbose_name=_("Telephone Number"),
         help_text=_("Don't forget with country code. Example: 62215678901"),
     )
-    handphone_number = models.BigIntegerField(
+    handphone_number_1 = models.BigIntegerField(
         null=True,
         blank=True,
-        verbose_name=_("Handphone / WhatsApp Number"),
+        verbose_name=_("Handphone / WhatsApp Number 1"),
+        help_text=_("Don't forget with country code. Example: 6281234567890"),
+    )
+    handphone_number_2 = models.BigIntegerField(
+        null=True,
+        blank=True,
+        verbose_name=_("Handphone / WhatsApp Number 2"),
         help_text=_("Don't forget with country code. Example: 6281234567890"),
     )
     address = models.CharField(max_length=511, blank=True, verbose_name=_("Address"))
@@ -53,7 +59,8 @@ class Profile(BaseSetting):
                 FieldPanel("company_name"),
                 FieldPanel("email"),
                 FieldPanel("telephone_number"),
-                FieldPanel("handphone_number"),
+                FieldPanel("handphone_number_1"),
+                FieldPanel("handphone_number_2"),
                 FieldPanel("address"),
             ],
             _("Profile"),

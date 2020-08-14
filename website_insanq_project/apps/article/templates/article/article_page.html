@@ -1,4 +1,4 @@
-{% extends "coderedcms/pages/web_page.html" %}
+{% extends "article/article_base.html" %}
 
 {% load wagtailadmin_tags wagtailcore_tags wagtailimages_tags coderedcms_tags %}
 
@@ -7,9 +7,9 @@
 {% if self.get_author_name %}<meta name="author" content="{{self.get_author_name}}" />{% endif %}
 <meta name="created" content="{{self.get_pub_date|date:'c'}}" />
 <meta name="revised" content="{{self.last_published_at|date:'c'}}" />
-{% if settings.coderedcms.SeoSettings.amp_pages %}
+{% comment %} {% if settings.coderedcms.SeoSettings.amp_pages %}
 <link rel="amphtml" href="{{self.get_full_url}}?amp">
-{% endif %}
+{% endif %} {% endcomment %}
 {% endblock %}
 
 {% if settings.coderedcms.SeoSettings.og_meta %}
@@ -39,41 +39,25 @@
     {% endblock %}
 {% endif %}
 
-{% block content %}
-    <article class="codered-article {%if self.cover_image %}has-img{% endif %}">
-        {% if self.cover_image %}
-        {% image self.cover_image fill-2000x1000 as cover_image %}
-        <img src="{{cover_image.url}}" class="w-100" />
-        {% endif %}
-        <div class="container">
-            <div class="article-header">
-                <h1 {% if not self.cover_image %}class="mt-5"{% endif %}>{{ self.title }}</h1>
-                {% if self.caption %}
-                <p class="lead">{{self.caption}}</p>
-                {% endif %}
-                <p>
-                    {% if self.author_display %}
-                    <span class="article-author">{{self.get_author_name}}</span>
-                    {% elif self.author %}
-                    <img class="article-author-img rounded-circle mr-2" src="{% avatar_url self.author %}">
-                    <span class="article-author">{{self.get_author_name}}</span>
-                    {% endif %}
+{% block sidebar %}
+    {% include 'sidebar_share.html' %}
+{% endblock %}
 
-                    {% if self.get_author_name and self.get_pub_date %}
-                    <span class="mx-2">&bull;</span>
-                    {% endif %}
-
-                    {% if self.get_pub_date %}
-                    <span class="article-date">{{ self.get_pub_date }}</span>
-                    {% endif %}
-                </p>
-                <hr>
-            </div>
-            <div class="article-body">
-                {% include_block self.body with settings=settings %}
-            </div>
+{% block cover %}
+    {% if self.cover_image %}
+        <div class="fill-kontainer-wide">
+            {% image self.cover_image max-1600x900 as cover_image %}
+            <img src="{{cover_image.url}}" class="w-100" />
         </div>
-    </article>
+    {% endif %}
+{% endblock %}
+
+{% block isi_artikel %}
+    {{ self.body|richtext }}
+{% endblock %}
+
+{% block other_article %}
+    {% include "article/article_other.html" %}
 {% endblock %}
 
 {% if settings.coderedcms.SeoSettings.struct_meta %}

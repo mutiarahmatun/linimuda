@@ -1,0 +1,103 @@
+-- API Setting for template --
+Company Name: settings.website.Profile.company_name
+Email: settings.website.Profile.email
+Telephone Number: settings.website.Profile.telephone_number
+Handphone / WA Number 1: settings.website.Profile.handphone_number_1
+Handphone / WA Number 2: settings.website.Profile.handphone_number_2
+Alamat: settings.website.Profile.address
+
+
+Link FB: settings.coderedcms.SocialMediaSettings.facebook
+Link Twitter: settings.coderedcms.SocialMediaSettings.twitter
+Handle Instagram: settings.coderedcms.SocialMediaSettings.instagram
+Link Youtube: settings.coderedcms.SocialMediaSettings.youtube
+Link Linkedin: settings.coderedcms.SocialMediaSettings.linkedin
+Link Googleplus: settings.coderedcms.SocialMediaSettings.googleplus
+
+Logo: settings.coderedcms.LayoutSettings.logo
+Favicon: settings.coderedcms.LayoutSettings.favicon
+
+GA Tracking ID: settings.coderedcms.AnalyticsSettings.ga_tracking_id
+
+From Email Address: settings.coderedcms.GeneralSettings.from_email_address
+Number Result per Page on Search: settings.coderedcms.GeneralSettings.search_num_results
+Open All External Link in New Tab: settings.coderedcms.GeneralSettings.external_new_tab
+# YANG PANEL SEO BELUM DI LISTING
+
+---- API Home Page for template --
+cover_images: 
+  - page.cover_images.all
+  - page.cover_images.first
+  - KALAU MAU PAKAI UKURAN
+    {% for item in page.cover_images.all %}
+        <div style="float: left; margin: 10px">
+            {% image item.image fill-320x240 %}
+        </div>
+    {% endfor %}
+
+layanan:
+  - {% for layanan in page.section_layanan %}
+      - layanan.block_type == "layanan"
+      - layanan.value.title
+      - layanan.value.content|richtext
+      - layanan.value.thumbnail
+      - layanan.value.related_page.
+        - url, dkk
+    {% endfor %}
+
+---- API Article Landing Page for template --
+children:
+  - {% for article in page.get_children %}
+      - article.title
+      - article.specific.<attr> (other than title)
+    {% endfor %}
+  - page.add_hits
+  
+---- API Article Page for template --
+  - page.get_full_url
+  - page.title
+  - page.cover_image
+  - page.get_author_name
+  - page.get_pub_date
+  - page.body|richtext
+  - page.add_hits && page.hits
+
+---- API Contact Us Page for template --
+  - page.title
+  - page.cover_image
+  - page.url_embedded_maps
+  - page.add_hits && page.hits
+
+form_fields: 
+  - page.form_fields.all
+  - 
+    {% for field in page.form_fields.all %}
+      - field.field_type
+      - field.label
+      - field.help_text
+      - field.choices
+      - field.default_value
+    {% endfor %}
+
+form_submissions:
+  - page.thank_you_page
+  - page.save_from_submissions
+  - . 
+    . 
+    .
+
+confirmation_emails:
+  - SAMA (MIRIP) DENGAN FORM_FIELD
+
+---- API Event Landing Page for template -- 
+- Mirip Article Landing Page
+
+---- API Event Page for template --
+- MIRIP Contact Page
+        + 
+- page.start_date
+- page.end_date
+...
+...
+- page.monday, page.tuesday, ..., page.sunday
+- page.short_description|richtext, page.long_description|richtext

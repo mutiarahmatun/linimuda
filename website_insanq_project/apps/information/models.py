@@ -1,6 +1,6 @@
 import locale
 from datetime import date
-from coderedcms.models import CoderedArticleIndexPage, CoderedArticlePage
+from coderedcms.models import CoderedArticlePage
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 from wagtail.admin.edit_handlers import (
@@ -11,20 +11,15 @@ from wagtail.admin.edit_handlers import (
 )
 from wagtail.core.fields import RichTextField
 from wagtail.core.models import Page
-from wagtail.images.edit_handlers import ImageChooserPanel
 from wagtail.search import index
 from wagtail.utils.decorators import cached_classmethod
 
 from website_insanq_project.apps.website.models import ReadOnlyPanel
 
 
-class ArticlePage(CoderedArticlePage):
-    """
-    Article, suitable for news or blog content.
-    """
-
+class InformationPage(CoderedArticlePage):
     class Meta:
-        verbose_name = "Article Page"
+        verbose_name = "Information Page"
         ordering = [
             "-first_published_at",
         ]
@@ -63,8 +58,8 @@ class ArticlePage(CoderedArticlePage):
             return self.date_display.strftime("%d %b %y")
         return ""
 
-    template = "article/article_page.html"
-    search_template = "coderedcms/pages/article_page.search.html"
+    template = "information/information_page.html"
+    search_template = "coderedcms/pages/information_page.search.html"
 
     # Override to become empty
     layout_panels = []
@@ -78,7 +73,6 @@ class ArticlePage(CoderedArticlePage):
     # Override with additional hits attribute
     content_panels = (
         Page.content_panels
-        + [ImageChooserPanel("cover_image"),]
         + [
             MultiFieldPanel(
                 [
@@ -129,78 +123,4 @@ class ArticlePage(CoderedArticlePage):
     ]
 
     # Only allow this page to be created beneath an ArticleIndexPage.
-    parent_page_types = ["article.ArticleIndexPage"]
     subpage_types = []
-
-
-class ArticleIndexPage(CoderedArticleIndexPage):
-    """
-    Shows a list of article sub-pages.
-    """
-
-    class Meta:
-        verbose_name = "Article Landing Page"
-
-    hits = models.IntegerField(default=0, editable=False)
-    body = None
-
-    def add_hits(self):
-        self.hits += 1
-        self.save()
-        return ""
-
-    # Panel
-
-    # Override to not contain template form
-    layout_panels = []
-
-    # Override to become empty
-    body_content_panels = []
-
-    # Override without content walls
-    settings_panels = Page.settings_panels
-
-    # Override with additional hits attribute
-    content_panels = Page.content_panels + [
-        MultiFieldPanel(
-            [ReadOnlyPanel("hits", heading="Hits"),], _("Publication Info"),
-        ),
-    ]
-
-    # Override to specify custom index ordering choice/default.
-    index_query_pagemodel = "article.ArticlePage"
-
-    template = "coderedcms/pages/article_index_page.html"
-
-    @cached_classmethod
-    def get_edit_handler(cls):  # noqa
-        """
-        Override to "lazy load" the panels overriden by subclasses.
-        """
-        panels = [
-            ObjectList(
-                cls.content_panels
-                + cls.body_content_panels
-                + cls.bottom_content_panels,
-                heading=_("Content"),
-            ),
-            ObjectList(cls.classify_panels, heading=_("Classify")),
-            ObjectList(cls.promote_panels, heading=_("SEO"), classname="seo"),
-            ObjectList(
-                cls.settings_panels, heading=_("Settings"), classname="settings"
-            ),
-        ]
-
-        if cls.integration_panels:
-            panels.append(
-                ObjectList(
-                    cls.integration_panels,
-                    heading="Integrations",
-                    classname="integrations",
-                )
-            )
-
-        return TabbedInterface(panels).bind_to(model=cls)
-
-    # Only allow ArticlePages beneath this page.
-    subpage_types = ["article.ArticlePage"]
