@@ -11,20 +11,15 @@ from wagtail.admin.edit_handlers import (
 )
 from wagtail.core.fields import RichTextField
 from wagtail.core.models import Page
-from wagtail.images.edit_handlers import ImageChooserPanel
 from wagtail.search import index
 from wagtail.utils.decorators import cached_classmethod
 
 from website_insanq_project.apps.website.models import ReadOnlyPanel
 
 
-class ArticlePage(CoderedArticlePage):
-    """
-    Article, suitable for news or blog content.
-    """
-
+class VideoPage(CoderedArticlePage):
     class Meta:
-        verbose_name = "Article Page"
+        verbose_name = "Video Page"
         ordering = [
             "-first_published_at",
         ]
@@ -33,6 +28,8 @@ class ArticlePage(CoderedArticlePage):
     date_display = models.DateField(
         null=True, blank=True, verbose_name=_("Publish date"), default=date.today
     )
+
+    link_thumbnail_embed_video = models.URLField(max_length=511, blank=True)
 
     # Additional attribute
     hits = models.IntegerField(default=0, editable=False)
@@ -63,7 +60,7 @@ class ArticlePage(CoderedArticlePage):
             return self.date_display.strftime("%d %b %y")
         return ""
 
-    template = "article/article_page.html"
+    template = "video/video_page.html"
     search_template = "coderedcms/pages/article_page.search.html"
 
     # Override to become empty
@@ -78,7 +75,7 @@ class ArticlePage(CoderedArticlePage):
     # Override with additional hits attribute
     content_panels = (
         Page.content_panels
-        + [ImageChooserPanel("cover_image"),]
+        + [FieldPanel("link_thumbnail_embed_video")]
         + [
             MultiFieldPanel(
                 [
@@ -128,18 +125,13 @@ class ArticlePage(CoderedArticlePage):
         index.SearchField("body", partial_match=True)
     ]
 
-    # Only allow this page to be created beneath an ArticleIndexPage.
-    parent_page_types = ["article.ArticleIndexPage"]
+    parent_page_types = ["video.VideoIndexPage"]
     subpage_types = []
 
 
-class ArticleIndexPage(CoderedArticleIndexPage):
-    """
-    Shows a list of article sub-pages.
-    """
-
+class VideoIndexPage(CoderedArticleIndexPage):
     class Meta:
-        verbose_name = "Article Landing Page"
+        verbose_name = "Video Landing Page"
 
     hits = models.IntegerField(default=0, editable=False)
     body = None
@@ -168,9 +160,9 @@ class ArticleIndexPage(CoderedArticleIndexPage):
     ]
 
     # Override to specify custom index ordering choice/default.
-    index_query_pagemodel = "article.ArticlePage"
+    index_query_pagemodel = "video.VideoPage"
 
-    template = "article/article_index_page.html"
+    template = "video/video_index_page.html"
 
     @cached_classmethod
     def get_edit_handler(cls):  # noqa
@@ -202,5 +194,5 @@ class ArticleIndexPage(CoderedArticleIndexPage):
 
         return TabbedInterface(panels).bind_to(model=cls)
 
-    # Only allow ArticlePages beneath this page.
-    subpage_types = ["article.ArticlePage"]
+    # Only allow VideoPages beneath this page.
+    subpage_types = ["video.VideoPage"]

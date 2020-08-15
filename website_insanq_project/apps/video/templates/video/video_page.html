@@ -1,6 +1,6 @@
 {% extends "article/article_base.html" %}
 
-{% load wagtailadmin_tags wagtailcore_tags wagtailimages_tags coderedcms_tags %}
+{% load wagtailadmin_tags wagtailcore_tags wagtailimages_tags coderedcms_tags watch_to_embed %}
 
 {% block description %}{{self.get_description}}{% endblock %}
 {% block html_seo_extra %}
@@ -17,11 +17,17 @@
 {% endblock %}
 
 {% block cover %}
-    {% if self.cover_image %}
-        <div class="fill-kontainer-wide">
-            {% image self.cover_image max-1600x900 as cover_image %}
-            <img src="{{cover_image.url}}" class="w-100" />
-        </div>
+{% comment %} TODO: if link include youtube {% endcomment %}
+    {% if "youtube" in page.link_thumbnail_embed_video %}
+        <iframe class="fill-kontainer-wide"
+        {% if "watch?v=" in page.link_thumbnail_embed_video %}
+            src="{{ page.link_thumbnail_embed_video|watch_to_embed }}"
+        {% elif "embed" in page.link_thumbnail_embed_video %}
+            src="{{ page.link_thumbnail_embed_video }}"
+        {% endif %}
+            frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen>
+        </iframe>
     {% endif %}
 {% endblock %}
 
@@ -30,7 +36,6 @@
 {% endblock %}
 
 {% block other_article %}
-    {% include "article/article_other.html" %}
 {% endblock %}
 
 {% if settings.coderedcms.SeoSettings.struct_meta %}

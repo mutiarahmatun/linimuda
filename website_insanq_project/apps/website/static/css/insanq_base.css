@@ -381,6 +381,12 @@ br {
   right: 0;
 }
 
+.hw-override,
+.hw-override > * {
+  height: 100% !important;
+  width: 100% !important;
+}
+
 .fill-kontainer-wide {
   display: flex;
   justify-content: center;
@@ -769,6 +775,11 @@ br {
 :not(.artikel-konten) a:not(.btn) {
   color: inherit;
   text-decoration: inherit;
+}
+
+.artikel-konten a:not(.btn) {
+  color: var(--warna-secondary);
+  font-weight: 800;
 }
 
 .btn {

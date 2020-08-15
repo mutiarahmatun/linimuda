@@ -1,71 +1,13 @@
 from django.db import models
 from django.utils.html import format_html
 from django.utils.translation import gettext_lazy as _
-from wagtail.admin.edit_handlers import EditHandler, FieldPanel, MultiFieldPanel
-from wagtail.contrib.settings.models import BaseSetting, register_setting
-from wagtail.core import hooks
+from wagtail.admin.edit_handlers import (
+    EditHandler,
+    StreamFieldPanel,
+)
 
-
-@hooks.register("construct_settings_menu")
-def hide_user_menu_item(request, menu_items):
-    hide_item_by_name = [
-        "mailchimp-api",
-        "accessibility",
-        "google-api",
-        "mailchimp-api",
-        "collections",
-        "cache",
-    ]
-    menu_items[:] = [item for item in menu_items if item.name not in hide_item_by_name]
-
-
-@register_setting(icon="fa-building-o")
-class Profile(BaseSetting):
-    """
-    Social media accounts.
-    """
-
-    class Meta:
-
-        verbose_name = _("Profile")
-
-    company_name = models.CharField(
-        max_length=255, blank=True, verbose_name=_("Company Name")
-    )
-    email = models.EmailField(max_length=255, blank=True, verbose_name=_("Email"))
-    telephone_number = models.BigIntegerField(
-        null=True,
-        blank=True,
-        verbose_name=_("Telephone Number"),
-        help_text=_("Don't forget with country code. Example: 62215678901"),
-    )
-    handphone_number_1 = models.BigIntegerField(
-        null=True,
-        blank=True,
-        verbose_name=_("Handphone / WhatsApp Number 1"),
-        help_text=_("Don't forget with country code. Example: 6281234567890"),
-    )
-    handphone_number_2 = models.BigIntegerField(
-        null=True,
-        blank=True,
-        verbose_name=_("Handphone / WhatsApp Number 2"),
-        help_text=_("Don't forget with country code. Example: 6281234567890"),
-    )
-    address = models.CharField(max_length=511, blank=True, verbose_name=_("Address"))
-
-    panels = [
-        MultiFieldPanel(
-            [
-                FieldPanel("company_name"),
-                FieldPanel("email"),
-                FieldPanel("telephone_number"),
-                FieldPanel("handphone_number_1"),
-                FieldPanel("handphone_number_2"),
-                FieldPanel("address"),
-            ],
-            _("Profile"),
-        )
-    ]
+from wagtail.core import blocks
+from wagtail.core.fields import StreamField
 
 
 class ReadOnlyPanel(EditHandler):
@@ -108,3 +50,31 @@ class ReadOnlyPanel(EditHandler):
             ":",
             self.render(),
         )
+
+
+class PageLinkBlock(blocks.StructBlock):
+    """
+    A component of information with image, text, and buttons.
+    """
+
+    display_text = blocks.CharBlock(max_length=255)
+    page = blocks.PageChooserBlock()
+
+
+class BlockPageLinkBlock(blocks.StructBlock):
+    display_text = blocks.CharBlock(max_length=255)
+    sub_links = blocks.StreamBlock([("SubLink", PageLinkBlock())], required=True)
+
+
+class Navbar(models.Model):
+    class Meta:
+        verbose_name = _("Navigation Bar")
+
+    navigation_links = StreamField(
+        [("NonDropdown", PageLinkBlock()), ("Dropdown", BlockPageLinkBlock())],
+        blank=True,
+    )
+
+    panels = [
+        StreamFieldPanel("navigation_links"),
+    ]

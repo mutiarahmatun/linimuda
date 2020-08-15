@@ -24,6 +24,22 @@ Number Result per Page on Search: settings.coderedcms.GeneralSettings.search_num
 Open All External Link in New Tab: settings.coderedcms.GeneralSettings.external_new_tab
 # YANG PANEL SEO BELUM DI LISTING
 
+---- Navbar --
+- {% get_first_navbar as navbar %}
+{% for link in navbar.navigation_links %}
+{% if link.block_type == "NonDropdown"%}
+link.display_text
+link.page.url
+{% if link.block_type == "Dropdown"%}
+link.display_text
+{% for sub_link in link.sub_links%}
+sub_link.display_text
+sub_link.page.url
+
+----- API Video for template --
+- page.link_thumbnail_embed_video
+
+
 ---- API Home Page for template --
 cover_images: 
   - page.cover_images.all
@@ -65,7 +81,7 @@ children:
 ---- API Contact Us Page for template --
   - page.title
   - page.cover_image
-  - page.url_embedded_maps
+  - page.html_embedded_maps
   - page.add_hits && page.hits
 
 form_fields: 

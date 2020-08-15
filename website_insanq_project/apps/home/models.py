@@ -1,13 +1,12 @@
 from coderedcms.models import CoderedWebPage
 from django.db import models
 from django.utils.translation import gettext_lazy as _
-from modelcluster.fields import ParentalKey
 from wagtail.admin.edit_handlers import (
-    InlinePanel,
     ObjectList,
     StreamFieldPanel,
     TabbedInterface,
     MultiFieldPanel,
+    FieldPanel,
 )
 from wagtail.core import blocks
 from wagtail.core.fields import StreamField
@@ -16,12 +15,11 @@ from wagtail.images.blocks import ImageChooserBlock
 from wagtail.images.edit_handlers import ImageChooserPanel
 from wagtail.utils.decorators import cached_classmethod
 from wagtail.core.blocks import PageChooserBlock
-
 from website_insanq_project.apps.website.models import ReadOnlyPanel
 
 
 class LayananBlock(blocks.StructBlock):
-    title = blocks.CharBlock()
+    title = blocks.CharBlock(max_length=255)
     content = blocks.RichTextBlock()
     thumbnail = ImageChooserBlock()
     related_page = PageChooserBlock(required=False)
@@ -46,8 +44,24 @@ class HomePage(CoderedWebPage):
     body_content_panels = []
     # section layanan
     section_layanan = StreamField([("Layanan", LayananBlock())], blank=True)
+    home_company_name = models.CharField(max_length=255, blank=True)
+    home_description = models.CharField(max_length=511, blank=True)
+    home_image = models.ForeignKey(
+        "wagtailimages.Image",
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name="+",
+    )
     content_panels = Page.content_panels + [
-        InlinePanel("main_images", label="Main Images"),
+        MultiFieldPanel(
+            [
+                FieldPanel("home_company_name"),
+                FieldPanel("home_description"),
+                ImageChooserPanel("home_image"),
+            ],
+            _("Main Home"),
+        ),
         StreamFieldPanel("section_layanan"),
         MultiFieldPanel(
             [ReadOnlyPanel("hits", heading="Hits"),], _("Publication Info"),
@@ -86,8 +100,8 @@ class HomePage(CoderedWebPage):
 
 
 class HomePageGalleryImage(Orderable):
-    page = ParentalKey(HomePage, on_delete=models.CASCADE, related_name="main_images")
     image = models.ForeignKey(
         "wagtailimages.Image", on_delete=models.CASCADE, related_name="+"
     )
     panels = [ImageChooserPanel("image")]
+

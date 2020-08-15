@@ -1,10 +1,12 @@
 {% load static coderedcms_tags i18n wagtailcore_tags wagtailimages_tags wagtailsettings_tags wagtailuserbar %}
+{% load get_first_navbar %}
+{% get_first_navbar as navbar %}
 
 <div class="bg-navbar" id="bg-navbar"></div>
 <!-- Brand -->
 <div class="container-fluid content-width align-items-md-start">
     {% if settings.coderedcms.LayoutSettings.logo %}
-        <a href="#" target="_self">
+        <a href="/" target="_self">
             <div class="kontainer-logo-navbar align-items-center" id="kontainer-logo">
                 <div class="vertical-center">
                     {% image settings.coderedcms.LayoutSettings.logo original as logo_image %}
@@ -22,38 +24,22 @@
     <!-- Navbar links -->
     <div class="collapse navbar-collapse" id="collapsibleNavbar">
         <ul class="navbar-nav ml-auto text-right">
-            <li class="nav-item dropdown">
-                <a class="nav-link  dropdown-toggle" href="/tentang-kami" data-toggle="dropdown">Tentang Kami</a>
-                <ul class="dropdown-menu">
-                    <li><a class="dropdown-item" href="/tentang-kami/profil-insan-q">Profil Insan-Q</a></li>
-                    <li><a class="dropdown-item" href="/tentang-kami/profil-psikolog">Profil Psikolog</a></li>
-                </ul>
-            </li>
-            <li class="nav-item dropdown">
-                <a class="nav-link  dropdown-toggle" href="/layanan" data-toggle="dropdown">Layanan</a>
-                <ul class="dropdown-menu">
-                    <li><a class="dropdown-item" href="/layanan/konseling">Konseling</a></li>
-                    <li><a class="dropdown-item" href="/layanan/test-psikologi">Test Psikologi</a></li>
-                    <li><a class="dropdown-item" href="/layanan/seminar-training">Seminar &amp; Training</a></li>
-                    <li><a class="dropdown-item" href="/layanan/layanan-lain">Layanan Lain</a></li>
-                </ul>
-            </li>
-            <li class="nav-item dropdown">
-                <a class="nav-link  dropdown-toggle" href="./media" data-toggle="dropdown">Media</a>
-                <ul class="dropdown-menu">
-                    <li><a class="dropdown-item" href="./artikel">Artikel</a></li>
-                    <li><a class="dropdown-item" href="./video">Video</a></li>
-                </ul>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="./pencarian">Pencarian</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="./kontak">Kontak</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="./daftar">Daftar</a>
-            </li>
+            {% for link in navbar.navigation_links %}
+                {% if link.block_type == "NonDropdown" %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ link.page.url }}">{{ link.display_text }}</a>
+                    </li>
+                {% else %}
+                    <li class="nav-item dropdown">
+                        <a class="nav-link  dropdown-toggle" href="#" data-toggle="dropdown">{{ link.display_text }}</a>
+                        <ul class="dropdown-menu">
+                            {% for sub_link in link.sub_links %}
+                                <li><a class="dropdown-item" href="{{ sub_link.page.url }}">{{ sub_link.display_text }}</a></li>
+                            {% endfor %}
+                        </ul>
+                    </li>
+                {% endif %}
+            {% endfor %}
         </ul>
     </div>
 </div>

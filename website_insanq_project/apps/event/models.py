@@ -52,7 +52,7 @@ class EventPage(CoderedFormPage):
         self.save()
         return ""
 
-    template = "coderedcms/pages/form_page.html"
+    template = "event/event_page.html"
 
     body_content_panels = (
         [
@@ -258,8 +258,7 @@ class EventIndexPage(CoderedWebPage):
 
         return TabbedInterface(panels).bind_to(model=cls)
 
-    # template = "coderedcms/pages/form_index_page.html"
-    template = "coderedcms/pages/article_index_page.html"
+    template = "event/event_index_page.html"
 
     index_show_subpages_default = True
     index_order_by_default = "title"

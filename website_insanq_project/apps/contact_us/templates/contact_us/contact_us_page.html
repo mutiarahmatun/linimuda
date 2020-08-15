@@ -1,0 +1,160 @@
+{% extends 'base.html' %}
+
+{% load static coderedcms_tags i18n wagtailcore_tags wagtailimages_tags wagtailsettings_tags wagtailuserbar %}
+
+{% block description %}{{self.get_description}}{% endblock %}
+{% block html_seo_extra %}
+{% if self.get_author_name %}<meta name="author" content="{{self.get_author_name}}" />{% endif %}
+<meta name="created" content="{{self.get_pub_date|date:'c'}}" />
+<meta name="revised" content="{{self.last_published_at|date:'c'}}" />
+{% comment %} {% if settings.coderedcms.SeoSettings.amp_pages %}
+<link rel="amphtml" href="{{self.get_full_url}}?amp">
+{% endif %} {% endcomment %}
+{% endblock %}
+
+{% block sidebar %}
+    {% comment %} {% include 'sidebar_share.html' %} {% endcomment %}
+{% endblock %}
+
+{% if settings.coderedcms.SeoSettings.og_meta %}
+    {% block og_description %}{{self.get_description}}{% endblock %}
+    {% block og_type %}article{% endblock %}
+    {% block og_seo_extra %}
+        <meta property="og:article:published_time" content="{{self.get_pub_date}}" />
+        <meta property="og:article:modified_time" content="{{self.last_published_at}}" />
+        {% if self.author_display %}
+        <meta property="og:article:author" content="{{self.author_display}}" />
+        {% elif self.author %}
+        <meta property="og:article:author:first_name" content="{{self.author.first_name}}" />
+        <meta property="og:article:author:last_name" content="{{self.author.last_name}}" />
+        {% endif %}
+    {% endblock %}
+{% endif %}
+
+{% if settings.coderedcms.SeoSettings.twitter_meta %}
+    {% block twitter_card %}{% if self.cover_image %}summary_large_image{% else %}{{block.super}}{% endif %}{% endblock %}
+    {% block twitter_seo_extra %}
+        {% if self.caption %}
+        <meta name="twitter:description" content="{{ self.caption }}">
+        {% endif %}
+        {% if self.author.twitter %}
+            <meta name="twitter:creator" content="{{self.author.twitter}}" />
+        {% endif %}
+    {% endblock %}
+{% endif %}
+
+{% block isi_page %}
+    <div class="section-fluid gray-text">
+        {% include 'navbar-primary.html' %}
+        <div class="navbar-space"></div>
+    </div>
+    <div class="section-fluid gray-text">
+        <div class="content-width">
+            <div class="section-kontainer">
+                <div class="content-kontainer warna-teks-primary-dark">
+                    <div class="align-items-center text-center mar-auto">
+                        <div class="d-inline-block">
+                            <h2>{{ page.title }}</h2>
+                            <div class="underline-short ul-primary ul-normal mar-auto"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="pad-horizontal-sm pad-vertical d-flex">
+                    <div class="img-md mar-auto">
+                        {% if self.cover_image %}
+                            {% image self.cover_image max-1600x900 as cover_image %}
+                            <img src="{{cover_image.url}}" class="w-100" />
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="content-kontainer">
+                    <div class="artikel-konten mar-auto par-max-width small-br">
+                        <p>
+                            {% if settings.website.Profile.company_name %}
+                                {{settings.website.Profile.company_name}}
+                                <br>
+                            {% endif %}
+
+                            {% if settings.website.Profile.address %}
+                                {{ settings.website.Profile.address }}
+                                <br>
+                            {% endif %}
+                        </p>
+                        <p class="teks-footer">
+                            {% if settings.website.Profile.telephone_number %}
+                                <span class="fa fa-phone px-2"></span> {{settings.website.Profile.telephone_number}}
+                                <br>
+                            {% endif %}
+                        
+
+                            {% if settings.website.Profile.handphone_number_1 %}
+                                <span class="fa fa-mobile px-2"></span> +{{settings.website.Profile.handphone_number_1}}
+                                <br>
+                            {% endif %}
+
+                            {% if settings.website.Profile.handphone_number_2 %}
+                                <span class="fa fa-mobile px-2"></span> +{{settings.website.Profile.handphone_number_2}}
+                                <br>
+                            {% endif %}
+                        </p>
+                    </div>
+                </div>
+                <div class="content-kontainer">
+                    <div class="artikel-konten mar-auto par-max-width small-br">
+                        <div class="fill-space-kontainer">
+                            <div class="py-4 pr-4 warna-teks-secondary">
+                                <h4>Kirim Pesan</h4>
+                            </div>
+                            <div class="fill-space">
+                                <div class="underline-short ul-secondary-light ul-thin mar-auto"></div>
+                            </div>
+                        </div>
+                        <form class="" action="./terima-kasih/" method="post">
+                            <div class="form-group">
+                                <label for="inputNama">Nama</label>
+                                <input type="text" class="form-control" id="inputNama" placeholder="Nama" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="inputEmail">Alamat Email</label>
+                                <input type="email" class="form-control" id="inputEmail" placeholder="Alamat Email" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="inputSubjek">Subjek</label>
+                                <input type="text" class="form-control" id="inputSubjek" placeholder="Subjek" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="inputPesan">Isi Pesan</label>
+                                <textarea class="form-control" id="inputPesan" rows="6" required></textarea>
+                            </div>
+                            <div class="py-4 d-flex justify-content-end">
+                                <button type="submit" class="btn btn-secondary">Kirim pesan</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                {% if page.html_embedded_maps %}
+                    <div class="content-kontainer">
+                        <div class="mar-auto par-max-width">
+                            <div class="fill-space-kontainer">
+                                <div class="py-4 pr-4 warna-teks-secondary">
+                                    <h4>Lokasi {{ settings.website.Profile.company_name }}</h4>
+                                </div>
+                                <div class="fill-space">
+                                    <div class="underline-short ul-secondary-light ul-thin mar-auto"></div>
+                                </div>
+                            </div>
+                            <div class="ratio-1-1">
+                                <div class="fill-ratio">
+                                    <div class="hw-override">
+                                        <!-- LINK VIDEO DI SINI -->
+                                        {{ page.html_embedded_maps|safe }}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% endblock %}
