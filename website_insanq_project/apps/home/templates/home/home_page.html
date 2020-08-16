@@ -32,45 +32,42 @@
                         </div>
                     </div>
                 </div>
-                {% for LAYANAN in SEMUALAYANAN %}
+                {% for layanan in page.section_layanan %}
                     {% cycle 'odd' 'even' %}
                     {% if cycle == 'odd' %}
                         <div class="row content-kontainer warna-teks-primary-dark pad-vertical">
                             <div class="col-md-6 order-2 order-md-1">
-                                <a href="">
-                                    <h3>Konseling Individu &amp; Kelompok</h3>
+                                <a href="{{ layanan.value.related_page.url }}">
+                                    <h3>{{ layanan.value.title }}</h3>
                                 </a>
-                                <p class="deskripsi">
-                                    Program layanan konsultasi dengan pembahasan dan
-                                    pengentasan permasalahan yang dialami melalui dinamika
-                                    kelompok maupun individu.<br>
-                                    Contoh kegiatan: konseling
-                                    keluarga, teamwork, pernikahan, perkembangan anak
-                                    dan remaja.
-                                </p>
+                                <div class="deskripsi">
+                                    {{ layanan.value.content|richtext }}
+                                </div>
                             </div>
                             <div class="col-md-6 order-1 order-md-2">
                                 <div class="img-placeholder">
-
+                                    {% image layanan.value.thumbnail max-1200x1200 as main_image %}
+                                    <img src="{{main_image.url}}" class="w-100" />
                                 </div>
                             </div>
                         </div>
                     {% else %}
                         <div class="row content-kontainer warna-teks-primary-dark pad-vertical">
                             <div class="col-md-6 order-2">
-                                <a href="">
+                                <a href="{{ layanan.value.related_page.url }}">
                                     <h3>Tes Psikologi Siswa, Minat Bakat &amp; IQ</h3>
                                 </a>
-                                <p class="deskripsi">
+                                <div class="deskripsi">
                                     Program layanan psikotes yang dapat membantu para guru
                                     mengetahui potensi diri anak didiknya sesuai minat
                                     bakat, sehingga dapat menyesuaikan diri secara baik
                                     dalam bidang pendidikan.
-                                </p>
+                                </div>
                             </div>
-                            <div class="col-md-6 order-1">
+                            <div class="col-md-6 order-1 order-md-2">
                                 <div class="img-placeholder">
-
+                                    {% image layanan.value.thumbnail max-1200x1200 as main_image %}
+                                    <img src="{{main_image.url}}" class="w-100" />
                                 </div>
                             </div>
                         </div>
@@ -89,23 +86,26 @@
                     </div>
                 </div>
                 <div class="row content-kontainer">
-                    {% for ARTIKEL in TIGAARTIKEL %}
+                    {% for article in recent_articles %}
                         <div class="col-md-4">
                             <a href="/artikel/LINKARTIKEL">
                                 <div class="artikel-card mar-auto">
                                     <div class="ratio-1-1">
                                         <div class="fill-ratio">
-                                            <div class="fill-kontainer-tall">
-                                                <img src="https://insanq.co.id/images/TETAP_EFEKTIF_DI_TENGAH_PANDEMI.jpg" alt="">
-                                            </div>
+                                            {% if article.main_image %}
+                                                <div class="fill-kontainer-tall">
+                                                    {% image article.main_image max-900x900 as main_image %}
+                                                    <img src="{{main_image.url}}" />
+                                                </div>
+                                            {% endif %}
                                         </div>
                                     </div>
                                     <div class="artikel-teksboks">
                                         <div class="artikel-tanggal">
-                                            <p>1 Juli 2020</p>
+                                            <p>{{ article.get_pub_date }}</p>
                                         </div>
                                         <div class="artikel-judul">
-                                            <h4>Tetap Efektif di Tengah Pandemi</h4>
+                                            <h4>{{ article.title }}</h4>
                                         </div>
                                     </div>
                                 </div>

@@ -9,7 +9,6 @@ from wagtail.admin.edit_handlers import (
     FieldPanel,
     MultiFieldPanel,
     InlinePanel,
-    PageChooserPanel,
     TabbedInterface,
     ObjectList,
     FieldRowPanel,
@@ -53,6 +52,7 @@ class EventPage(CoderedFormPage):
         return ""
 
     template = "event/event_page.html"
+    landing_page_template = "thank_you_page.html"
 
     body_content_panels = (
         [
@@ -100,7 +100,6 @@ class EventPage(CoderedFormPage):
         + [
             MultiFieldPanel(
                 [
-                    PageChooserPanel("thank_you_page"),
                     FieldPanel("save_to_database"),
                     FieldPanel("to_address"),
                     FieldPanel("reply_address"),

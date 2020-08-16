@@ -9,7 +9,6 @@ from wagtail.admin.edit_handlers import (
     InlinePanel,
     MultiFieldPanel,
     ObjectList,
-    PageChooserPanel,
     TabbedInterface,
 )
 from wagtail.contrib.forms.edit_handlers import FormSubmissionsPanel
@@ -36,6 +35,7 @@ class ContactUsPage(CoderedFormPage):
         return ""
 
     template = "contact_us/contact_us_page.html"
+    landing_page_template = "thank_you_page.html"
 
     body_content_panels = (
         [FieldPanel("html_embedded_maps")]
@@ -43,7 +43,6 @@ class ContactUsPage(CoderedFormPage):
         + [
             MultiFieldPanel(
                 [
-                    PageChooserPanel("thank_you_page"),
                     FieldPanel("save_to_database"),
                     FieldPanel("to_address"),
                     FieldPanel("reply_address"),

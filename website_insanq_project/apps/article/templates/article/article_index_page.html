@@ -1,53 +1,175 @@
-{% extends "website/base.html" %}
+{% extends "base.html" %}
 
 {% load wagtailcore_tags wagtailimages_tags coderedcms_tags %}
 
-{% block index_filters %}{% endblock %}
-
-{% block index_content %}
-{% comment %} {% if page.index_show_subpages %}
-    <div class="container">
-        {% if page.index_classifiers.exists %}
-        <div class="row">
-            <div class="col-md-9">
+{% if settings.coderedcms.SeoSettings.og_meta %}
+    {% block og_description %}{{self.get_description}}{% endblock %}
+    {% block og_type %}article{% endblock %}
+    {% block og_seo_extra %}
+        <meta property="og:article:published_time" content="{{self.get_pub_date}}" />
+        <meta property="og:article:modified_time" content="{{self.last_published_at}}" />
+        {% if self.author_display %}
+        <meta property="og:article:author" content="{{self.author_display}}" />
+        {% elif self.author %}
+        <meta property="og:article:author:first_name" content="{{self.author.first_name}}" />
+        <meta property="og:article:author:last_name" content="{{self.author.last_name}}" />
         {% endif %}
+    {% endblock %}
+{% endif %}
 
-        {% for article in index_paginated %}
-        <div class="row">
-            {% if self.show_images %}
-            <div class="col-md">
-                <a href="{% pageurl article %}" title="{{article.title}}">
-                {% if article.cover_image %}
-                    {% image article.specific.cover_image fill-1000x500 as cover_image %}
-                    <img src="{{cover_image.url}}" class="w-100" alt="{{article.title}}" />
-                {% else %}
-                    <p class="p-5 lead text-center bg-secondary text-white-50">{{article.title}}</p>
-                {% endif %}
-                </a>
-            </div>
-            {% endif %}
-            <div class="col-md">
-                <h3><a href="{% pageurl article %}">{{article.title}}</a></h3>
-                {% if self.show_captions and article.specific.caption %}<p class="lead">{{article.specific.caption}}</p>{% endif %}
-                {% if self.show_meta %}<p>{{article.specific.get_pub_date}}{% if article.specific.get_author_name %} &bull; {{article.specific.get_author_name}}{% endif %}</p>{% endif %}
-                {% if self.show_preview_text %}<p>{{article.specific.body_preview}}</p>{% endif %}
+{% if settings.coderedcms.SeoSettings.twitter_meta %}
+    {% block twitter_card %}{% if self.main_image %}summary_large_image{% else %}{{block.super}}{% endif %}{% endblock %}
+    {% block twitter_seo_extra %}
+        {% if self.caption %}
+        <meta name="twitter:description" content="{{ self.caption }}">
+        {% endif %}
+        {% if self.author.twitter %}
+            <meta name="twitter:creator" content="{{self.author.twitter}}" />
+        {% endif %}
+    {% endblock %}
+{% endif %}
+
+{% block isi_page %}
+    <div class="section-fluid gray-text">
+        {% include 'navbar-primary.html' %}
+        <div class="navbar-space"></div>
+    </div>
+    <div class="section-fluid gray-text">
+        <div class="content-width">
+
+            <div class="section-kontainer">
+                <div class="content-kontainer">
+                    <div class="warna-teks-secondary d-inline-block">
+                        <h2>Artikel</h2>
+                        <div class="underline-long ul-secondary-light ul-normal"></div>
+                    </div>
+                </div>
+                <div class="content-kontainer">
+                    <div class="form-group has-search searchbox">
+                        <span class="fa fa-search fa-lg form-control-feedback"></span>
+                        <input type="text" class="form-control" id="search-artikel" placeholder="Cari Artikel">
+                    </div>
+                </div>
+                <div class="content-kontainer">
+                    <div class="d-flex flex-wrap justify-content-center white-text">
+
+                    {% comment %} {% for ARTIKEL in SEPULUH ARTIKEL %}
+
+                        <div class="px-4 ---">
+                            <a href="./LINKARTIKEL">
+                                <div class="artikel-card align-self-start mx-auto">
+                                    <div class="ratio-1-1">
+                                        <div class="fill-ratio">
+                                            <div class="fill-kontainer-tall">
+                                                <!-- GAMBAR ARTIKEL 1 DI SINI -->
+                                                <img src="https://insanq.co.id/images/TETAP_EFEKTIF_DI_TENGAH_PANDEMI.jpg" alt="">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="artikel-teksboks">
+                                        <div class="artikel-tanggal">
+                                            <!-- TANGGAL ARTIKEL 1 DI SINI -->
+                                            <p>1 Juli 2020</p>
+                                        </div>
+                                        <div class="artikel-judul">
+                                            <!-- JUDUL ARTIKEL 1 DI SINI -->
+                                            <h5>Tetap Efektif di Tengah Pandemi</h5>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                            <div class="p-4"></div>
+                        </div>
+                    
+                    {% endfor %} {% endcomment %}
+
+                    </div>
+
+                    <div class="list-page-num text-center mar-vertical-sm">
+
+                        <a href="./">
+                            <div class="page-num-block disabled">
+                                <div class="vertical-center">
+                                    <div class="mar-auto">
+                                        <span class="fa fa-angle-left fa-sm"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                        <div class="page-num-block current-page">
+                            <div class="vertical-center">
+                                <div class="mar-auto">
+                                    1
+                                </div>
+                            </div>
+                        </div>
+                        <a href="./LINKLISTARTIKEL?page=2">
+                            <div class="page-num-block">
+                                <div class="vertical-center">
+                                    <div class="mar-auto">
+                                            2
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                        <a href="./LINKLISTARTIKEL?page=3">
+                            <div class="page-num-block">
+                                <div class="vertical-center">
+                                    <div class="mar-auto">
+                                            3
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                        <a href="./LINKLISTARTIKEL?page=4">
+                            <div class="page-num-block">
+                                <div class="vertical-center">
+                                    <div class="mar-auto">
+                                            4
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                        <a href="./LINKLISTARTIKEL?page=5">
+                            <div class="page-num-block">
+                                <div class="vertical-center">
+                                    <div class="mar-auto">
+                                            5
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                        <a href="./LINKLISTARTIKEL?page=6">
+                            <div class="page-num-block">
+                                <div class="vertical-center">
+                                    <div class="mar-auto">
+                                            6
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                        <a href="./LINKLISTARTIKEL?page=7">
+                            <div class="page-num-block">
+                                <div class="vertical-center">
+                                    <div class="mar-auto">
+                                            7
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                        <a href="./LINKLISTARTIKEL?page=2">
+                            <div class="page-num-block">
+                                <div class="vertical-center">
+                                    <div class="mar-auto">
+                                        <span class="fa fa-angle-right fa-sm"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+
+                </div>
             </div>
         </div>
-        {% if not forloop.last %}
-        <hr>
-        {% endif %}
-        {% endfor %}
-
-        {% if page.index_classifiers.exists %}
-            </div>
-            <div class="col-md-3">
-                {% include "coderedcms/includes/classifier_nav.html" with navclass="nav-pills flex-column" %}
-            </div>
-        </div>
-        {% endif %}
-
-    {% include "coderedcms/includes/pagination.html" with items=index_paginated %}
-
-</div>
-{% endif %} {% endcomment %}
+    </div>
 {% endblock %}

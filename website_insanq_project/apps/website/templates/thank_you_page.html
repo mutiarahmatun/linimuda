@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% load static coderedcms_tags i18n wagtailcore_tags wagtailimages_tags wagtailsettings_tags wagtailuserbar bootstrap4 %}
+
+{% block isi_page %}
+    <div class="section-fluid gray-text">
+        {% include 'navbar-primary.html' %}
+        <div class="navbar-space navbar-space d-block d-md-none"></div>
+        <div class="content-width full-height">
+            <div class="vertical-center">
+                <div class="mar-auto">
+                    <div class="content-kontainer warna-teks-primary-dark text-center mar-auto">
+                        <h2>Terima Kasih</h2>
+                        <div class="artikel-konten mar-auto par-max-width">
+                            <p>
+                                Form anda telah terkirim.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

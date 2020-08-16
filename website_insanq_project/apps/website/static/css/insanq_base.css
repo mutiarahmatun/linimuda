@@ -255,6 +255,13 @@ p.deskripsi {
   padding: 0.5rem 0rem;
 }
 
+deskripsi > p {
+  font-size: 1.75rem;
+  font-weight: 400;
+  letter-spacing: 0.1rem;
+  padding: 0.5rem 0rem;
+}
+
 .underline-exact {
   height: 0px;
   width: 100%;
@@ -550,6 +557,7 @@ br {
 .kontainer-logo-footer img {
   width: 200px;
   max-width: 30vw;
+  max-height: 7.5rem;
 }
 
 .kontainer-logo-navbar {
@@ -755,6 +763,11 @@ br {
   padding-left: 4rem;
 }
 
+.form-text.text-muted {
+  font-size: 1.2rem;
+  color: var(--warna-secondary) !important;
+}
+
 .list-page-num {
   display: flex;
   justify-content: center;
@@ -854,6 +867,18 @@ br {
   color: white;
   background-color: var(--warna-primary-dark) !important;
   border: none;
+}
+
+.error-kontainer {
+  transform: rotate(-8deg);
+}
+
+.error-kontainer h1 {
+  font-size: 12rem;
+}
+
+.error-kontainer p {
+  font-size: 2rem;
 }
 
 .top-bigger {

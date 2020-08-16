@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 
-{% load static coderedcms_tags i18n wagtailcore_tags wagtailimages_tags wagtailsettings_tags wagtailuserbar %}
+{% load static coderedcms_tags i18n wagtailcore_tags wagtailimages_tags wagtailsettings_tags wagtailuserbar bootstrap4 %}
 
 {% block description %}{{self.get_description}}{% endblock %}
 {% block html_seo_extra %}
@@ -32,7 +32,7 @@
 {% endif %}
 
 {% if settings.coderedcms.SeoSettings.twitter_meta %}
-    {% block twitter_card %}{% if self.cover_image %}summary_large_image{% else %}{{block.super}}{% endif %}{% endblock %}
+    {% block twitter_card %}{% if self.main_image %}summary_large_image{% else %}{{block.super}}{% endif %}{% endblock %}
     {% block twitter_seo_extra %}
         {% if self.caption %}
         <meta name="twitter:description" content="{{ self.caption }}">
@@ -61,9 +61,9 @@
                 </div>
                 <div class="pad-horizontal-sm pad-vertical d-flex">
                     <div class="img-md mar-auto">
-                        {% if self.cover_image %}
-                            {% image self.cover_image max-1600x900 as cover_image %}
-                            <img src="{{cover_image.url}}" class="w-100" />
+                        {% if self.main_image %}
+                            {% image self.main_image max-1600x900 as main_image %}
+                            <img src="{{main_image.url}}" class="w-100" />
                         {% endif %}
                     </div>
                 </div>
@@ -109,23 +109,9 @@
                                 <div class="underline-short ul-secondary-light ul-thin mar-auto"></div>
                             </div>
                         </div>
-                        <form class="" action="./terima-kasih/" method="post">
-                            <div class="form-group">
-                                <label for="inputNama">Nama</label>
-                                <input type="text" class="form-control" id="inputNama" placeholder="Nama" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="inputEmail">Alamat Email</label>
-                                <input type="email" class="form-control" id="inputEmail" placeholder="Alamat Email" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="inputSubjek">Subjek</label>
-                                <input type="text" class="form-control" id="inputSubjek" placeholder="Subjek" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="inputPesan">Isi Pesan</label>
-                                <textarea class="form-control" id="inputPesan" rows="6" required></textarea>
-                            </div>
+                        <form class="" action ="{% pageurl self %}" method="POST" {% if form|is_file_form %}enctype="multipart/form-data"{% endif %}>
+                            {% csrf_token %}
+                            {% bootstrap_form form layout='vertical' %}
                             <div class="py-4 d-flex justify-content-end">
                                 <button type="submit" class="btn btn-secondary">Kirim pesan</button>
                             </div>

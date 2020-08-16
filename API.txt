@@ -46,6 +46,35 @@ Open All External Link in New Tab: settings.coderedcms.GeneralSettings.external_
 ----- API Video for template --
 - page.link_thumbnail_embed_video
 
+----- API Search --
+- URL ?s=haha&p=1 (sesarch and page)
+
+- results_paginated.paginator.num_pages (banyaknya page)
+- results_paginated.number (sekarang page berapa)
+Query
+  {% if not form.s.value %}
+      {% trans 'Search' %}
+  {% else %}
+      {% trans 'Search for' %} “{{form.s.value}}”
+  {%endif%}
+- <form action="{% url 'codered_search' %}" method="GET">
+- {% bootstrap_form form size='large|medium|small (pilih)' layout='inline' %}
+- 
+{% if results_paginated.object_list %}
+    {% for page in results_paginated %}
+        {% with page=page.specific %}
+            - page.title
+            - page.cover_image
+            - dll
+        {% endwith %}
+    {% endfor %}
+{% endif %}
+    
+{% else %}
+    {% if form.s.value %}
+      <p>{% trans 'No results found.' %}</p>
+    {% endif %}
+{% endif %}
 
 ---- API Home Page for template --
 cover_images: 
@@ -119,8 +148,9 @@ form_fields:
         {% csrf_token %}
         
     </form>
+  - {% bootstrap_form form layout='vertical' %}
+                OR
   - page.form_fields.all
-  - 
     {% for field in page.get_form_fields %}
       - field.field_type
       - field.label

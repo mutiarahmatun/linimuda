@@ -25,17 +25,15 @@ class VideoPage(CoderedArticlePage):
         ]
 
     # Override to have default today
-    date_display = models.DateField(
-        null=True, blank=True, verbose_name=_("Publish date"), default=date.today
-    )
+    date_display = models.DateField(verbose_name=_("Publish date"), default=date.today)
 
-    link_thumbnail_embed_video = models.URLField(max_length=511, blank=True)
+    link_thumbnail_embed_video = models.URLField(max_length=511)
 
     # Additional attribute
     hits = models.IntegerField(default=0, editable=False)
 
     # Override from streamfield to richtextfield
-    body_text = RichTextField(blank=False, verbose_name=_("body"))
+    body_text = RichTextField(verbose_name=_("body"))
 
     @property
     def body(self):
@@ -61,7 +59,6 @@ class VideoPage(CoderedArticlePage):
         return ""
 
     template = "video/video_page.html"
-    search_template = "coderedcms/pages/article_page.search.html"
 
     # Override to become empty
     layout_panels = []
@@ -80,7 +77,6 @@ class VideoPage(CoderedArticlePage):
             MultiFieldPanel(
                 [
                     FieldPanel("author"),
-                    FieldPanel("author_display"),
                     FieldPanel("date_display"),
                     ReadOnlyPanel("hits", heading="Hits"),
                 ],
@@ -122,7 +118,7 @@ class VideoPage(CoderedArticlePage):
         return TabbedInterface(panels).bind_to(model=cls)
 
     search_fields = CoderedArticlePage.search_fields + [
-        index.SearchField("body", partial_match=True)
+        index.SearchField("body_text", partial_match=True)
     ]
 
     parent_page_types = ["video.VideoIndexPage"]

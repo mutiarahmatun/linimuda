@@ -17,10 +17,10 @@
 {% endblock %}
 
 {% block cover %}
-    {% if self.cover_image %}
+    {% if self.main_image %}
         <div class="fill-kontainer-wide">
-            {% image self.cover_image max-1600x900 as cover_image %}
-            <img src="{{cover_image.url}}" class="w-100" />
+            {% image self.main_image max-1600x900 as main_image %}
+            <img src="{{main_image.url}}" class="w-100" />
         </div>
     {% endif %}
 {% endblock %}

@@ -16,15 +16,24 @@ $(document).ready(function () {
     cekNavbar();
   });
 
-  if ($(".datepicker").length) {
-    $(".datepicker").datepicker({
-      format: "d MM yyyy",
-      maxViewMode: 1,
-      todayBtn: "linked",
-      language: "id",
-      todayHighlight: true,
-    });
-  }
+  $("#searchbox").keypress(function (event) {
+    var keycode = event.keyCode ? event.keyCode : event.which;
+    if (keycode == "13") {
+      history.pushState("", document.title, window.location.pathname);
+      window.location.href =
+        window.location.href + "?s=" + $(this).val() + "&p=1";
+    }
+  });
+
+  // if ($("input[type=date]").length) {
+  //   $("input[type=date]").datepicker({
+  //     format: "d MM yyyy",
+  //     maxViewMode: 1,
+  //     todayBtn: "linked",
+  //     language: "id",
+  //     todayHighlight: true,
+  //   });
+  // }
 
   //Smooth scrolling
   $('a[href*="#"]')

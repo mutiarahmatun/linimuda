@@ -18,7 +18,7 @@
 {% endif %}
 
 {% if settings.coderedcms.SeoSettings.twitter_meta %}
-    {% block twitter_card %}{% if self.cover_image %}summary_large_image{% else %}{{block.super}}{% endif %}{% endblock %}
+    {% block twitter_card %}{% if self.main_image %}summary_large_image{% else %}{{block.super}}{% endif %}{% endblock %}
     {% block twitter_seo_extra %}
         {% if self.caption %}
         <meta name="twitter:description" content="{{ self.caption }}">
@@ -30,48 +30,48 @@
 {% endif %}
 
 {% block isi_page %}
-<div class="section-fluid gray-text">
-    {% include 'navbar-primary.html' %}
-    <div class="navbar-space"></div>
-</div>
-<div class="section-fluid gray-text">
-    <div class="content-width">
-        <div class="row section-kontainer">
-            <div class="col-md-9 artikel-kontainer">
-                <div class="px-5 px-md-0">
-                    <div class="content-kontainer warna-teks-primary-dark">
-                        <div class="fill-space-kontainer">
-                            <div class="artikel-tanggal">
-                                <p>{{ page.get_pub_date }}</p>
-                                <!-- TANGGAL ARTIKEL DI SINI -->
+    <div class="section-fluid gray-text">
+        {% include 'navbar-primary.html' %}
+        <div class="navbar-space"></div>
+    </div>
+    <div class="section-fluid gray-text">
+        <div class="content-width">
+            <div class="row section-kontainer">
+                <div class="col-md-9 artikel-kontainer">
+                    <div class="px-5 px-md-0">
+                        <div class="content-kontainer warna-teks-primary-dark">
+                            <div class="fill-space-kontainer">
+                                <div class="artikel-tanggal">
+                                    <p>{{ page.get_pub_date }}</p>
+                                    <!-- TANGGAL ARTIKEL DI SINI -->
+                                </div>
+                                <div class="fill-space">
+                                    <div class="underline-short ul-primary-light ul-thin mar-auto"></div>
+                                </div>
                             </div>
-                            <div class="fill-space">
-                                <div class="underline-short ul-primary-light ul-thin mar-auto"></div>
+                            <h2>{{ page.title }}</h2>
+                            <!-- JUDUL ARTIKEL DI SINI -->
+                        </div>
+                        <div class="pad-horizontal-sm">
+                            <div class="ratio-16-9">
+                                <div class="fill-ratio">
+                                    {% block cover %}
+                                    {% endblock %}
+                                </div>
                             </div>
                         </div>
-                        <h2>{{ page.title }}</h2>
-                        <!-- JUDUL ARTIKEL DI SINI -->
-                    </div>
-                    <div class="pad-horizontal-sm">
-                        <div class="ratio-16-9">
-                            <div class="fill-ratio">
-                                {% block cover %}
+                        <div class="content-kontainer">
+                            <div class="artikel-konten">
+                                <!-- ISI KONTEN ARTIKEL DI SINI -->
+                                {% block isi_artikel %}
                                 {% endblock %}
                             </div>
                         </div>
                     </div>
-                    <div class="content-kontainer">
-                        <div class="artikel-konten">
-                            <!-- ISI KONTEN ARTIKEL DI SINI -->
-                            {% block isi_artikel %}
-                            {% endblock %}
-                        </div>
-                    </div>
                 </div>
+                {% block other_article %}
+                {% endblock %}
             </div>
-            {% block other_article %}
-            {% endblock %}
         </div>
     </div>
-</div>
 {% endblock %}

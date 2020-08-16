@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 
-{% load static coderedcms_tags i18n wagtailcore_tags wagtailimages_tags wagtailsettings_tags wagtailuserbar %}
+{% load static coderedcms_tags i18n wagtailcore_tags wagtailimages_tags wagtailsettings_tags wagtailuserbar bootstrap4 %}
 
 {% block extra_css %}
     {% include 'datepicker_style.html' %}
@@ -78,8 +78,8 @@
                                 <div class="underline-short ul-secondary-light ul-thin mar-auto"></div>
                             </div>
                         </div>
-                        <form class="" action="./terima-kasih/" method="post">
-                            <div class="form-group">
+                        <form class="" action ="{% pageurl self %}" method="POST" {% if form|is_file_form %}enctype="multipart/form-data"{% endif %}>
+                            {% comment %} <div class="form-group">
                                 <label for="inputNama">Nama</label>
                                 <input type="text" class="form-control" id="inputNama" placeholder="Nama" required>
                             </div>
@@ -97,6 +97,11 @@
                             </div>
                             <div class="py-4 d-flex justify-content-end">
                                 <button type="submit" class="btn btn-secondary">Daftar</button>
+                            </div> {% endcomment %}
+                            {% csrf_token %}
+                            {% bootstrap_form form layout='vertical' %}
+                            <div class="py-4 d-flex justify-content-end">
+                                <button type="submit" class="btn btn-secondary">Kirim pesan</button>
                             </div>
                         </form>
                     </div>

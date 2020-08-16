@@ -28,7 +28,7 @@
 {% endif %}
 
 {% if settings.coderedcms.SeoSettings.twitter_meta %}
-    {% block twitter_card %}{% if self.cover_image %}summary_large_image{% else %}{{block.super}}{% endif %}{% endblock %}
+    {% block twitter_card %}{% if self.main_image %}summary_large_image{% else %}{{block.super}}{% endif %}{% endblock %}
     {% block twitter_seo_extra %}
         {% if self.caption %}
         <meta name="twitter:description" content="{{ self.caption }}">

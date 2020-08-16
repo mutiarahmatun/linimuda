@@ -28,16 +28,17 @@ class ArticlePage(CoderedArticlePage):
             "-first_published_at",
         ]
 
-    # Override to have default today
-    date_display = models.DateField(
-        null=True, blank=True, verbose_name=_("Publish date"), default=date.today
+    main_image = models.ForeignKey(
+        "wagtailimages.Image", null=True, on_delete=models.SET_NULL, related_name="+",
     )
+    # Override to have default today
+    date_display = models.DateField(verbose_name=_("Publish date"), default=date.today)
 
     # Additional attribute
     hits = models.IntegerField(default=0, editable=False)
 
     # Override from streamfield to richtextfield
-    body_text = RichTextField(blank=False, verbose_name=_("body"))
+    body_text = RichTextField(verbose_name=_("body"))
 
     def get_context(self, request):
         context = super().get_context(request)
@@ -82,7 +83,6 @@ class ArticlePage(CoderedArticlePage):
         return ""
 
     template = "article/article_page.html"
-    search_template = "coderedcms/pages/article_page.search.html"
 
     # Override to become empty
     layout_panels = []
@@ -96,12 +96,11 @@ class ArticlePage(CoderedArticlePage):
     # Override with additional hits attribute
     content_panels = (
         Page.content_panels
-        + [ImageChooserPanel("cover_image"),]
+        + [ImageChooserPanel("main_image"),]
         + [
             MultiFieldPanel(
                 [
                     FieldPanel("author"),
-                    FieldPanel("author_display"),
                     FieldPanel("date_display"),
                     ReadOnlyPanel("hits", heading="Hits"),
                 ],
@@ -143,7 +142,7 @@ class ArticlePage(CoderedArticlePage):
         return TabbedInterface(panels).bind_to(model=cls)
 
     search_fields = CoderedArticlePage.search_fields + [
-        index.SearchField("body", partial_match=True)
+        index.SearchField("body_text", partial_match=True)
     ]
 
     # Only allow this page to be created beneath an ArticleIndexPage.
@@ -167,6 +166,7 @@ class ArticleIndexPage(CoderedArticleIndexPage):
 
     def add_hits(self):
         self.hits += 1
+        self._meta.get_field("index_order_by").choices = self.index_order_by_choices
         self.save()
         return ""
 

@@ -76,10 +76,18 @@ class HomePage(CoderedWebPage):
         related_name="+",
     )
     landing_articles = models.ForeignKey(
-        ArticleIndexPage, null=True, on_delete=models.SET_NULL, related_name="+",
+        ArticleIndexPage,
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name="+",
     )
     landing_events = models.ForeignKey(
-        EventIndexPage, null=True, on_delete=models.SET_NULL, related_name="+"
+        EventIndexPage,
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name="+",
     )
 
     content_panels = Page.content_panels + [
@@ -128,11 +136,4 @@ class HomePage(CoderedWebPage):
             )
 
         return TabbedInterface(panels).bind_to(model=cls)
-
-
-class HomePageGalleryImage(Orderable):
-    image = models.ForeignKey(
-        "wagtailimages.Image", on_delete=models.CASCADE, related_name="+"
-    )
-    panels = [ImageChooserPanel("image")]
 
