@@ -1,16 +1,3 @@
-{% extends 'base.html' %}
-
-
-{% load static coderedcms_tags i18n wagtailcore_tags wagtailimages_tags wagtailsettings_tags wagtailuserbar %}
-
-{% block extra_css %}
-    {% include 'datepicker_style.html' %}
-{% endblock %}
-
-{% block extra_js %}
-    {% include 'datepicker_script.html' %}
-{% endblock %}
-
 {% block isi_page %}
     <div class="section-fluid gray-text">
         {% include 'navbar-primary.html' %}
@@ -18,8 +5,8 @@
     </div>
     <div class="section-fluid gray-text">
         <div class="content-width">
-            <div class="section-kontainer">
-                <div class="content-kontainer warna-teks-primary-dark">
+            <div class="section-container">
+                <div class="content-container warna-teks-primary-dark">
                     <div class="align-items-center text-center mar-auto">
                         <div class="d-inline-block">
                             <h2>Daftar Kegiatan</h2>
@@ -27,7 +14,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="content-kontainer">
+                <div class="content-container">
                     <div class="artikel-konten mar-auto par-max-width">
                         <div class="kegiatan-card card-wide m-0">
                             <div class="kegiatan-judul">
@@ -49,7 +36,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="content-kontainer">
+                <div class="content-container">
                     <div class="artikel-konten mar-auto par-max-width">
                         <p>
                             Psikotes menjadi hal yang sudah umum dan lumrah
@@ -68,9 +55,9 @@
                         </p>
                     </div>
                 </div>
-                <div class="content-kontainer">
+                <div class="content-container">
                     <div class="artikel-konten mar-auto par-max-width small-br">
-                        <div class="fill-space-kontainer">
+                        <div class="fill-space-container">
                             <div class="py-4 pr-4 warna-teks-secondary">
                                 <h4>Daftar</h4>
                             </div>
@@ -93,7 +80,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="inputTanggal">Tanggal</label>
-                                <input type="text" class="form-control datepicker" id="inputTanggal" required>
+                                <input type="date" class="form-control datepicker" id="inputTanggal" required>
                             </div>
                             <div class="py-4 d-flex justify-content-end">
                                 <button type="submit" class="btn btn-secondary">Daftar</button>

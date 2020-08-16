@@ -688,6 +688,17 @@ br {
   box-shadow: 0 0 1rem 0 rgba(0, 0, 0, 0.2);
 }
 
+.dropdown-menu.datepicker {
+  min-width: 10rem;
+  padding: 0;
+  margin: 0.5rem 0 0;
+  background-color: var(--warna-bg);
+  background-clip: padding-box;
+  border: none;
+  border-radius: 0;
+  box-shadow: 0 0 1rem 0 rgba(0, 0, 0, 0.2);
+}
+
 @media all and (min-width: 992px) {
   .navbar .nav-item .dropdown-menu {
     display: block;

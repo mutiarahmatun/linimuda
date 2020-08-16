@@ -7,6 +7,7 @@ from wagtail.admin.edit_handlers import (
     TabbedInterface,
     MultiFieldPanel,
     FieldPanel,
+    PageChooserPanel,
 )
 from wagtail.core import blocks
 from wagtail.core.fields import StreamField
@@ -16,6 +17,8 @@ from wagtail.images.edit_handlers import ImageChooserPanel
 from wagtail.utils.decorators import cached_classmethod
 from wagtail.core.blocks import PageChooserBlock
 from website_insanq_project.apps.website.models import ReadOnlyPanel
+from website_insanq_project.apps.article.models import ArticleIndexPage, ArticlePage
+from website_insanq_project.apps.event.models import EventIndexPage, EventPage
 
 
 class LayananBlock(blocks.StructBlock):
@@ -36,6 +39,25 @@ class HomePage(CoderedWebPage):
         self.save()
         return ""
 
+    def get_context(self, request):
+        context = super().get_context(request)
+        context["recent_articles"] = []
+        context["recent_events"] = []
+        try:
+            context["recent_articles"] = (
+                ArticlePage.objects.child_of(self.landing_articles)
+                .live()
+                .order_by(self.landing_articles.index_order_by)[:3]
+            )
+            context["recent_events"] = (
+                EventPage.objects.child_of(self.landing_events)
+                .live()
+                .order_by(self.landing_events.index_order_by)[:4]
+            )
+        except Exception as e:
+            print(e)
+        return context
+
     ###############
     # Panels
     ###############
@@ -53,6 +75,13 @@ class HomePage(CoderedWebPage):
         on_delete=models.SET_NULL,
         related_name="+",
     )
+    landing_articles = models.ForeignKey(
+        ArticleIndexPage, null=True, on_delete=models.SET_NULL, related_name="+",
+    )
+    landing_events = models.ForeignKey(
+        EventIndexPage, null=True, on_delete=models.SET_NULL, related_name="+"
+    )
+
     content_panels = Page.content_panels + [
         MultiFieldPanel(
             [
@@ -63,6 +92,8 @@ class HomePage(CoderedWebPage):
             _("Main Home"),
         ),
         StreamFieldPanel("section_layanan"),
+        PageChooserPanel("landing_articles"),
+        PageChooserPanel("landing_events"),
         MultiFieldPanel(
             [ReadOnlyPanel("hits", heading="Hits"),], _("Publication Info"),
         ),

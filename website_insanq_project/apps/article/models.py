@@ -14,7 +14,6 @@ from wagtail.core.models import Page
 from wagtail.images.edit_handlers import ImageChooserPanel
 from wagtail.search import index
 from wagtail.utils.decorators import cached_classmethod
-
 from website_insanq_project.apps.website.models import ReadOnlyPanel
 
 
@@ -39,6 +38,25 @@ class ArticlePage(CoderedArticlePage):
 
     # Override from streamfield to richtextfield
     body_text = RichTextField(blank=False, verbose_name=_("body"))
+
+    def get_context(self, request):
+        context = super().get_context(request)
+        context["recent_articles"] = []
+        try:
+            parent_article = ArticleIndexPage.objects.parent_of(self)
+            plus_one_recent_articles = (
+                ArticlePage.objects.child_of(parent_article)
+                .live()
+                .order_by(parent_article.index_order_by)[:4]
+            )
+            for item in plus_one_recent_articles:
+                if item.id != self.id:
+                    context["recent_article"].append(item)
+                if len(context["recent_article"]) >= 3:
+                    break
+        except Exception as e:
+            print(e)
+        return context
 
     @property
     def body(self):
@@ -143,6 +161,9 @@ class ArticleIndexPage(CoderedArticleIndexPage):
 
     hits = models.IntegerField(default=0, editable=False)
     body = None
+    is_company_articles = models.BooleanField(
+        default=False, verbose_name="Is this company articles?"
+    )
 
     def add_hits(self):
         self.hits += 1
@@ -162,6 +183,7 @@ class ArticleIndexPage(CoderedArticleIndexPage):
 
     # Override with additional hits attribute
     content_panels = Page.content_panels + [
+        FieldPanel("is_company_articles"),
         MultiFieldPanel(
             [ReadOnlyPanel("hits", heading="Hits"),], _("Publication Info"),
         ),

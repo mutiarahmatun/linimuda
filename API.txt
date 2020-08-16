@@ -25,16 +25,23 @@ Open All External Link in New Tab: settings.coderedcms.GeneralSettings.external_
 # YANG PANEL SEO BELUM DI LISTING
 
 ---- Navbar --
-- {% get_first_navbar as navbar %}
+- 
+{% load get_first_navbar %}
+{% get_first_navbar as navbar %}
+
 {% for link in navbar.navigation_links %}
-{% if link.block_type == "NonDropdown"%}
-link.display_text
-link.page.url
-{% if link.block_type == "Dropdown"%}
-link.display_text
-{% for sub_link in link.sub_links%}
-sub_link.display_text
-sub_link.page.url
+  {% if link.block_type == "NonDropdown"%}
+    link.value.display_text
+    link.value.page.url
+  {% endif %}
+  {% if link.block_retype == "Dropdown"%}
+    link.value.display_text
+    {% for sub_link in link.value.sub_links%}
+      sub_link.value.display_text
+      sub_link.value.page.url
+    {% endfor %}
+  {% endif %}
+{% endfor %}
 
 ----- API Video for template --
 - page.link_thumbnail_embed_video
@@ -42,23 +49,26 @@ sub_link.page.url
 
 ---- API Home Page for template --
 cover_images: 
-  - page.cover_images.all
-  - page.cover_images.first
-  - KALAU MAU PAKAI UKURAN
-    {% for item in page.cover_images.all %}
-        <div style="float: left; margin: 10px">
-            {% image item.image fill-320x240 %}
-        </div>
-    {% endfor %}
+  - page.home_company_name
+  - page.home_description
+  - page.home_image
+  - {% for article in recent_articles %}
+    - article.title
+    - article.cover_image
+    - article.get_full_url
+  - {% endfor %}
+  - {% for event in recent_events %}
+    - event.short_description
+    - event.title
+    - event.get_full_url
+  - {% endfor %}
 
 layanan:
   - {% for layanan in page.section_layanan %}
-      - layanan.block_type == "layanan"
       - layanan.value.title
       - layanan.value.content|richtext
       - layanan.value.thumbnail
-      - layanan.value.related_page.
-        - url, dkk
+      - layanan.value.related_page.url
     {% endfor %}
 
 ---- API Article Landing Page for template --
@@ -68,6 +78,18 @@ children:
       - article.specific.<attr> (other than title)
     {% endfor %}
   - page.add_hits
+
+  - paginated pake query ?p=
+  - {% for article in index_paginated %}
+      - article.title
+      - article.specific.cover_image
+        - article.specific.cover_image.url (kalau mau akses specifi)
+        - alt text nya article.title
+        - Jadiin gini aja
+          {% image article.specific.cover_image fill-100x100 as cover_image %}
+          <img src="{{cover_image.url}}" alt="{{article.title}}" />
+      - article.specific.get_pub_date
+    {% endfor %}
   
 ---- API Article Page for template --
   - page.get_full_url
@@ -78,6 +100,14 @@ children:
   - page.body|richtext
   - page.add_hits && page.hits
 
+  - page.get_parent.specific.is_company_articles
+
+  - {% for aticle in recent_articles %}
+      article.cover_image
+      article.title
+      article.get_full_url
+    {% endfor %}
+
 ---- API Contact Us Page for template --
   - page.title
   - page.cover_image
@@ -85,9 +115,13 @@ children:
   - page.add_hits && page.hits
 
 form_fields: 
+  - <form action ="{% pageurl self %} method="POST" {% if form|is_file_form %}enctype="multipart/form-data"{% endif %}>
+        {% csrf_token %}
+        
+    </form>
   - page.form_fields.all
   - 
-    {% for field in page.form_fields.all %}
+    {% for field in page.get_form_fields %}
       - field.field_type
       - field.label
       - field.help_text

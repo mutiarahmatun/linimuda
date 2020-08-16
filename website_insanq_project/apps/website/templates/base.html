@@ -80,6 +80,9 @@
 
         <link rel="stylesheet" type="text/css" href="{% static 'css/insanq_base.css' %}">
 
+        {% block extra_css %}
+        {% endblock %}
+
         {% block favicon %}
             {% if settings.coderedcms.LayoutSettings.favicon %}
                 {# See https://developer.apple.com/design/human-interface-guidelines/ios/icons-and-images/app-icon/ #}
@@ -101,7 +104,6 @@
 
     <body class="coderedcms-{{page.content_type.model}} {% if page.get_parent %}parent-page-{{page.get_parent.id}}{% endif %} {% block body_class %}{% endblock %}" id="page-{{page.id}}">
         {% wagtailuserbar %}
-
         {% block sidebar %}
         {% endblock %}
 
@@ -168,6 +170,9 @@
 
         {% block coderedcms_scripts %}
         <script type="text/javascript" src="{% static 'coderedcms/js/codered-front.js' %}"></script>
+        {% endblock %}
+
+        {% block extra_js %}
         {% endblock %}
 
 
