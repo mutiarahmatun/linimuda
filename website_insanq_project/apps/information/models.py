@@ -1,5 +1,5 @@
 import locale
-from datetime import date
+from django.utils import timezone
 from coderedcms.models import CoderedArticlePage
 from django.db import models
 from django.utils.translation import gettext_lazy as _
@@ -25,7 +25,9 @@ class InformationPage(CoderedArticlePage):
         ]
 
     # Override to have default today
-    date_display = models.DateField(verbose_name=_("Publish date"), default=date.today)
+    date_display = models.DateTimeField(
+        verbose_name=_("Publish date"), default=timezone.now
+    )
 
     # Additional attribute
     hits = models.IntegerField(default=0, editable=False)
@@ -52,8 +54,8 @@ class InformationPage(CoderedArticlePage):
         Gets published date.
         """
         locale.setlocale(locale.LC_ALL, "id_ID")
-        if self.date_display:
-            return self.date_display.strftime("%d %b %y")
+        if hasattr(self, "date_display") and self.date_display:
+            return self.date_display.strftime("%d %B %Y")
         return ""
 
     template = "information/information_page.html"

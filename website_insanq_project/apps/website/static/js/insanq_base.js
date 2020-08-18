@@ -21,8 +21,18 @@ $(document).ready(function () {
     if (keycode == "13") {
       history.pushState("", document.title, window.location.pathname);
       window.location.href =
-        window.location.href + "?s=" + $(this).val() + "&p=1";
+        window.location.href +
+        "?s=" +
+        encodeURIComponent($(this).val()) +
+        "&p=1";
     }
+  });
+
+  $(".replace-koma").each(function (i, obj) {
+    var text = obj.innerHTML;
+    console.log(obj);
+    console.log(text.trim());
+    obj.innerHTML = replaceLast(",", ".", text);
   });
 
   // if ($("input[type=date]").length) {
@@ -97,4 +107,17 @@ function cekDesktop() {
     $(".navbar-transparan").toggleClass("navbar-transparan navbar-white");
     $("#navbar").addClass("small-navbar");
   }
+}
+
+function replaceLast(find, replace, string) {
+  var lastIndex = string.lastIndexOf(find);
+
+  if (lastIndex === -1) {
+    return string;
+  }
+
+  var beginString = string.substring(0, lastIndex);
+  var endString = string.substring(lastIndex + find.length);
+
+  return beginString + replace + endString;
 }

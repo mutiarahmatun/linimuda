@@ -1,4 +1,3 @@
 1. Dont forget set up cron job on web hosting => python manage.py update_index
 2. Handle email in hosting
 3. Migrate database
-4. Handle hits page on template

@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% load wagtailcore_tags wagtailimages_tags coderedcms_tags %}
+{% load wagtailcore_tags wagtailimages_tags coderedcms_tags subtract update_variable %}
 
 {% if settings.coderedcms.SeoSettings.og_meta %}
     {% block og_description %}{{self.get_description}}{% endblock %}
@@ -40,40 +40,41 @@
             <div class="section-kontainer">
                 <div class="content-kontainer">
                     <div class="warna-teks-secondary d-inline-block">
-                        <h2>Artikel</h2>
+                        <h2>{{page.title}}</h2>
                         <div class="underline-long ul-secondary-light ul-normal"></div>
                     </div>
                 </div>
                 <div class="content-kontainer">
                     <div class="form-group has-search searchbox">
                         <span class="fa fa-search fa-lg form-control-feedback"></span>
-                        <input type="text" class="form-control" id="search-artikel" placeholder="Cari Artikel">
+                        <input type="text" class="form-control" id="searchbox" placeholder="Cari {{page.title}}">
                     </div>
                 </div>
                 <div class="content-kontainer">
                     <div class="d-flex flex-wrap justify-content-center white-text">
 
-                    {% comment %} {% for ARTIKEL in SEPULUH ARTIKEL %}
+                    {% for article in index_paginated %}
 
                         <div class="px-4 ---">
-                            <a href="./LINKARTIKEL">
+                            <a href="{{article.specific.url}}">
                                 <div class="artikel-card align-self-start mx-auto">
                                     <div class="ratio-1-1">
                                         <div class="fill-ratio">
                                             <div class="fill-kontainer-tall">
                                                 <!-- GAMBAR ARTIKEL 1 DI SINI -->
-                                                <img src="https://insanq.co.id/images/TETAP_EFEKTIF_DI_TENGAH_PANDEMI.jpg" alt="">
+                                                {% image article.specific.main_image max-1600x900 as main_image %}
+                                                <img src="{{main_image.url}}" />
                                             </div>
                                         </div>
                                     </div>
                                     <div class="artikel-teksboks">
                                         <div class="artikel-tanggal">
                                             <!-- TANGGAL ARTIKEL 1 DI SINI -->
-                                            <p>1 Juli 2020</p>
+                                            <p>{{article.specific.get_pub_date}}</p>
                                         </div>
                                         <div class="artikel-judul">
                                             <!-- JUDUL ARTIKEL 1 DI SINI -->
-                                            <h5>Tetap Efektif di Tengah Pandemi</h5>
+                                            <h5>{{article.title}}</h5>
                                         </div>
                                     </div>
                                 </div>
@@ -81,14 +82,19 @@
                             <div class="p-4"></div>
                         </div>
                     
-                    {% endfor %} {% endcomment %}
+                    {% endfor %}
 
                     </div>
 
                     <div class="list-page-num text-center mar-vertical-sm">
 
-                        <a href="./">
-                            <div class="page-num-block disabled">
+                        {% if index_paginated.number > 1 %}
+                            <a href="{{ index_paginated.number|subtract:1 }}" id="page-previous">
+                                <div class="page-num-block">
+                        {% else %}
+                            <a href="#" id="page-previous">
+                                <div class="page-num-block disabled">
+                        {% endif %}
                                 <div class="vertical-center">
                                     <div class="mar-auto">
                                         <span class="fa fa-angle-left fa-sm"></span>
@@ -96,69 +102,53 @@
                                 </div>
                             </div>
                         </a>
-                        <div class="page-num-block current-page">
-                            <div class="vertical-center">
-                                <div class="mar-auto">
-                                    1
-                                </div>
-                            </div>
-                        </div>
-                        <a href="./LINKLISTARTIKEL?page=2">
-                            <div class="page-num-block">
-                                <div class="vertical-center">
-                                    <div class="mar-auto">
-                                            2
-                                    </div>
-                                </div>
-                            </div>
-                        </a>
-                        <a href="./LINKLISTARTIKEL?page=3">
-                            <div class="page-num-block">
-                                <div class="vertical-center">
-                                    <div class="mar-auto">
-                                            3
-                                    </div>
-                                </div>
-                            </div>
-                        </a>
-                        <a href="./LINKLISTARTIKEL?page=4">
-                            <div class="page-num-block">
-                                <div class="vertical-center">
-                                    <div class="mar-auto">
-                                            4
-                                    </div>
-                                </div>
-                            </div>
-                        </a>
-                        <a href="./LINKLISTARTIKEL?page=5">
-                            <div class="page-num-block">
-                                <div class="vertical-center">
-                                    <div class="mar-auto">
-                                            5
-                                    </div>
-                                </div>
-                            </div>
-                        </a>
-                        <a href="./LINKLISTARTIKEL?page=6">
-                            <div class="page-num-block">
-                                <div class="vertical-center">
-                                    <div class="mar-auto">
-                                            6
-                                    </div>
-                                </div>
-                            </div>
-                        </a>
-                        <a href="./LINKLISTARTIKEL?page=7">
-                            <div class="page-num-block">
-                                <div class="vertical-center">
-                                    <div class="mar-auto">
-                                            7
-                                    </div>
-                                </div>
-                            </div>
-                        </a>
-                        <a href="./LINKLISTARTIKEL?page=2">
-                            <div class="page-num-block">
+                        {% with start="0" %}
+                            {% if index_paginated.paginator.num_pages >= 9 %}
+                                {{index_paginated.number}}
+                                {% if index_paginated.number < 5 %}
+                                    {{start}}
+                                {% elif index_paginated.paginator.num_pages|subtract:index_paginated.number < 5 %}
+                                    {% update_variable index_paginated.paginator.num_pages|subtract:9 as start %}
+                                    {{start}}
+                                {% else %}
+                                    {% update_variable index_paginated.number|subtract:5 as start %}
+                                    {{start}}
+                                {% endif %}
+                            {% endif %}
+
+                            {{start}}
+                            {{ index_paginated.paginator.num_pages|subtract:9 }}
+                            {{ index_paginated.number|subtract:5 }}
+                            
+                            {% for i in '012345678'|make_list %}
+                                {% if forloop.counter|add:start > index_paginated.paginator.num_pages %}
+                                {% else %}
+                                    <a href="?p={{ forloop.counter|add:start }}" page="{{ forloop.counter|add:start }}" id="page-button-{{ forloop.counter }}">
+                                    {% if forloop.counter|add:start == index_paginated.number %}
+                                        <div class="page-num-block current-page">
+                                    {% else %}
+                                        <div class="page-num-block">
+                                    {% endif %}
+                                            <div class="vertical-center">
+                                                <div class="mar-auto">
+                                                    <span class="isi-page-button">
+                                                        {{ forloop.counter|add:start }}
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </a>
+                                {% endif %}
+                                
+                            {% endfor %}
+                        {% endwith %}
+                        {% if index_paginated.number < index_paginated.paginator.num_pages %}
+                            <a href="{{ index_paginated.number|add:1 }}" id="page-next">
+                                <div class="page-num-block">
+                        {% else %}
+                            <a href="#" id="page-next">
+                                <div class="page-num-block disabled">
+                        {% endif %}
                                 <div class="vertical-center">
                                     <div class="mar-auto">
                                         <span class="fa fa-angle-right fa-sm"></span>
@@ -166,7 +156,6 @@
                                 </div>
                             </div>
                         </a>
-                    </div>
 
                 </div>
             </div>

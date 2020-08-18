@@ -2,6 +2,7 @@ from django.db import models
 from django.utils.html import format_html
 from django.utils.translation import gettext_lazy as _
 from wagtail.admin.edit_handlers import (
+    FieldPanel,
     EditHandler,
     StreamFieldPanel,
 )
@@ -63,18 +64,23 @@ class PageLinkBlock(blocks.StructBlock):
 
 class BlockPageLinkBlock(blocks.StructBlock):
     display_text = blocks.CharBlock(max_length=255)
-    sub_links = blocks.StreamBlock([("SubLink", PageLinkBlock())], required=True)
+    sub_links = blocks.StreamBlock([("SubLink", PageLinkBlock())])
 
 
 class Navbar(models.Model):
     class Meta:
         verbose_name = _("Navigation Bar")
 
+    name = models.CharField(max_length=255)
     navigation_links = StreamField(
         [("NonDropdown", PageLinkBlock()), ("Dropdown", BlockPageLinkBlock())],
         blank=True,
     )
 
     panels = [
+        FieldPanel("name"),
         StreamFieldPanel("navigation_links"),
     ]
+
+    def __str__(self):
+        return self.name

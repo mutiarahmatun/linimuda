@@ -32,13 +32,15 @@ Open All External Link in New Tab: settings.coderedcms.GeneralSettings.external_
 {% for link in navbar.navigation_links %}
   {% if link.block_type == "NonDropdown"%}
     link.value.display_text
-    link.value.page.url
+    link.value.page.url => /<path>
+    link.value.page.get_full_url -> www.insanq.co.id/<path>
   {% endif %}
   {% if link.block_retype == "Dropdown"%}
     link.value.display_text
     {% for sub_link in link.value.sub_links%}
       sub_link.value.display_text
-      sub_link.value.page.url
+      sub_link.value.page.url => /<path>
+      sub_link.value.page.get_full_url -> www.insanq.co.id/<path>
     {% endfor %}
   {% endif %}
 {% endfor %}
@@ -64,7 +66,7 @@ Query
     {% for page in results_paginated %}
         {% with page=page.specific %}
             - page.title
-            - page.cover_image
+            - page.main_image
             - dll
         {% endwith %}
     {% endfor %}
@@ -77,19 +79,21 @@ Query
 {% endif %}
 
 ---- API Home Page for template --
-cover_images: 
+main_images: 
   - page.home_company_name
   - page.home_description
   - page.home_image
   - {% for article in recent_articles %}
     - article.title
-    - article.cover_image
-    - article.get_full_url
+    - article.main_image
+    - article.url => /<path>
+    - article.get_full_url -> www.insanq.co.id/<path>
   - {% endfor %}
   - {% for event in recent_events %}
     - event.short_description
     - event.title
-    - event.get_full_url
+    - event.url => /<path>
+    - event.get_full_url -> www.insanq.co.id/<path>
   - {% endfor %}
 
 layanan:
@@ -97,7 +101,8 @@ layanan:
       - layanan.value.title
       - layanan.value.content|richtext
       - layanan.value.thumbnail
-      - layanan.value.related_page.url
+      - layanan.value.related_page.url => /<path>
+      - layanan.value.related_page.get_full_url -> www.insanq.co.id/<path>
     {% endfor %}
 
 ---- API Article Landing Page for template --
@@ -109,21 +114,26 @@ children:
   - page.add_hits
 
   - paginated pake query ?p=
+  - index_paginated.paginator.num_pages (banyaknya page)
+  - index_paginated.number (sekarang page berapa)
   - {% for article in index_paginated %}
       - article.title
-      - article.specific.cover_image
-        - article.specific.cover_image.url (kalau mau akses specifi)
+      - article.specific.url
+      - article.specific.main_image
+        - {% image article.specific.cover_image fill-1000x500 as cover_image %}
+          <img src="{{cover_image.url}}" class="w-100" alt="{{article.title}}" />      
         - alt text nya article.title
         - Jadiin gini aja
-          {% image article.specific.cover_image fill-100x100 as cover_image %}
-          <img src="{{cover_image.url}}" alt="{{article.title}}" />
+          {% image article.specific.main_image fill-100x100 as main_image %}
+          <img src="{{main_image.url}}" alt="{{article.title}}" />
       - article.specific.get_pub_date
     {% endfor %}
   
 ---- API Article Page for template --
-  - page.get_full_url
+  - page.url => /<path>
+  - page.get_full_url -> www.insanq.co.id/<path>
   - page.title
-  - page.cover_image
+  - page.main_image
   - page.get_author_name
   - page.get_pub_date
   - page.body|richtext
@@ -132,14 +142,15 @@ children:
   - page.get_parent.specific.is_company_articles
 
   - {% for aticle in recent_articles %}
-      article.cover_image
+      article.main_image
       article.title
-      article.get_full_url
+      article.url => /<path>
+      article.get_full_url -> www.insanq.co.id/<path>
     {% endfor %}
 
 ---- API Contact Us Page for template --
   - page.title
-  - page.cover_image
+  - page.main_image
   - page.html_embedded_maps
   - page.add_hits && page.hits
 
@@ -175,9 +186,10 @@ confirmation_emails:
 ---- API Event Page for template --
 - MIRIP Contact Page
         + 
-- page.start_date
-- page.end_date
-...
+- page.get_start_date
+- page.get_end_date
+- page.get_start_time_each_day
+- page.get_end_time_each_day
 ...
 - page.monday, page.tuesday, ..., page.sunday
 - page.short_description|richtext, page.long_description|richtext

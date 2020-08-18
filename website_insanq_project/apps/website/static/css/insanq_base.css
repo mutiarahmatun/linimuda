@@ -255,7 +255,8 @@ p.deskripsi {
   padding: 0.5rem 0rem;
 }
 
-deskripsi > p {
+.deskripsi > p,
+.deskripsi > .rich-text > p {
   font-size: 1.75rem;
   font-weight: 400;
   letter-spacing: 0.1rem;
@@ -348,6 +349,15 @@ br {
   letter-spacing: 0;
   color: var(--warna-gray-dark);
   line-height: 2;
+}
+
+.artikel-konten p {
+  text-indent: 2em;
+}
+
+.no-indent > p,
+p.no-indent {
+  text-indent: 0 !important;
 }
 
 .img-sm {

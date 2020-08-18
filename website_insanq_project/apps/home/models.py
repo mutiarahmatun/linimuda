@@ -11,7 +11,7 @@ from wagtail.admin.edit_handlers import (
 )
 from wagtail.core import blocks
 from wagtail.core.fields import StreamField
-from wagtail.core.models import Orderable, Page
+from wagtail.core.models import Page
 from wagtail.images.blocks import ImageChooserBlock
 from wagtail.images.edit_handlers import ImageChooserPanel
 from wagtail.utils.decorators import cached_classmethod
@@ -23,8 +23,8 @@ from website_insanq_project.apps.event.models import EventIndexPage, EventPage
 
 class LayananBlock(blocks.StructBlock):
     title = blocks.CharBlock(max_length=255)
-    content = blocks.RichTextBlock()
     thumbnail = ImageChooserBlock()
+    content = blocks.RichTextBlock(required=False)
     related_page = PageChooserBlock(required=False)
 
 
@@ -67,7 +67,7 @@ class HomePage(CoderedWebPage):
     # section layanan
     section_layanan = StreamField([("Layanan", LayananBlock())], blank=True)
     home_company_name = models.CharField(max_length=255, blank=True)
-    home_description = models.CharField(max_length=511, blank=True)
+    home_description = models.CharField(max_length=1023, blank=True)
     home_image = models.ForeignKey(
         "wagtailimages.Image",
         null=True,

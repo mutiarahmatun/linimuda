@@ -1,7 +1,7 @@
+import locale
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 from modelcluster.fields import ParentalKey
-from wagtail.contrib.forms.edit_handlers import FormSubmissionsPanel
 from wagtail.utils.decorators import cached_classmethod
 from wagtail.core.models import Page
 from wagtail.core.fields import RichTextField
@@ -34,14 +34,14 @@ class EventPage(CoderedFormPage):
 
     hits = models.IntegerField(default=0, editable=False)
 
-    short_description = RichTextField(blank=True)
+    short_description = RichTextField()
     long_description = RichTextField(blank=True)
 
-    start_date = models.DateField(default=date.today)
-    end_date = models.DateField(default=date.today)
-    start_time_each_day = models.TimeField(default=time(8, 0, 0))
-    end_time_each_day = models.TimeField(default=time(16, 0, 0))
-    location = models.CharField(max_length=511, default="Insan-Q Cilegon")
+    start_date = models.DateField(null=True, blank=True, default=date.today)
+    end_date = models.DateField(null=True, blank=True, default=date.today)
+    start_time_each_day = models.TimeField(null=True, blank=True, default=time(8, 0, 0))
+    end_time_each_day = models.TimeField(null=True, blank=True, default=time(16, 0, 0))
+    location = models.CharField(blank=True, max_length=1023, default="Insan-Q Cilegon")
     [monday, tuesday, wednesday, thursday, friday, saturday, sunday,] = [
         models.BooleanField(default=True) for _ in range(7)
     ]
@@ -50,6 +50,23 @@ class EventPage(CoderedFormPage):
         self.hits += 1
         self.save()
         return ""
+
+    def format(self, attr_name, format):
+        locale.setlocale(locale.LC_ALL, "id_ID")
+        attr_value = getattr(self, attr_name, None)
+        return attr_value.strftime(format) if attr_value else ""
+
+    def get_start_date(self):
+        return self.format("start_date", "%d %B %Y")
+
+    def get_end_date(self):
+        return self.format("end_date", "%d %B %Y")
+
+    def get_start_time_each_day(self):
+        return self.format("start_time_each_day", "%H.%M")
+
+    def get_end_time_each_day(self):
+        return self.format("end_time_each_day", "%H.%M")
 
     template = "event/event_page.html"
     landing_page_template = "thank_you_page.html"
@@ -108,7 +125,6 @@ class EventPage(CoderedFormPage):
                 _("Form Submissions"),
             ),
         ]
-        + [FormSubmissionsPanel(),]
         + [
             MultiFieldPanel(
                 [ReadOnlyPanel("hits", heading="Hits")], _("Publication Info")

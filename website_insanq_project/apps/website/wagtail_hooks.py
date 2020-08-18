@@ -7,6 +7,7 @@ from wagtail.admin.edit_handlers import (
     FieldPanel,
     MultiFieldPanel,
 )
+from coderedcms.models.snippet_models import Classifier
 from .models import Navbar
 
 
@@ -83,12 +84,22 @@ class NavbarAdmin(ModelAdmin):
     model = Navbar
     menu_label = "Navbar"
     menu_icon = "list-ul"
-    menu_order = 200
-    add_to_settings_menu = False  # or True to add your model to the Settings sub-menu
-    exclude_from_explorer = (
-        False  # or True to exclude pages of this type from Wagtail's explorer view
-    )
+    menu_order = 499
+    add_to_settings_menu = False
+    exclude_from_explorer = False
+    list_display = ("name",)
+
+
+class ClassifierAdmin(ModelAdmin):
+    model = Classifier
+    menu_label = "Classifier"
+    menu_icon = "folder-inverse"
+    menu_order = 500
+    add_to_settingsmenu = False
+    exclude_from_explorer = False
+    list_display = ("name",)
 
 
 # Now you just need to register your customised ModelAdmin class with Wagtail
 modeladmin_register(NavbarAdmin)
+modeladmin_register(ClassifierAdmin)
