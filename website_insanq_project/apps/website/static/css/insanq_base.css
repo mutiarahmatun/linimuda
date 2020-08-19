@@ -33,6 +33,50 @@ body {
   justify-content: space-between;
 }
 
+.blob-parent {
+  overflow: hidden;
+  position: relative;
+}
+
+.blob-kontainer {
+  max-width: 1024px;
+}
+
+.blob-primary {
+  background: url("https://insanq.co.id/images/logo-insan-q.png");
+  background-size: contain;
+  background-repeat: repeat-y;
+  width: 20vw;
+  height: 100vh;
+  min-height: 200%;
+  max-width: 20rem;
+  position: absolute;
+}
+
+.parallax-kontainer {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow-x: hidden;
+  overflow-y: scroll;
+  perspective: 1px;
+  perspective-origin: 0%;
+}
+
+.parallax {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  transform: translateZ(-1px);
+}
+
+.force-center {
+  left: 50%;
+  transform: translateX(-50%);
+}
+
 .bg-warna-primary {
   background-color: var(--warna-primary);
 }
@@ -693,6 +737,12 @@ p.no-indent {
   color: var(--warna-gray);
   font-size: 1.3rem;
   padding: 0.8rem 1.5rem;
+}
+
+.dropdown-item.active,
+.dropdown-item:active {
+  text-decoration: none;
+  background-color: var(--warna-gray-light-3);
 }
 
 .dropdown-menu {

@@ -34,6 +34,8 @@ class ContactUsPage(CoderedFormPage):
         self.save()
         return ""
 
+    search_fields = []
+
     template = "contact_us/contact_us_page.html"
     landing_page_template = "thank_you_page.html"
 

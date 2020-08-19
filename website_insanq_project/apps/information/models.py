@@ -11,7 +11,6 @@ from wagtail.admin.edit_handlers import (
 )
 from wagtail.core.fields import RichTextField
 from wagtail.core.models import Page
-from wagtail.search import index
 from wagtail.utils.decorators import cached_classmethod
 
 from website_insanq_project.apps.website.models import ReadOnlyPanel
@@ -116,9 +115,7 @@ class InformationPage(CoderedArticlePage):
 
         return TabbedInterface(panels).bind_to(model=cls)
 
-    search_fields = CoderedArticlePage.search_fields + [
-        index.SearchField("body_text", partial_match=True)
-    ]
+    search_fields = []
 
     # Only allow this page to be created beneath an ArticleIndexPage.
     subpage_types = []

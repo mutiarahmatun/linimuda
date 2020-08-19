@@ -58,6 +58,7 @@ class HomePage(CoderedWebPage):
             print(e)
         return context
 
+    search_fields = []
     ###############
     # Panels
     ###############

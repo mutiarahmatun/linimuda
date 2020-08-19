@@ -3,29 +3,29 @@
 {% load static coderedcms_tags i18n wagtailcore_tags wagtailimages_tags wagtailsettings_tags wagtailuserbar %}
 
 {% block isi_page %}
-    <div class="section-fluid bg-warna-primary white-text blob-parent">
+    <div class="section-fluid bg-warna-primary white-text">
         {% include 'navbar-transparan.html' %}
         <div class="navbar-space d-block d-md-none"></div>
-        <div class="blob-kontainer h-100 position-absolute">
+        <div class="parallax-kontainer">
             <div class="parallax blob-primary">
             </div>
-        </div>
-        <div class="content-width full-height">
-            <div class="row vertical-center content-kontainer">
-                <div class="col-md-6">
-                    <h1 class="smaller">Selamat Datang di</h1>
-                    <h1>{{ page.home_company_name }}</h1>
-                    <p class="deskripsi">
-                        {{ page.home_description }}
-                    </p>
-                    <div class="my-4">
-                        <a class="btn btn-secondary btn-lg btn-wide" href="./LINKDAFTAR" role="button">Daftar</a>
+            <div class="content-width full-height">
+                <div class="row vertical-center content-kontainer">
+                    <div class="col-md-6">
+                        <h1 class="smaller">Selamat Datang di</h1>
+                        <h1>{{ page.home_company_name }}</h1>
+                        <p class="deskripsi">
+                            {{ page.home_description }}
+                        </p>
+                        <div class="my-4">
+                            <a class="btn btn-secondary btn-lg btn-wide" href="./LINKDAFTAR" role="button">Daftar</a>
+                        </div>
                     </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="img-placeholder">
-                        {% image page.home_image max-1200x1200 as main_image %}
-                        <img src="{{main_image.url}}" class="w-100" />
+                    <div class="col-md-6">
+                        <div class="img-placeholder">
+                            {% image page.home_image max-1200x1200 as main_image %}
+                            <img src="{{main_image.url}}" class="w-100" />
+                        </div>
                     </div>
                 </div>
             </div>

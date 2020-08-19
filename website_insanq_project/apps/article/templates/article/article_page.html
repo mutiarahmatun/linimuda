@@ -30,7 +30,9 @@
 {% endblock %}
 
 {% block other_article %}
-    {% include "article/article_other.html" %}
+    {% if not page.get_parent.specific.is_company_articles %}
+        {% include "article/article_other.html" %}
+    {% endif %}
 {% endblock %}
 
 {% if settings.coderedcms.SeoSettings.struct_meta %}

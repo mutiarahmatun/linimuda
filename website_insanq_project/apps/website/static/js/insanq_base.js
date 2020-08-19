@@ -1,11 +1,18 @@
 $(document).ready(function () {
   var is_desktop = false;
 
+  var parallax_faktor = 0.5;
+  $(".parallax").css(
+    "height",
+    $(document).height() * (1 / parallax_faktor) + 500
+  );
+
   cekDesktop();
+  // geserParallax(parallax_faktor);
 
   $(window).resize(function () {
     cekDesktop();
-    cekNavbar();
+    cekNavbar(parallax_faktor);
   });
 
   $("#navbar").addClass("no-transition");
@@ -14,19 +21,31 @@ $(document).ready(function () {
 
   $(document).scroll(function () {
     cekNavbar();
+    // geserParallax();
   });
 
-  $("#searchbox").keypress(function (event) {
-    var keycode = event.keyCode ? event.keyCode : event.which;
-    if (keycode == "13") {
-      history.pushState("", document.title, window.location.pathname);
-      window.location.href =
-        window.location.href +
-        "?s=" +
-        encodeURIComponent($(this).val()) +
-        "&p=1";
-    }
+  $("form").each(function () {
+    $(this)
+      .find("input")
+      .keypress(function (e) {
+        // Enter pressed?
+        if (e.which == 10 || e.which == 13) {
+          this.form.submit();
+        }
+      });
   });
+
+  // $("#searchbox").keypress(function (event) {
+  //   var keycode = event.keyCode ? event.keyCode : event.which;
+  //   if (keycode == "13") {
+  //     history.pushState("", document.title, window.location.pathname);
+  //     window.location.href =
+  //       window.location.href +
+  //       "?s=" +
+  //       encodeURIComponent($(this).val()) +
+  //       "&p=1";
+  //   }
+  // });
 
   $(".replace-koma").each(function (i, obj) {
     var text = obj.innerHTML;
@@ -106,6 +125,16 @@ function cekDesktop() {
   } else {
     $(".navbar-transparan").toggleClass("navbar-transparan navbar-white");
     $("#navbar").addClass("small-navbar");
+  }
+}
+
+function geserParallax(parallax_faktor) {
+  if (true) {
+    console.log("wow");
+    var scroll = $(document).scrollTop();
+    var ypos = parallax_faktor * scroll;
+
+    $(".parallax").css("transform", "translatey(" + ypos + "px)");
   }
 }
 

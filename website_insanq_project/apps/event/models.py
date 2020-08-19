@@ -225,6 +225,8 @@ class EventIndexPage(CoderedWebPage):
         self.save()
         return ""
 
+    search_fields = []
+
     # Panel
 
     # Override to not contain template form

@@ -59,7 +59,7 @@ Query
   {% else %}
       {% trans 'Search for' %} “{{form.s.value}}”
   {%endif%}
-- <form action="{% url 'codered_search' %}" method="GET">
+- <form action="{% url 'codered_search'k %}" method="GET">
 - {% bootstrap_form form size='large|medium|small (pilih)' layout='inline' %}
 - 
 {% if results_paginated.object_list %}
@@ -70,11 +70,12 @@ Query
             - dll
         {% endwith %}
     {% endfor %}
-{% endif %}
     
 {% else %}
     {% if form.s.value %}
       <p>{% trans 'No results found.' %}</p>
+    {% else %}
+      empty state sebelum search
     {% endif %}
 {% endif %}
 
@@ -141,7 +142,7 @@ children:
 
   - page.get_parent.specific.is_company_articles
 
-  - {% for aticle in recent_articles %}
+  - {% for article in recent_articles %}
       article.main_image
       article.title
       article.url => /<path>

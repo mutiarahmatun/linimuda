@@ -46,16 +46,17 @@ class ArticlePage(CoderedArticlePage):
         context = super().get_context(request)
         context["recent_articles"] = []
         try:
-            parent_article = ArticleIndexPage.objects.parent_of(self)
+
+            parent_article = ArticleIndexPage.objects.parent_of(self)[0]
             plus_one_recent_articles = (
                 ArticlePage.objects.child_of(parent_article)
                 .live()
-                .order_by(parent_article.index_order_by)[:4]
+                .order_by(parent_article.specific.index_order_by)[:4]
             )
             for item in plus_one_recent_articles:
                 if item.id != self.id:
-                    context["recent_article"].append(item)
-                if len(context["recent_article"]) >= 3:
+                    context["recent_articles"].append(item)
+                if len(context["recent_articles"]) >= 3:
                     break
         except Exception as e:
             print(e)
@@ -172,6 +173,7 @@ class ArticleIndexPage(CoderedArticleIndexPage):
         self.save()
         return ""
 
+    search_fields = []
     # Panel
 
     # Override to not contain template form
