@@ -1,0 +1,17 @@
+{% extends "article/article_index_page.html" %}
+
+{% load wagtailadmin_tags wagtailcore_tags wagtailimages_tags coderedcms_tags watch_to_embed %}
+
+{% block cover %}
+    {% if "youtube" in page.link_thumbnail_embed_video %}
+        <iframe class="fill-kontainer-wide"
+        {% if "watch?v=" in page.link_thumbnail_embed_video %}
+            src="{{ page.link_thumbnail_embed_video|watch_to_embed }}"
+        {% elif "embed" in page.link_thumbnail_embed_video %}
+            src="{{ page.link_thumbnail_embed_video }}"
+        {% endif %}
+            frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen>
+        </iframe>
+    {% endif %}
+{% endblock %}

@@ -81,6 +81,10 @@ Query
 
 ---- API Home Page for template --
 main_images: 
+  - page.landing_articles.url
+  - page.landing_events.url
+
+
   - page.home_company_name
   - page.home_description
   - page.home_image

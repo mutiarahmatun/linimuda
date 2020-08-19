@@ -129,11 +129,16 @@ function cekDesktop() {
 }
 
 function geserParallax(parallax_faktor) {
-  if (true) {
-    var scroll = $(document).scrollTop();
-    var ypos = parallax_faktor * scroll;
+  if (is_desktop) {
+    for (let index = 0; index < $(".parallax").length; index++) {
+      var top =
+        window.pageYOffset +
+        $(".parallax")[index].parentElement.getBoundingClientRect().top;
+      var scroll = $(document).scrollTop() - top;
+      var ypos = parallax_faktor * scroll;
 
-    $(".parallax").css("transform", "translatey(" + ypos + "px)");
+      $(".parallax")[index].style.transform = "translatey(" + ypos + "px)";
+    }
   }
 }
 

@@ -7,9 +7,9 @@
         {% include 'navbar-transparan.html' %}
         <div class="navbar-space d-block d-md-none"></div>
         <div class="blob-kontainer h-100">
-            <div class="parallax blob-primary blob-left" style="background-image: url('https://dl.dropboxusercontent.com/s/gs3x2onx28oh81k/blob-primary-left.png?dl=1')">
+            <div class="parallax blob-primary blob-left" style="background-image: url({% static "img/blob-primary-left.png" %})">
             </div>
-            <div class="parallax blob-primary blob-right" style="background-image: url('https://dl.dropboxusercontent.com/s/hmzwu70uaxeivmv/blob-primary-right.png?dl=1')">
+            <div class="parallax blob-primary blob-right" style="background-image: url({% static "img/blob-primary-right.png" %})">
             </div>
         </div>
         <div class="content-width full-height">
@@ -87,12 +87,12 @@
     </div>
     <div class="section-fluid bg-warna-secondary white-text blob-parent" id="artikel">
         <div class="blob-kontainer h-100">
-            <div class="parallax blob-primary blob-left" style="background-image: url('https://dl.dropboxusercontent.com/s/gs3x2onx28oh81k/blob-primary-left.png?dl=1')">
+            <div class="parallax blob-primary blob-left" style="background-image: url({% static "img/blob-secondary-left.png" %})">
             </div>
-            <div class="parallax blob-primary blob-right" style="background-image: url('https://dl.dropboxusercontent.com/s/hmzwu70uaxeivmv/blob-primary-right.png?dl=1')">
+            <div class="parallax blob-primary blob-right" style="background-image: url({% static "img/blob-secondary-right.png" %})">
             </div>
         </div>
-        <div class="content-width">
+        <div class="content-width position-relative">
             <div class="section-kontainer">
                 <div class="content-kontainer">
                     <div class="d-inline-block pl-4">
@@ -130,7 +130,7 @@
                     {% endfor %}
                 </div>
                 <div class="d-flex align-items-center flex-column">
-                    <a class="btn btn-secondary btn-border btn-lg btn-wide" href="/artikel" role="button">Artikel lain</a>
+                    <a class="btn btn-secondary btn-border btn-lg btn-wide" href="{{ page.landing_articles.url }}" role="button">Artikel lain</a>
                 </div>
                 <div class="p-4"></div>
             </div>
@@ -170,7 +170,7 @@
                     </div>
                 </div>
                 <div class="d-flex align-items-center flex-column">
-                    <a class="btn btn-secondary btn-lg btn-wide" href="/daftar" role="button">Kegiatan lain</a>
+                    <a class="btn btn-secondary btn-lg btn-wide" href="{{ page.landing_events.url }}" role="button">Kegiatan lain</a>
                 </div>
                 <div class="p-4"></div>
             </div>
