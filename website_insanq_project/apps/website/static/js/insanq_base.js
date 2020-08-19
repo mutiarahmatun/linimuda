@@ -35,18 +35,6 @@ $(document).ready(function () {
       });
   });
 
-  // $("#searchbox").keypress(function (event) {
-  //   var keycode = event.keyCode ? event.keyCode : event.which;
-  //   if (keycode == "13") {
-  //     history.pushState("", document.title, window.location.pathname);
-  //     window.location.href =
-  //       window.location.href +
-  //       "?s=" +
-  //       encodeURIComponent($(this).val()) +
-  //       "&p=1";
-  //   }
-  // });
-
   $(".replace-koma").each(function (i, obj) {
     var text = obj.innerHTML;
     console.log(obj);
@@ -54,15 +42,15 @@ $(document).ready(function () {
     obj.innerHTML = replaceLast(",", ".", text);
   });
 
-  // if ($("input[type=date]").length) {
-  //   $("input[type=date]").datepicker({
-  //     format: "d MM yyyy",
-  //     maxViewMode: 1,
-  //     todayBtn: "linked",
-  //     language: "id",
-  //     todayHighlight: true,
-  //   });
-  // }
+  if ($("input[type=date]").length) {
+    $("input[type=date]").datepicker({
+      format: "d MM yyyy",
+      maxViewMode: 1,
+      todayBtn: "linked",
+      language: "id",
+      todayHighlight: true,
+    });
+  }
 
   //Smooth scrolling
   $('a[href*="#"]')
