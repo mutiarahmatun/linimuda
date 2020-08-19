@@ -136,6 +136,7 @@ class VideoIndexPage(CoderedArticleIndexPage):
 
     def add_hits(self):
         self.hits += 1
+        self._meta.get_field("index_order_by").choices = self.index_order_by_choices
         self.save()
         return ""
 
