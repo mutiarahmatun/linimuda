@@ -156,6 +156,13 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
+# ManifestStaticFilesStorage is recommended in production, to prevent outdated
+# Javascript / CSS assets being served from cache (e.g. after a Wagtail upgrade).
+# See https://docs.djangoproject.com/en/3.0/ref/contrib/staticfiles/#manifeststaticfilesstorage
+# STATICFILES_STORAGE = "django.contrib.staticfiles.storage.ManifestStaticFilesStorage"
+STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
+
+
 STATICFILES_FINDERS = [
     "django.contrib.staticfiles.finders.FileSystemFinder",
     "django.contrib.staticfiles.finders.AppDirectoriesFinder",
@@ -175,12 +182,14 @@ LOGIN_REDIRECT_URL = "wagtailadmin_home"
 
 # Wagtail settings
 
+# TODO
 WAGTAIL_SITE_NAME = "Insanq"
 WAGTAIL_CACHE = False
 WAGTAIL_ENABLE_UPDATE_CHECK = False
 
 # Base URL to use when referring to full URLs within the Wagtail admin backend -
 # e.g. in notification emails. Don't include '/admin' or a trailing slash
+# TODO
 BASE_URL = "http://www.insanq.co.id"
 
 # Search
@@ -206,6 +215,5 @@ BOOTSTRAP4 = {
 
 
 # Tags
-
 TAGGIT_CASE_INSENSITIVE = True
 

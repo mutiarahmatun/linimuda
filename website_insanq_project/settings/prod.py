@@ -1,4 +1,5 @@
 from .base import *  # noqa
+import os
 import dj_database_url
 
 # SECURITY WARNING: don't run with debug turned on in production!
@@ -95,9 +96,7 @@ COMPRESS_CSS_FILTERS = [
 ]
 COMPRESS_CSS_HASHING_METHOD = "content"
 PRODUCTION = os.environ.get("DATABASE_URL")
-print("liverjango")
 if PRODUCTION:
-    print("wkwkwk")
     DATABASES["default"] = dj_database_url.config()
 SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
 SECURE_SSL_REDIRECT = True
