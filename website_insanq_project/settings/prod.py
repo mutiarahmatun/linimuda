@@ -11,6 +11,8 @@ SECRET_KEY = os.environ["SECRET_KEY"]
 ALLOWED_HOSTS = ["*"]
 # ALLOWED_HOSTS = ["www.insanq.co.id"]
 
+WAGTAIL_CACHE = False
+
 # To send email from the server, we recommend django_sendmail_backend
 # Or specify your own email backend such as an SMTP server.
 # https://docs.djangoproject.com/en/3.0/ref/settings/#email-backend
