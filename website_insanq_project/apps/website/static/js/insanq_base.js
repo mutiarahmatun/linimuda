@@ -42,6 +42,13 @@ $(document).ready(function () {
     obj.innerHTML = replaceLast(",", ".", text);
   });
 
+  $("p").each(function (i, obj) {
+    var text = obj.innerHTML;
+    text = text.replace(/###/g, "<span id=");
+    text = text.replace(/!##/g, ">");
+    obj.innerHTML = text.replace(/!##\n/g, ">");
+  });
+
   // if ($("input[type=date]").length) {
   //   $("input[type=date]").datepicker({
   //     format: "d MM yyyy",

@@ -21,7 +21,7 @@
                         {{ page.home_description }}
                     </p>
                     <div class="my-4">
-                        <a class="btn btn-secondary btn-lg btn-wide" href="./LINKDAFTAR" role="button">Daftar</a>
+                        <a class="btn btn-secondary btn-lg btn-wide" href="{{ page.landing_events.url }}" role="button">Daftar</a>
                     </div>
                 </div>
                 <div class="col-md-6">
@@ -110,7 +110,7 @@
                                             {% if article.main_image %}
                                                 <div class="fill-kontainer-tall">
                                                     {% image article.main_image max-900x900 as main_image %}
-                                                    <img src="{{main_image.url}}" />
+                                                    <img src="{{main_image.url}}" class="h-100"/>
                                                 </div>
                                             {% endif %}
                                         </div>
@@ -142,7 +142,7 @@
                 <div class="content-kontainer warna-teks-secondary-dark">
                     <div class="align-items-center text-center mar-auto">
                         <div class="d-inline-block">
-                            <h2>Kegiatan Konseling &amp; Psikotes</h2>
+                            <h2>Acara Konseling &amp; Psikotes</h2>
                             <div class="underline-short ul-secondary ul-normal mar-auto"></div>
                         </div>
                     </div>
@@ -170,7 +170,7 @@
                     </div>
                 </div>
                 <div class="d-flex align-items-center flex-column">
-                    <a class="btn btn-secondary btn-lg btn-wide" href="{{ page.landing_events.url }}" role="button">Kegiatan lain</a>
+                    <a class="btn btn-secondary btn-lg btn-wide" href="{{ page.landing_events.url }}" role="button">Acara lain</a>
                 </div>
                 <div class="p-4"></div>
             </div>

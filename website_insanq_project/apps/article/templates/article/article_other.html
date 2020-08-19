@@ -4,7 +4,7 @@
     <div class="col-md-3 white-text">
         <div class="content-kontainer">
             <div class="warna-teks-secondary text-center text-md-left">
-                <h4>Artikel Lain</h4>
+                <h4>{{page.get_parent.title}} Lain</h4>
             </div>
             <div class="d-flex d-md-block flex-wrap justify-content-around">
 
@@ -15,9 +15,8 @@
                                 <div class="fill-ratio">
                                     <div class="fill-kontainer-tall">
                                         <!-- GAMBAR ARTIKEL 1 DI SINI -->
-                                        {% comment %} <img src="https://insanq.co.id/images/TETAP_EFEKTIF_DI_TENGAH_PANDEMI.jpg" alt=""> {% endcomment %}
-                                        {% image article.main_image max-900x900 as main_image %}
-                                        <img src="{{main_image.url}}" alt="{{article.title}}"/>
+                                        {% image article.main_image max-1600x900 as main_image %}
+                                        <img src="{{main_image.url}}" alt="{{article.title}}" class="h-100"/>
                                     </div>
                                 </div>
                             </div>

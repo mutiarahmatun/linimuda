@@ -62,17 +62,19 @@
 
                                 <div class="px-4 ---">
                                     <a href="{{article.specific.url}}">
-                                        <div class="artikel-card align-self-start mx-auto">
-                                            <div class="ratio-1-1">
-                                                <div class="fill-ratio">
-                                                    <div class="fill-kontainer-tall">
-                                                        {% block cover %}
-                                                            {% image article.specific.main_image max-1600x900 as main_image %}
-                                                            <img src="{{main_image.url}}" alt="{{article.title}}"/>
-                                                        {% endblock %}
+                                        <div class="artikel-card {% if article.specific.link_thumbnail_embed_video %}card-video{% endif %} align-self-start mx-auto">
+                                            {% block video_cover %}
+                                                <div class="ratio-1-1">
+                                                    <div class="fill-ratio">
+                                                        <div class="fill-kontainer-tall">
+                                                            {% block cover %}
+                                                                {% image article.specific.main_image max-1600x900 as main_image %}
+                                                                <img src="{{main_image.url}}" alt="{{article.title}}" class="h-100"/>
+                                                            {% endblock %}
+                                                        </div>
                                                     </div>
                                                 </div>
-                                            </div>
+                                            {% endblock %}
                                             <div class="artikel-teksboks">
                                                 <div class="artikel-tanggal">
                                                     <!-- TANGGAL ARTIKEL 1 DI SINI -->

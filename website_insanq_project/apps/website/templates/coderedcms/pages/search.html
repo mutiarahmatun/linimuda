@@ -94,7 +94,7 @@
                                     <div class="fill-ratio">
                                         <div class="fill-kontainer-tall">
                                             {% image page.specific.main_image max-1600x900 as main_image %}
-                                            <img src="{{main_image.url}}" alt="{{page.title}}"/>
+                                            <img src="{{main_image.url}}" alt="{{page.title}}" class="h-100"/>
                                         </div>
                                     </div>
                                 </div>
@@ -195,7 +195,7 @@
                 {% if form.s.value %}
                     Hasil pencarian kosong.
                 {% else %}
-                    Silakan mengetikkan kata kunci ke dalam form.
+                    Silakan masukkan kata kunci ke dalam kotak pencarian.
                 {% endif %}
             </p>
         </div>

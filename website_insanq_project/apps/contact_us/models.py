@@ -11,9 +11,11 @@ from wagtail.admin.edit_handlers import (
     ObjectList,
     TabbedInterface,
 )
+from wagtail.images.edit_handlers import ImageChooserPanel
 from wagtail.contrib.forms.edit_handlers import FormSubmissionsPanel
 from wagtail.core.models import Page
 from wagtail.utils.decorators import cached_classmethod
+
 
 from website_insanq_project.apps.website.models import ReadOnlyPanel
 
@@ -28,6 +30,9 @@ class ContactUsPage(CoderedFormPage):
 
     hits = models.IntegerField(default=0, editable=False)
     html_embedded_maps = models.CharField(max_length=511, blank=True)
+    main_image = models.ForeignKey(
+        "wagtailimages.Image", null=True, on_delete=models.SET_NULL, related_name="+",
+    )
 
     def add_hits(self):
         self.hits += 1
@@ -38,6 +43,10 @@ class ContactUsPage(CoderedFormPage):
 
     template = "contact_us/contact_us_page.html"
     landing_page_template = "thank_you_page.html"
+
+    content_panels = Page.content_panels + [
+        ImageChooserPanel("main_image"),
+    ]
 
     body_content_panels = (
         [FieldPanel("html_embedded_maps")]

@@ -15,6 +15,9 @@ South==1.0.2
 # search
 wagtail-whoosh==0.2.4
 
+# other
+phonenumbers==8.12.8
+
 # To use with a MySQL database.
 # Don't forget specify appropriate version.
 # mysqlclient

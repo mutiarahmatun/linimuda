@@ -397,7 +397,9 @@ br {
 }
 
 .artikel-konten p,
-.artikel-konten label {
+.artikel-konten label,
+.artikel-konten ul,
+.artikel-konten li {
   font-size: 1.6rem;
   font-weight: 400;
   letter-spacing: 0;

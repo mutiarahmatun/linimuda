@@ -14,7 +14,7 @@
 
 {% if settings.coderedcms.SeoSettings.og_meta %}
     {% block og_description %}{{self.get_description}}{% endblock %}
-    {% block og_type %}article{% endblock %}
+    {% block og_type %}business.business{% endblock %}
     {% block og_seo_extra %}
         <meta property="og:article:published_time" content="{{self.get_pub_date}}" />
         <meta property="og:article:modified_time" content="{{self.last_published_at}}" />
