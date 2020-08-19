@@ -43,7 +43,6 @@ body {
 }
 
 .blob-primary {
-  background: url("{% static 'image/blob-primary-left.png' %}");
   background-size: contain;
   background-repeat: repeat-y;
   width: 20vw;

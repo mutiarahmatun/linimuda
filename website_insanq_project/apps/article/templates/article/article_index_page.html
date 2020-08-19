@@ -53,7 +53,6 @@
                 <div class="content-kontainer">
 
                     {% block index_result %}
-
                         <div class="d-flex flex-wrap justify-content-center white-text">
 
                             {% for article in index_paginated %}
@@ -89,77 +88,76 @@
                             {% endfor %}
 
                         </div>
+                    {% endblock %}
 
-                        <div class="list-page-num text-center mar-vertical-sm">
+                    <div class="list-page-num text-center mar-vertical-sm">
 
-                            {% if index_paginated.number > 1 %}
-                                <a href="{{ index_paginated.number|subtract:1 }}{% block par_lain_previous %}{% endblock %}" id="page-previous">
-                                    <div class="page-num-block">
-                            {% else %}
-                                <a href="#" id="page-previous">
-                                    <div class="page-num-block disabled">
-                            {% endif %}
-                                    <div class="vertical-center">
-                                        <div class="mar-auto">
-                                            <span class="fa fa-angle-left fa-sm"></span>
-                                        </div>
+                        {% if index_paginated.number > 1 %}
+                            <a href="{{ index_paginated.number|subtract:1 }}{% block par_lain_previous %}{% endblock %}" id="page-previous">
+                                <div class="page-num-block">
+                        {% else %}
+                            <a href="#" id="page-previous">
+                                <div class="page-num-block disabled">
+                        {% endif %}
+                                <div class="vertical-center">
+                                    <div class="mar-auto">
+                                        <span class="fa fa-angle-left fa-sm"></span>
                                     </div>
                                 </div>
-                            </a>
-                            {% with start="0" %}
-                                {% if index_paginated.paginator.num_pages >= 9 %}
-                                    {{index_paginated.number}}
-                                    {% if index_paginated.number < 5 %}
-                                        {{start}}
-                                    {% elif index_paginated.paginator.num_pages|subtract:index_paginated.number < 5 %}
-                                        {% update_variable index_paginated.paginator.num_pages|subtract:9 as start %}
-                                        {{start}}
-                                    {% else %}
-                                        {% update_variable index_paginated.number|subtract:5 as start %}
-                                        {{start}}
-                                    {% endif %}
+                            </div>
+                        </a>
+                        {% with start="0" %}
+                            {% if index_paginated.paginator.num_pages >= 9 %}
+                                {{index_paginated.number}}
+                                {% if index_paginated.number < 5 %}
+                                    {{start}}
+                                {% elif index_paginated.paginator.num_pages|subtract:index_paginated.number < 5 %}
+                                    {% update_variable index_paginated.paginator.num_pages|subtract:9 as start %}
+                                    {{start}}
+                                {% else %}
+                                    {% update_variable index_paginated.number|subtract:5 as start %}
+                                    {{start}}
                                 {% endif %}
-                                
-                                {% for i in '012345678'|make_list %}
-                                    {% if forloop.counter|add:start > index_paginated.paginator.num_pages %}
+                            {% endif %}
+                            
+                            {% for i in '012345678'|make_list %}
+                                {% if forloop.counter|add:start > index_paginated.paginator.num_pages %}
+                                {% else %}
+                                    <a href="?p={{ forloop.counter|add:start }}{% block par_lain %}{% endblock %}" page="{{ forloop.counter|add:start }}" id="page-button-{{ forloop.counter }}">
+                                    {% if forloop.counter|add:start == index_paginated.number %}
+                                        <div class="page-num-block current-page">
                                     {% else %}
-                                        <a href="?p={{ forloop.counter|add:start }}{% block par_lain %}{% endblock %}" page="{{ forloop.counter|add:start }}" id="page-button-{{ forloop.counter }}">
-                                        {% if forloop.counter|add:start == index_paginated.number %}
-                                            <div class="page-num-block current-page">
-                                        {% else %}
-                                            <div class="page-num-block">
-                                        {% endif %}
-                                                <div class="vertical-center">
-                                                    <div class="mar-auto">
-                                                        <span class="isi-page-button">
-                                                            {{ forloop.counter|add:start }}
-                                                        </span>
-                                                    </div>
+                                        <div class="page-num-block">
+                                    {% endif %}
+                                            <div class="vertical-center">
+                                                <div class="mar-auto">
+                                                    <span class="isi-page-button">
+                                                        {{ forloop.counter|add:start }}
+                                                    </span>
                                                 </div>
                                             </div>
-                                        </a>
-                                    {% endif %}
-                                    
-                                {% endfor %}
-                            {% endwith %}
-                            {% if index_paginated.number < index_paginated.paginator.num_pages %}
-                                <a href="?p={{ index_paginated.number|add:1 }}{% block par_lain_next %}{% endblock %}" id="page-next">
-                                    <div class="page-num-block">
-                            {% else %}
-                                <a href="#" id="page-next">
-                                    <div class="page-num-block disabled">
-                            {% endif %}
-                                    <div class="vertical-center">
-                                        <div class="mar-auto">
-                                            <span class="fa fa-angle-right fa-sm"></span>
                                         </div>
+                                    </a>
+                                {% endif %}
+                                
+                            {% endfor %}
+                        {% endwith %}
+                        {% if index_paginated.number < index_paginated.paginator.num_pages %}
+                            <a href="?p={{ index_paginated.number|add:1 }}{% block par_lain_next %}{% endblock %}" id="page-next">
+                                <div class="page-num-block">
+                        {% else %}
+                            <a href="#" id="page-next">
+                                <div class="page-num-block disabled">
+                        {% endif %}
+                                <div class="vertical-center">
+                                    <div class="mar-auto">
+                                        <span class="fa fa-angle-right fa-sm"></span>
                                     </div>
                                 </div>
-                            </a>
+                            </div>
+                        </a>
 
-                        </div>
-                    
-                    {% endblock %}
+                    </div>
                 </div>
             </div>
         </div>

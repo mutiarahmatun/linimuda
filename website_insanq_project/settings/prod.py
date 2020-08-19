@@ -23,7 +23,7 @@ EMAIL_FILE_PATH = "/tmp/app-messages"
 # EMAIL_HOST_USER: (Empty string)
 # EMAIL_HOST_PASSWORD: (Empty string)
 # -- Default email address used to send messages from the website. ==
-# DEFAULT_FROM_EMAIL = "Insanq <info@insanq.co.id>"
+DEFAULT_FROM_EMAIL = "Insanq <info@insanq.co.id>"
 
 # A list of people who get error notifications.
 ADMINS = [

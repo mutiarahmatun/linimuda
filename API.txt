@@ -108,10 +108,6 @@ layanan:
 
 ---- API Article Landing Page for template --
 children:
-  - {% for article in page.get_children %}
-      - article.title
-      - article.specific.<attr> (other than title)
-    {% endfor %}
   - page.add_hits
 
   - paginated pake query ?p=
