@@ -59,44 +59,46 @@
                         </div>
                     </div>
                 </div>
-                <div class="pad-horizontal-sm pad-vertical d-flex">
-                    <div class="img-md mar-auto">
-                        {% if self.main_image %}
+                {% if self.main_image %}
+                    <div class="pad-horizontal-sm pad-vertical d-flex">
+                        <div class="img-md mar-auto">
                             {% image self.main_image max-1600x900 as main_image %}
                             <img src="{{main_image.url}}" class="w-100" />
-                        {% endif %}
+                        </div>
                     </div>
-                </div>
+                {% endif %}
                 <div class="content-kontainer">
                     <div class="artikel-konten mar-auto par-max-width small-br">
-                        <p>
-                            {% if settings.website.Profile.company_name %}
-                                {{settings.website.Profile.company_name}}
-                                <br>
-                            {% endif %}
+                        <div class="no-indent">
+                            <p>
+                                {% if settings.website.Profile.company_name %}
+                                    {{settings.website.Profile.company_name}}
+                                    <br>
+                                {% endif %}
 
-                            {% if settings.website.Profile.address %}
-                                {{ settings.website.Profile.address }}
-                                <br>
-                            {% endif %}
-                        </p>
-                        <p class="teks-footer">
-                            {% if settings.website.Profile.telephone_number %}
-                                <span class="fa fa-phone px-2"></span> {{settings.website.Profile.telephone_number}}
-                                <br>
-                            {% endif %}
-                        
+                                {% if settings.website.Profile.address %}
+                                    {{ settings.website.Profile.address }}
+                                    <br>
+                                {% endif %}
+                            </p>
+                            <p class="teks-footer">
+                                {% if settings.website.Profile.telephone_number %}
+                                    <span class="fa fa-phone px-2"></span> {{settings.website.Profile.telephone_number}}
+                                    <br>
+                                {% endif %}
+                            
 
-                            {% if settings.website.Profile.handphone_number_1 %}
-                                <span class="fa fa-mobile px-2"></span> +{{settings.website.Profile.handphone_number_1}}
-                                <br>
-                            {% endif %}
+                                {% if settings.website.Profile.handphone_number_1 %}
+                                    <span class="fa fa-mobile px-2"></span> +{{settings.website.Profile.handphone_number_1}}
+                                    <br>
+                                {% endif %}
 
-                            {% if settings.website.Profile.handphone_number_2 %}
-                                <span class="fa fa-mobile px-2"></span> +{{settings.website.Profile.handphone_number_2}}
-                                <br>
-                            {% endif %}
-                        </p>
+                                {% if settings.website.Profile.handphone_number_2 %}
+                                    <span class="fa fa-mobile px-2"></span> +{{settings.website.Profile.handphone_number_2}}
+                                    <br>
+                                {% endif %}
+                            </p>
+                        </div>
                     </div>
                 </div>
                 <div class="content-kontainer">
