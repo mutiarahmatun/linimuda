@@ -8,11 +8,11 @@ $(document).ready(function () {
   );
 
   cekDesktop();
-  // geserParallax(parallax_faktor);
+  geserParallax(parallax_faktor);
 
   $(window).resize(function () {
     cekDesktop();
-    cekNavbar(parallax_faktor);
+    cekNavbar();
   });
 
   $("#navbar").addClass("no-transition");
@@ -21,7 +21,7 @@ $(document).ready(function () {
 
   $(document).scroll(function () {
     cekNavbar();
-    // geserParallax();
+    geserParallax(parallax_faktor);
   });
 
   $("form").each(function () {
@@ -130,7 +130,6 @@ function cekDesktop() {
 
 function geserParallax(parallax_faktor) {
   if (true) {
-    console.log("wow");
     var scroll = $(document).scrollTop();
     var ypos = parallax_faktor * scroll;
 

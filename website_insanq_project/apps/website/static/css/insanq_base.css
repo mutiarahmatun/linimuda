@@ -43,7 +43,7 @@ body {
 }
 
 .blob-primary {
-  background: url("https://insanq.co.id/images/logo-insan-q.png");
+  background: url("{% static 'image/blob-primary-left.png' %}");
   background-size: contain;
   background-repeat: repeat-y;
   width: 20vw;
