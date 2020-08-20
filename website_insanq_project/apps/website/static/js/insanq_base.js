@@ -43,10 +43,12 @@ $(document).ready(function () {
   });
 
   $("p").each(function (i, obj) {
-    var text = obj.innerHTML;
-    text = text.replace(/###/g, "<span id=");
-    text = text.replace(/!##/g, ">");
-    obj.innerHTML = text.replace(/!##\n/g, ">");
+    if (obj.innerHTML.indexOf("###") !== -1) {
+      var text = obj.innerHTML;
+      text = text.replace(/###/g, "<span id=");
+      text = text.replace(/!##/g, ">");
+      obj.outerHTML = text.replace(/!##\n/g, ">");
+    }
   });
 
   // if ($("input[type=date]").length) {
