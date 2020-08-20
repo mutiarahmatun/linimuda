@@ -412,6 +412,7 @@ br {
 }
 
 .no-indent > p,
+.no-indent > .rich-text > p,
 p.no-indent {
   text-indent: 0 !important;
 }
@@ -582,7 +583,7 @@ p.no-indent {
 .img-placeholder {
   width: 100%;
   height: 100%;
-  background-color: gray;
+  /* background-color: gray; */
 }
 
 .navbar-toggler {

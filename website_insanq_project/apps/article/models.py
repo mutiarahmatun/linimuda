@@ -150,7 +150,6 @@ class ArticlePage(CoderedArticlePage):
 
     # Only allow this page to be created beneath an ArticleIndexPage.
     parent_page_types = ["article.ArticleIndexPage"]
-    subpage_types = []
 
 
 class ArticleIndexPage(CoderedArticleIndexPage):
@@ -164,7 +163,9 @@ class ArticleIndexPage(CoderedArticleIndexPage):
     hits = models.IntegerField(default=0, editable=False)
     body = None
     is_company_articles = models.BooleanField(
-        default=False, verbose_name="Is this company articles?"
+        default=False,
+        verbose_name="Is this company articles?",
+        help_text="Company articles adalah artikel-artikel mengenai Insanq. Misal: Konseling, Test Psikologi, Seminar & Training",
     )
 
     def add_hits(self):
@@ -229,4 +230,4 @@ class ArticleIndexPage(CoderedArticleIndexPage):
         return TabbedInterface(panels).bind_to(model=cls)
 
     # Only allow ArticlePages beneath this page.
-    subpage_types = ["article.ArticlePage"]
+    parent_page_types = ["home.HomePage"]

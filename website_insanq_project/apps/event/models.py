@@ -187,7 +187,6 @@ class EventPage(CoderedFormPage):
 
     # Only allow this page to be created beneath an EventIndexPage.
     parent_page_types = ["event.EventIndexPage"]
-    subpage_types = []
 
 
 class EventPageField(CoderedFormField):
@@ -282,5 +281,5 @@ class EventIndexPage(CoderedWebPage):
     index_query_pagemodel = "event.EventPage"
 
     # Only allow EventPages beneath this page.
-    subpage_types = ["event.EventPage"]
+    parent_page_types = ["home.HomePage"]
 

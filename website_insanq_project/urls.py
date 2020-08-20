@@ -13,7 +13,7 @@ urlpatterns = [
     # Documents
     path("docs/", include(wagtaildocs_urls)),
     # Search
-    path("search/", include(coderedsearch_urls)),
+    path("pencarian/", include(coderedsearch_urls)),
     # For anything not caught by a more specific rule above, hand over to
     # the page serving mechanism. This should be the last pattern in
     # the list:

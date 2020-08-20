@@ -118,4 +118,4 @@ class InformationPage(CoderedArticlePage):
     search_fields = []
 
     # Only allow this page to be created beneath an ArticleIndexPage.
-    subpage_types = []
+    parent_page_types = ["home.HomePage"]

@@ -19,7 +19,6 @@ def hide_user_menu_item(request, menu_items):
         "google-api",
         "mailchimp-api",
         "collections",
-        "cache",
     ]
     menu_items[:] = [item for item in menu_items if item.name not in hide_item_by_name]
 

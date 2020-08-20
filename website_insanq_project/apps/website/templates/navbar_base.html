@@ -24,6 +24,9 @@
     <!-- Navbar links -->
     <div class="collapse navbar-collapse" id="collapsibleNavbar">
         <ul class="navbar-nav ml-auto text-right">
+            <li class="nav-item">
+                <a class="nav-link" href="/pencarian">Pencarian</a>
+            </li>
             {% for link in navbar.navigation_links %}
                 {% if link.block_type == "NonDropdown" %}
                     <li class="nav-item">

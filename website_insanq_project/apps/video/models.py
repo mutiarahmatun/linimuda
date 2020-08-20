@@ -124,7 +124,6 @@ class VideoPage(CoderedArticlePage):
     ]
 
     parent_page_types = ["video.VideoIndexPage"]
-    subpage_types = []
 
 
 class VideoIndexPage(CoderedArticleIndexPage):
@@ -195,4 +194,4 @@ class VideoIndexPage(CoderedArticleIndexPage):
         return TabbedInterface(panels).bind_to(model=cls)
 
     # Only allow VideoPages beneath this page.
-    subpage_types = ["video.VideoPage"]
+    parent_page_types = ["home.HomePage"]

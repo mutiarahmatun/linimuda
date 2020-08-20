@@ -118,6 +118,8 @@ class ContactUsPage(CoderedFormPage):
 
         return TabbedInterface(panels).bind_to(model=cls)
 
+    parent_page_types = ["home.HomePage"]
+
 
 class ContactUsPageField(CoderedFormField):
     """

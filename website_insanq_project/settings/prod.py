@@ -3,6 +3,7 @@ import os
 import dj_database_url
 
 # SECURITY WARNING: don't run with debug turned on in production!
+# TODO NANTI KALAU UDAH GA ADA ERROR BARU DIGANTI
 DEBUG = True
 
 PRODUCTION = os.environ.get("DATABASE_URL")
@@ -24,15 +25,13 @@ WAGTAIL_CACHE = False
 # https://docs.djangoproject.com/en/3.0/ref/settings/#email-backend
 
 
-EMAIL_BACKEND = "django.core.mail.backends.filebased.EmailBackend"
-EMAIL_FILE_PATH = "/tmp/app-messages"
 # EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
-# EMAIL_HOST:  'localhost'
-# EMAIL_PORT: 25
-# EMAIL_HOST_USER: (Empty string)
-# EMAIL_HOST_PASSWORD: (Empty string)
-# -- Default email address used to send messages from the website. ==
-DEFAULT_FROM_EMAIL = "Insanq <info@insanq.co.id>"
+# EMAIL_HOST = "smtp.gmail.com"
+# EMAIL_PORT = "465"
+# EMAIL_HOST_USER = <email>
+# EMAIL_HOST_PASSWORD = <password>
+# EMAIL_USE_SSL = True
+# DEFAULT_FROM_EMAIL = "INSAN-Q Psychological Services"
 
 # A list of people who get error notifications.
 ADMINS = [
