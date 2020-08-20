@@ -63,6 +63,9 @@ class Profile(BaseSetting):
         verbose_name=_("Handphone / WhatsApp Number 2"),
         help_text=_("Don't forget with country code. Example: 6281234567890"),
     )
+    copyright_year = models.IntegerField(
+        null=True, blank=True, verbose_name=_("Copyright Year")
+    )
     address = models.CharField(max_length=511, blank=True, verbose_name=_("Address"))
 
     panels = [
@@ -74,6 +77,7 @@ class Profile(BaseSetting):
                 FieldPanel("handphone_number_1"),
                 FieldPanel("handphone_number_2"),
                 FieldPanel("address"),
+                FieldPanel("copyright_year"),
             ],
             _("Profile"),
         )

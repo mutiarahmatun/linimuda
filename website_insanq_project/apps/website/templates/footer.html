@@ -1,4 +1,5 @@
 {% load static coderedcms_tags i18n wagtailcore_tags wagtailimages_tags wagtailsettings_tags wagtailuserbar %}
+{% load format_phone %}
 
 <footer>
     {% if settings.website.Profile.handphone_number_1 %}
@@ -44,18 +45,18 @@
                                 <p class="teks-footer">
 
                                     {% if settings.website.Profile.telephone_number %}
-                                        <span class="fa fa-phone px-2"></span> +{{settings.website.Profile.telephone_number}}
+                                        <span class="fa fa-phone px-2"></span> {% format_phone settings.website.Profile.telephone_number %}
                                     {% endif %}
                                 
 
                                     {% if settings.website.Profile.handphone_number_1 %}
                                         <br>
-                                        <span class="fa fa-mobile px-2"></span> +{{settings.website.Profile.handphone_number_1}}
+                                        <span class="fa fa-mobile px-2"></span> {% format_phone settings.website.Profile.handphone_number_1 %}
                                     {% endif %}
 
                                     {% if settings.website.Profile.handphone_number_2 %}
                                         <br>
-                                        <span class="fa fa-mobile px-2"></span> +{{settings.website.Profile.handphone_number_2}}
+                                        <span class="fa fa-mobile px-2"></span> {% format_phone settings.website.Profile.handphone_number_2 %}
                                     {% endif %}
                                 </p>
                                 <div class="row justify-content-center justify-content-md-end">
@@ -121,7 +122,7 @@
                         <div class="row pt-4 text-center text-md-left">
                             <div class="col-12">
                                 <p class="teks-footer">
-                                    <b>&#169; 2020 {{settings.website.Profile.company_name}}</b>
+                                    <b>&#169; {{settings.website.Profile.copyright_year}} {{settings.website.Profile.company_name}}</b>
                                 </p>
                             </div>
                         </div>

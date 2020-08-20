@@ -76,6 +76,7 @@ class HomePage(CoderedWebPage):
         on_delete=models.SET_NULL,
         related_name="+",
     )
+    landing_articles_title = models.CharField(max_length=255, blank=True)
     landing_articles = models.ForeignKey(
         ArticleIndexPage,
         null=True,
@@ -83,6 +84,7 @@ class HomePage(CoderedWebPage):
         on_delete=models.SET_NULL,
         related_name="+",
     )
+    landing_events_title = models.CharField(max_length=255, blank=True)
     landing_events = models.ForeignKey(
         EventIndexPage,
         null=True,
@@ -101,8 +103,17 @@ class HomePage(CoderedWebPage):
             _("Main Home"),
         ),
         StreamFieldPanel("section_layanan"),
-        PageChooserPanel("landing_articles"),
-        PageChooserPanel("landing_events"),
+        MultiFieldPanel(
+            [
+                FieldPanel("landing_articles_title"),
+                PageChooserPanel("landing_articles"),
+            ],
+            _("Section Landing Articles"),
+        ),
+        MultiFieldPanel(
+            [FieldPanel("landing_events_title"), PageChooserPanel("landing_events")],
+            _("Section Landing Events"),
+        ),
         MultiFieldPanel(
             [ReadOnlyPanel("hits", heading="Hits"),], _("Publication Info"),
         ),
