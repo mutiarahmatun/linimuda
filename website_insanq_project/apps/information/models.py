@@ -9,6 +9,7 @@ from wagtail.admin.edit_handlers import (
     ObjectList,
     TabbedInterface,
 )
+from wagtail.search import index
 from wagtail.core.fields import RichTextField
 from wagtail.core.models import Page
 from wagtail.utils.decorators import cached_classmethod
@@ -115,7 +116,9 @@ class InformationPage(CoderedArticlePage):
 
         return TabbedInterface(panels).bind_to(model=cls)
 
-    search_fields = []
+    search_fields = [
+        index.FilterField("title"),
+    ]
 
     # Only allow this page to be created beneath an ArticleIndexPage.
     parent_page_types = ["home.HomePage"]

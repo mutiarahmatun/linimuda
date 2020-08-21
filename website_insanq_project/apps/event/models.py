@@ -224,7 +224,9 @@ class EventIndexPage(CoderedWebPage):
         self.save()
         return ""
 
-    search_fields = []
+    search_fields = [
+        index.FilterField("title"),
+    ]
 
     # Panel
 

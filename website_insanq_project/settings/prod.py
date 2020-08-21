@@ -6,6 +6,7 @@ DEBUG = False
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = os.environ["SECRET_KEY"]
+MEDIA_ROOT = os.environ["MEDIA_ROOT"]
 
 # Add your site's domain name(s) here.
 ALLOWED_HOSTS = ["*"]

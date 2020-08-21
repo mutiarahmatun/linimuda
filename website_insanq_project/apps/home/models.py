@@ -9,6 +9,7 @@ from wagtail.admin.edit_handlers import (
     FieldPanel,
     PageChooserPanel,
 )
+from wagtail.search import index
 from wagtail.core import blocks
 from wagtail.core.fields import StreamField
 from wagtail.core.models import Page
@@ -58,7 +59,9 @@ class HomePage(CoderedWebPage):
             print(e)
         return context
 
-    search_fields = []
+    search_fields = [
+        index.FilterField("title"),
+    ]
     ###############
     # Panels
     ###############

@@ -9,9 +9,9 @@ from wagtail.admin.edit_handlers import (
     ObjectList,
     TabbedInterface,
 )
+from wagtail.search import index
 from wagtail.core.fields import RichTextField
 from wagtail.core.models import Page
-from wagtail.search import index
 from wagtail.utils.decorators import cached_classmethod
 
 from website_insanq_project.apps.website.models import ReadOnlyPanel
@@ -139,7 +139,9 @@ class VideoIndexPage(CoderedArticleIndexPage):
         self.save()
         return ""
 
-    search_fields = []
+    search_fields = [
+        index.FilterField("title"),
+    ]
     # Panel
 
     # Override to not contain template form

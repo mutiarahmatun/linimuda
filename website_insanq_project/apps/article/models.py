@@ -174,7 +174,9 @@ class ArticleIndexPage(CoderedArticleIndexPage):
         self.save()
         return ""
 
-    search_fields = []
+    search_fields = [
+        index.FilterField("title"),
+    ]
     # Panel
 
     # Override to not contain template form
