@@ -76,7 +76,7 @@ $(document).ready(function () {
         "Sabtu",
       ],
       dayNamesShort: ["Min", "Sen", "Sel", "Rab", "kam", "Jum", "Sab"],
-      dayNamesMin: ["Mg", "Sn", "Sl", "Rb", "Km", "jm", "Sb"],
+      dayNamesMin: ["Mg", "Sn", "Sl", "Rb", "Km", "Jm", "Sb"],
       weekHeader: "Mg",
       dateFormat: "dd/mm/yy",
       firstDay: 0,

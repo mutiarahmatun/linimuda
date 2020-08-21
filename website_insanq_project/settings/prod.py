@@ -1,15 +1,9 @@
 from .base import *  # noqa
 import os
-import dj_database_url
 
 # SECURITY WARNING: don't run with debug turned on in production!
 # TODO NANTI KALAU UDAH GA ADA ERROR BARU DIGANTI
 DEBUG = True
-
-PRODUCTION = os.environ.get("DATABASE_URL")
-if PRODUCTION:
-    print("This is production")
-    DATABASES["default"] = dj_database_url.config(conn_max_age=600)
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = os.environ["SECRET_KEY"]
@@ -26,16 +20,16 @@ WAGTAIL_CACHE = False
 
 
 EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
-EMAIL_HOST = "mail.insanq.co.id"
-EMAIL_PORT = "465"
-EMAIL_HOST_USER = "service@insanq.co.id"
-EMAIL_HOST_PASSWORD = ""
+EMAIL_HOST = os.environ["EMAIL_HOST"]
+EMAIL_PORT = os.environ["EMAIL_PORT"]
+EMAIL_HOST_USER = os.environ["EMAIL_HOST_USER"]
+EMAIL_HOST_PASSWORD = os.environ["EMAIL_HOST_PASSWORD"]
 EMAIL_USE_SSL = True
-DEFAULT_FROM_EMAIL = "INSAN-Q Psychological Services"
+DEFAULT_FROM_EMAIL = os.environ["DEFAULT_FROM_EMAIL"]
 
 # A list of people who get error notifications.
 ADMINS = [
-    ("Administrator", "admin@insanq.co.id"),
+    ("Administrator", os.environ["EMAIL_HOST"]),
 ]
 
 # A list in the same format as ADMINS that specifies who should get broken link
@@ -45,17 +39,17 @@ MANAGERS = ADMINS
 # Email address used to send error messages to ADMINS.
 SERVER_EMAIL = DEFAULT_FROM_EMAIL
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.mysql',
-#         'HOST': 'localhost',
-#         'NAME': 'website_insanq_project',
-#         'USER': 'website_insanq_project',
-#         'PASSWORD': '',
-#         # If using SSL to connect to a cloud mysql database, spedify the CA as so.
-#         'OPTIONS': { 'ssl': { 'ca': '/path/to/certificate-authority.pem' } },
-#     }
-# }
+DATABASES = {
+    "default": {
+        "ENGINE": "django.db.backends.mysql",
+        "HOST": os.environ.get("DATABASE_HOST"),
+        "NAME": os.environ.get("DATABASE_NAME"),
+        "USER": os.environ.get("DATABASE_USER"),
+        "PASSWORD": os.environ.get("DATABASE_PASSWORD"),
+        #         # If using SSL to connect to a cloud mysql database, spedify the CA as so.
+        #         'OPTIONS': { 'ssl': { 'ca': '/path/to/certificate-authority.pem' } },
+    }
+}
 
 # Use template caching to speed up wagtail admin and front-end.
 # Requires reloading web server to pick up template changes.

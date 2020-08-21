@@ -150,4 +150,3 @@ class HomePage(CoderedWebPage):
         return TabbedInterface(panels).bind_to(model=cls)
 
     parent_page_types = []
-

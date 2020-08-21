@@ -7,9 +7,9 @@ whitenoise==5.1.0
 coverage==5.1
 
 # Heroku
-django-toolbelt==0.0.1
-psycopg2-binary==2.8.5
-dj-database-url==0.5.0
+# django-toolbelt==0.0.1
+# psycopg2-binary==2.8.5
+# dj-database-url==0.5.0
 # South==1.0.2
 
 # search
@@ -20,4 +20,4 @@ phonenumbers==8.12.8
 
 # To use with a MySQL database.
 # Don't forget specify appropriate version.
-# mysqlclient
+mysqlclient==2.0.1

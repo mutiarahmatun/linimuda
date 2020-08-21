@@ -282,4 +282,3 @@ class EventIndexPage(CoderedWebPage):
 
     # Only allow EventPages beneath this page.
     parent_page_types = ["home.HomePage"]
-
