@@ -37,8 +37,6 @@ $(document).ready(function () {
 
   $(".replace-koma").each(function (i, obj) {
     var text = obj.innerHTML;
-    console.log(obj);
-    console.log(text.trim());
     obj.innerHTML = replaceLast(",", ".", text);
   });
 
@@ -50,16 +48,6 @@ $(document).ready(function () {
       obj.outerHTML = text.replace(/!##\n/g, ">");
     }
   });
-
-  // if ($("input[type=date]").length) {
-  //   $("input[type=date]").datepicker({
-  //     format: "d MM yyyy",
-  //     maxViewMode: 1,
-  //     todayBtn: "linked",
-  //     language: "id",
-  //     todayHighlight: true,
-  //   });
-  // }
 
   //Smooth scrolling
   $('a[href*="#"]')

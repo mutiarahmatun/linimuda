@@ -25,13 +25,13 @@ WAGTAIL_CACHE = False
 # https://docs.djangoproject.com/en/3.0/ref/settings/#email-backend
 
 
-# EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
-# EMAIL_HOST = "smtp.gmail.com"
-# EMAIL_PORT = "465"
-# EMAIL_HOST_USER = <email>
-# EMAIL_HOST_PASSWORD = <password>
-# EMAIL_USE_SSL = True
-# DEFAULT_FROM_EMAIL = "INSAN-Q Psychological Services"
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+EMAIL_HOST = "mail.insanq.co.id"
+EMAIL_PORT = "465"
+EMAIL_HOST_USER = "service@insanq.co.id"
+EMAIL_HOST_PASSWORD = ""
+EMAIL_USE_SSL = True
+DEFAULT_FROM_EMAIL = "INSAN-Q Psychological Services"
 
 # A list of people who get error notifications.
 ADMINS = [

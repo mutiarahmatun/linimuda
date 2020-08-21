@@ -78,10 +78,10 @@
         {% endif %}
         {% endblock %}
 
-        <link rel="stylesheet" type="text/css" href="{% static 'css/insanq_base.css' %}">
-
         {% block extra_css %}
         {% endblock %}
+
+        <link rel="stylesheet" type="text/css" href="{% static 'css/insanq_base.css' %}">
 
         {% block favicon %}
             {% if settings.coderedcms.LayoutSettings.favicon %}
