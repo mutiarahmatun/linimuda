@@ -69,11 +69,8 @@ $(document).ready(function () {
         if (target.length) {
           // Only prevent default if animation is actually gonna happen
           event.preventDefault();
-          // Scroll tambahan jika navbar masih kondisi awal
-          var tambahan = 0;
-          if ($(window).scrollTop() == 0) {
-            tambahan = 45;
-          }
+          // Scroll tambahan untuk navbar
+          var tambahan = -50;
           $("html, body").animate(
             {
               scrollTop:
@@ -106,9 +103,11 @@ function cekDesktop() {
 
   if (is_desktop) {
     $(".navbar-white").toggleClass("navbar-white navbar-transparan");
+    $(".full-height").height("");
   } else {
     $(".navbar-transparan").toggleClass("navbar-transparan navbar-white");
     $("#navbar").addClass("small-navbar");
+    $(".full-height").height("auto");
   }
 }
 

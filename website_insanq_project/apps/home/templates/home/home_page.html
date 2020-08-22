@@ -26,8 +26,8 @@
                 </div>
                 <div class="col-md-6">
                     <div class="img-placeholder">
-                        {% image page.home_image max-1200x1200 as main_image %}
-                        <img src="{{main_image.url}}" alt="INSAN-Q Psychological Services" class="w-100" />
+                        {% image page.home_image max-900x900 as main_image %}
+                        <img src="{{main_image.url}}" alt="{{ page.home_company_name }}" class="w-100" />
                     </div>
                 </div>
             </div>
@@ -58,7 +58,7 @@
                             </div>
                             <div class="col-md-6 order-1 order-md-2">
                                 <div class="img-placeholder">
-                                    {% image layanan.value.thumbnail max-1200x1200 as main_image %}
+                                    {% image layanan.value.thumbnail max-600x600 as main_image %}
                                     <img src="{{main_image.url}}" alt="Layanan" class="w-100" />
                                 </div>
                             </div>
@@ -75,7 +75,7 @@
                             </div>
                             <div class="col-md-6 order-1 order-md-1">
                                 <div class="img-placeholder">
-                                    {% image layanan.value.thumbnail max-1200x1200 as main_image %}
+                                    {% image layanan.value.thumbnail max-600x600 as main_image %}
                                     <img src="{{main_image.url}}" alt="Layanan" class="w-100" />
                                 </div>
                             </div>
@@ -109,7 +109,7 @@
                                         <div class="fill-ratio">
                                             {% if article.main_image %}
                                                 <div class="fill-kontainer-tall">
-                                                    {% image article.main_image max-900x900 as main_image %}
+                                                    {% image article.main_image max-600x600 as main_image %}
                                                     <img src="{{main_image.url}}" alt="{{ article.title }}" class="h-100"/>
                                                 </div>
                                             {% endif %}

@@ -606,10 +606,14 @@ p.no-indent {
   border-color: var(--warna-gray-light-2);
 }
 
-.small-navbar.navbar-transparan .navbar-toggler-icon,
-.navbar-white .navbar-toggler-icon {
-  filter: invert();
+.navbar-toggler-icon {
   transition: all 0.2s;
+  opacity: 0.4;
+}
+
+.navbar-primary .navbar-toggler-icon,
+.navbar-secondary .navbar-toggler-icon {
+  filter: invert();
 }
 
 .black-gradient {
@@ -749,6 +753,7 @@ p.no-indent {
 
 .navbar .nav-item {
   padding: 0.8rem 0;
+  margin-left: auto;
 }
 
 .dropdown-item {
