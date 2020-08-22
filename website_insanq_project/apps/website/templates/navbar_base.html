@@ -10,7 +10,7 @@
             <div class="kontainer-logo-navbar align-items-center" id="kontainer-logo">
                 <div class="vertical-center">
                     {% image settings.coderedcms.LayoutSettings.logo original as logo_image %}
-                    <img alt="Logo Perusahaan" id="logo-navbar" class="logo-navbar" src="{{ logo_image.url }}" />
+                    <img alt="Logo {{settings.website.Profile.company_name}}" id="logo-navbar" class="logo-navbar" src="{{ logo_image.url }}" />
                 </div>
             </div>
         </a>

@@ -63,7 +63,7 @@
                     <div class="pad-horizontal-sm pad-vertical d-flex">
                         <div class="img-md mar-auto">
                             {% image self.main_image max-1600x900 as main_image %}
-                            <img src="{{main_image.url}}" class="w-100" />
+                            <img src="{{main_image.url}}" alt={{page.title}} class="w-100" />
                         </div>
                     </div>
                 {% endif %}

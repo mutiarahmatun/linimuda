@@ -20,7 +20,7 @@
                     {% if settings.coderedcms.LayoutSettings.logo %}
                         <div class="kontainer-logo-footer d-inline-block z-100">
                             {% image settings.coderedcms.LayoutSettings.logo original as logo_image %}
-                            <img src="{{ logo_image.url }}" />
+                            <img src="{{ logo_image.url }}" alt="Logo {{settings.website.Profile.company_name}}" />
                         </div>
                     {% endif %}
                 </div>
