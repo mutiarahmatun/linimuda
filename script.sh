@@ -8,6 +8,7 @@ MIGRATE="python manage.py migrate"
 RUNSERVER="python manage.py runserver"
 UPDATEINDEX="python manage.py update_index"
 COLLECTSTATIC="python manage.py collectstatic"
+COMPRESS="python manage.py compress"
 
 # -- linter --
 # flake8 .
@@ -15,6 +16,8 @@ COLLECTSTATIC="python manage.py collectstatic"
 # -- formatter --
 # black .
 
-$MAKEMIGRATIONS && $MIGRATE && $UPDATEINDEX && $RUNSERVER
+$MAKEMIGRATIONS && $MIGRATE && $RUNSERVER
+# $UPDATEINDEX
+
 # -- collectstatic, do this if you want --
-# $COLLECTSTATIC
+# $COLLECTSTATIC && $COMPRESS

@@ -217,5 +217,3 @@ BOOTSTRAP4 = {
 # Tags
 TAGGIT_CASE_INSENSITIVE = True
 
-# Compressor
-COMPRESS_ENABLED = True

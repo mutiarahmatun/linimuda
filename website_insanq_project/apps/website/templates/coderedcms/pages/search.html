@@ -35,88 +35,84 @@
         <div class="d-flex flex-wrap justify-content-center white-text">
             
             {% for page in results_paginated %}
-                {% if page.specific.home_company_name or page.get_parent.specific.home_company_name %}
                 
-                {% else %}
-                    {% if page.specific.short_description %}
-                        <div class="px-4 ---">
-                            <div class="kegiatan-card gray-text m-0">
-                                <div class="kegiatan-judul">
-                                    <h3>{{ page.specific.title }}</h3>
+                {% if page.specific.short_description %}
+                    <div class="px-4 ---">
+                        <div class="kegiatan-card gray-text m-0">
+                            <div class="kegiatan-judul">
+                                <h3>{{ page.specific.title }}</h3>
+                            </div>
+                            <div class="my-3">
+                                <div class="underline-exact ul-secondary-light ul-mid mar-auto"></div>
+                            </div>
+                            <div class="kegiatan-deskripsi">
+                                {{ page.specific.short_description|richtext }}
+                            </div>
+                            <div class="text-right mt-4">
+                                <a class="btn btn-secondary" href="{{ page.specific.url }}" role="button">Daftar</a>
+                            </div>
+                        </div>
+                        <div class="p-4"></div>
+                    </div>
+                {% elif page.specific.link_youtube %}
+                    <div class="px-4 ---">
+                        <a href="{{page.specific.url}}">
+                            <div class="artikel-card card-video align-self-start mx-auto">
+                                <div class="ratio-16-9">
+                                    <div class="fill-ratio">
+                                        {% if "youtube" in page.specific.link_youtube %}
+                                            <iframe class="fill-kontainer-wide"
+                                            {% if "watch?v=" in page.specific.link_youtube %}
+                                                src="{{ page.specific.link_youtube|watch_to_embed }}"
+                                            {% elif "embed" in page.specific.link_youtube %}
+                                                src="{{ page.specific.link_youtube }}"
+                                            {% endif %}
+                                                frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                                                allowfullscreen>
+                                            </iframe>
+                                        {% endif %}
+                                    </div>
                                 </div>
-                                <div class="my-3">
-                                    <div class="underline-exact ul-secondary-light ul-mid mar-auto"></div>
-                                </div>
-                                <div class="kegiatan-deskripsi">
-                                    {{ page.specific.short_description|richtext }}
-                                </div>
-                                <div class="text-right mt-4">
-                                    <a class="btn btn-secondary" href="{{ page.specific.url }}" role="button">Daftar</a>
+                                <div class="artikel-teksboks">
+                                    <div class="artikel-tanggal">
+                                        <!-- TANGGAL ARTIKEL 1 DI SINI -->
+                                        <p>{{page.specific.get_pub_date}}</p>
+                                    </div>
+                                    <div class="artikel-judul">
+                                        <!-- JUDUL ARTIKEL 1 DI SINI -->
+                                        <h5>{{page.title}}</h5>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="p-4"></div>
-                        </div>
-                    {% elif page.specific.link_youtube %}
-                        <div class="px-4 ---">
-                            <a href="{{page.specific.url}}">
-                                <div class="artikel-card card-video align-self-start mx-auto">
-                                    <div class="ratio-16-9">
-                                        <div class="fill-ratio">
-                                            {% if "youtube" in page.specific.link_youtube %}
-                                                <iframe class="fill-kontainer-wide"
-                                                {% if "watch?v=" in page.specific.link_youtube %}
-                                                    src="{{ page.specific.link_youtube|watch_to_embed }}"
-                                                {% elif "embed" in page.specific.link_youtube %}
-                                                    src="{{ page.specific.link_youtube }}"
-                                                {% endif %}
-                                                    frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-                                                    allowfullscreen>
-                                                </iframe>
-                                            {% endif %}
-                                        </div>
-                                    </div>
-                                    <div class="artikel-teksboks">
-                                        <div class="artikel-tanggal">
-                                            <!-- TANGGAL ARTIKEL 1 DI SINI -->
-                                            <p>{{page.specific.get_pub_date}}</p>
-                                        </div>
-                                        <div class="artikel-judul">
-                                            <!-- JUDUL ARTIKEL 1 DI SINI -->
-                                            <h5>{{page.title}}</h5>
+                        </a>
+                        <div class="p-4"></div>
+                    </div>
+                {% else %}
+                    <div class="px-4 ---">
+                        <a href="{{page.specific.url}}">
+                            <div class="artikel-card align-self-start mx-auto">
+                                <div class="ratio-1-1">
+                                    <div class="fill-ratio">
+                                        <div class="fill-kontainer-tall">
+                                            {% image page.specific.main_image max-1600x900 as main_image %}
+                                            <img src="{{main_image.url}}" alt="{{page.title}}" class="h-100"/>
                                         </div>
                                     </div>
                                 </div>
-                            </a>
-                            <div class="p-4"></div>
-                        </div>
-                    {% else %}
-                        <div class="px-4 ---">
-                            <a href="{{page.specific.url}}">
-                                <div class="artikel-card align-self-start mx-auto">
-                                    <div class="ratio-1-1">
-                                        <div class="fill-ratio">
-                                            <div class="fill-kontainer-tall">
-                                                {% image page.specific.main_image max-1600x900 as main_image %}
-                                                <img src="{{main_image.url}}" alt="{{page.title}}" class="h-100"/>
-                                            </div>
-                                        </div>
+                                <div class="artikel-teksboks">
+                                    <div class="artikel-tanggal">
+                                        <!-- TANGGAL ARTIKEL 1 DI SINI -->
+                                        <p>{{page.specific.get_pub_date}}</p>
                                     </div>
-                                    <div class="artikel-teksboks">
-                                        <div class="artikel-tanggal">
-                                            <!-- TANGGAL ARTIKEL 1 DI SINI -->
-                                            <p>{{page.specific.get_pub_date}}</p>
-                                        </div>
-                                        <div class="artikel-judul">
-                                            <!-- JUDUL ARTIKEL 1 DI SINI -->
-                                            <h5>{{page.title}}</h5>
-                                        </div>
+                                    <div class="artikel-judul">
+                                        <!-- JUDUL ARTIKEL 1 DI SINI -->
+                                        <h5>{{page.title}}</h5>
                                     </div>
                                 </div>
-                            </a>
-                            <div class="p-4"></div>
-                        </div>
-                    {% endif %}
-
+                            </div>
+                        </a>
+                        <div class="p-4"></div>
+                    </div>
                 {% endif %}
             
             {% endfor %}

@@ -2,11 +2,9 @@ from .base import *  # noqa
 import os
 
 # SECURITY WARNING: don't run with debug turned on in production!
-# TODO PAS AKHIR NANTI BARU DIGANTI
-DEBUG = True
+DEBUG = False
 
-# TODO NANTI DIGANTI
-BASE_URL = "newwebsite.insanq.co.id"
+BASE_URL = "insanq.co.id"
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = os.environ["SECRET_KEY"]
@@ -91,7 +89,8 @@ CACHES = {
     }
 }
 
-# --Heroku things--
+COMPRESS_STORAGE = "compressor.storage.GzipCompressorFileStorage"
+COMPRESS_ENABLED = True
 COMPRESS_OFFLINE = True
 COMPRESS_CSS_FILTERS = [
     "compressor.filters.css_default.CssAbsoluteFilter",

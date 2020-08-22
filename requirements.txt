@@ -13,7 +13,7 @@ coverage==5.1
 # South==1.0.2
 
 # search
-wagtail-whoosh==0.2.4
+# wagtail-whoosh==0.2.4
 
 # other
 phonenumbers==8.12.8
@@ -22,7 +22,4 @@ phonenumbers==8.12.8
 # Don't forget specify appropriate version.
 mysqlclient==2.0.1
 
-# PENGGANTI django-compressor==2.4
-# pip install rcssmin --install-option="--without-c-extensions"
-# pip install rjsmin --install-option="--without-c-extensions"
-# pip install django-compressor --upgrade
+django-compressor==2.4

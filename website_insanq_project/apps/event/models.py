@@ -255,6 +255,7 @@ class EventIndexPage(CoderedWebPage):
         self.save()
         return ""
 
+    search_fields = []
     # Panel
     # Friend panels
     promote_panels = [

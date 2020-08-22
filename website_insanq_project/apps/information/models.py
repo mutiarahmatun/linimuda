@@ -59,6 +59,8 @@ class InformationPage(CoderedArticlePage):
 
     template = "information/information_page.html"
 
+    search_fields = []
+
     # Friend panels
     promote_panels = [
         MultiFieldPanel(

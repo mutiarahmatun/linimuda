@@ -58,6 +58,8 @@ class ContactUsPage(CoderedFormPage):
     template = "contact_us/contact_us_page.html"
     landing_page_template = "thank_you_page.html"
 
+    search_fields = []
+
     # Friend panels
     promote_panels = [
         MultiFieldPanel(

@@ -152,6 +152,7 @@ class VideoIndexPage(CoderedArticleIndexPage):
         self.save()
         return ""
 
+    search_fields = []
     # Panel
     # Friend panels
     promote_panels = [
