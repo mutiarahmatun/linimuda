@@ -194,13 +194,16 @@ BASE_URL = "insanq.co.id"
 
 # Search
 ROOT_DIR = os.path.abspath(os.path.dirname(__name__))
-WAGTAILSEARCH_BACKENDS = {
-    "default": {
-        "BACKEND": "wagtail_whoosh.backend",
-        "PATH": os.path.join(ROOT_DIR, "search_index"),
-        "LANGUAGE": "en",
-    }
-}
+
+WAGTAILSEARCH_BACKENDS = {"default": {"BACKEND": "wagtail.search.backends.db",}}
+# LIBRARY NYA ADA YANG ERROR, DIPAKAI KALAU PULL REQUEST UDAH BENAR
+# WAGTAILSEARCH_BACKENDS = {
+#     "default": {
+#         "BACKEND": "wagtail_whoosh.backend",
+#         "PATH": os.path.join(ROOT_DIR, "search_index"),
+#         "LANGUAGE": "en",
+#     }
+# }
 
 
 # Bootstrap
