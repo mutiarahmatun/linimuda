@@ -9,7 +9,6 @@ from wagtail.admin.edit_handlers import (
     ObjectList,
     TabbedInterface,
 )
-from wagtail.search import index
 from wagtail.core.fields import RichTextField
 from wagtail.core.models import Page
 from wagtail.utils.decorators import cached_classmethod

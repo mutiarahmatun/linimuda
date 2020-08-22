@@ -11,7 +11,6 @@ from wagtail.admin.edit_handlers import (
     ObjectList,
     TabbedInterface,
 )
-from wagtail.search import index
 from wagtail.images.edit_handlers import ImageChooserPanel
 from wagtail.contrib.forms.edit_handlers import FormSubmissionsPanel
 from wagtail.core.models import Page
