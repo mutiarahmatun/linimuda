@@ -3,7 +3,7 @@ from django.db import models
 from django.utils.translation import gettext_lazy as _
 from modelcluster.fields import ParentalKey
 from wagtail.utils.decorators import cached_classmethod
-from wagtail.core.models import Page
+from wagtail.core.models import Page, Site
 from wagtail.core.fields import RichTextField
 from wagtail.admin.edit_handlers import (
     FieldPanel,
@@ -23,6 +23,13 @@ from coderedcms.models import (
     CoderedFormPage,
 )
 from datetime import date, time
+from website_insanq_project.apps.website.wagtail_hooks import Profile
+
+
+def get_email():
+    return getattr(
+        Profile.for_site(Site.objects.get(is_default_site=True)), "email", None
+    )
 
 
 class EventPage(CoderedFormPage):
@@ -46,6 +53,16 @@ class EventPage(CoderedFormPage):
     [monday, tuesday, wednesday, thursday, friday, saturday, sunday,] = [
         models.BooleanField(default=True) for _ in range(7)
     ]
+
+    to_address = models.CharField(
+        max_length=255,
+        blank=True,
+        default=get_email,
+        verbose_name=_("Email form submissions to"),
+        help_text=_(
+            "Optional - email form submissions to this address. Separate multiple addresses by comma."
+        ),  # noqa
+    )
 
     def add_hits(self):
         self.hits += 1

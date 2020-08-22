@@ -13,11 +13,17 @@ from wagtail.admin.edit_handlers import (
 )
 from wagtail.images.edit_handlers import ImageChooserPanel
 from wagtail.contrib.forms.edit_handlers import FormSubmissionsPanel
-from wagtail.core.models import Page
+from wagtail.core.models import Page, Site
 from wagtail.utils.decorators import cached_classmethod
 
-
+from website_insanq_project.apps.website.wagtail_hooks import Profile
 from website_insanq_project.apps.website.models import ReadOnlyPanel
+
+
+def get_email():
+    return getattr(
+        Profile.for_site(Site.objects.get(is_default_site=True)), "email", None
+    )
 
 
 class ContactUsPage(CoderedFormPage):
@@ -32,6 +38,16 @@ class ContactUsPage(CoderedFormPage):
     html_embedded_maps = models.CharField(max_length=511, blank=True)
     main_image = models.ForeignKey(
         "wagtailimages.Image", null=True, on_delete=models.SET_NULL, related_name="+",
+    )
+
+    to_address = models.CharField(
+        max_length=255,
+        blank=True,
+        default=get_email,
+        verbose_name=_("Email form submissions to"),
+        help_text=_(
+            "Optional - email form submissions to this address. Separate multiple addresses by comma."
+        ),  # noqa
     )
 
     def add_hits(self):

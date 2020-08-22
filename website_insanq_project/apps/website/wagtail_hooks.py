@@ -40,59 +40,6 @@ def hide_main_menu(request, menu_items):
     menu_items[:] = [item for item in menu_items if item.name not in hide_menu_by_name]
 
 
-@register_setting(icon="fa-building-o")
-class Profile(BaseSetting):
-    """
-    Social media accounts.
-    """
-
-    class Meta:
-
-        verbose_name = _("Profile")
-
-    company_name = models.CharField(
-        max_length=255, blank=True, verbose_name=_("Company Name")
-    )
-    email = models.EmailField(max_length=255, blank=True, verbose_name=_("Email"))
-    telephone_number = models.BigIntegerField(
-        null=True,
-        blank=True,
-        verbose_name=_("Telephone Number"),
-        help_text=_("Don't forget with country code. Example: 62215678901"),
-    )
-    handphone_number_1 = models.BigIntegerField(
-        null=True,
-        blank=True,
-        verbose_name=_("Handphone / WhatsApp Number 1"),
-        help_text=_("Don't forget with country code. Example: 6281234567890"),
-    )
-    handphone_number_2 = models.BigIntegerField(
-        null=True,
-        blank=True,
-        verbose_name=_("Handphone / WhatsApp Number 2"),
-        help_text=_("Don't forget with country code. Example: 6281234567890"),
-    )
-    copyright_year = models.IntegerField(
-        null=True, blank=True, verbose_name=_("Copyright Year")
-    )
-    address = models.CharField(max_length=511, blank=True, verbose_name=_("Address"))
-
-    panels = [
-        MultiFieldPanel(
-            [
-                FieldPanel("company_name"),
-                FieldPanel("email"),
-                FieldPanel("telephone_number"),
-                FieldPanel("handphone_number_1"),
-                FieldPanel("handphone_number_2"),
-                FieldPanel("address"),
-                FieldPanel("copyright_year"),
-            ],
-            _("Profile"),
-        )
-    ]
-
-
 @register_setting(icon="fa-star-o")
 class SeoDefault(BaseSetting):
     """
@@ -262,6 +209,59 @@ class SeoDefault(BaseSetting):
             ],
             _("Structured Data - Organization"),
         ),
+    ]
+
+
+@register_setting(icon="fa-building-o")
+class Profile(BaseSetting):
+    """
+    Social media accounts.
+    """
+
+    class Meta:
+
+        verbose_name = _("Profile")
+
+    company_name = models.CharField(
+        max_length=255, blank=True, verbose_name=_("Company Name")
+    )
+    email = models.EmailField(max_length=255, blank=True, verbose_name=_("Email"))
+    telephone_number = models.BigIntegerField(
+        null=True,
+        blank=True,
+        verbose_name=_("Telephone Number"),
+        help_text=_("Don't forget with country code. Example: 62215678901"),
+    )
+    handphone_number_1 = models.BigIntegerField(
+        null=True,
+        blank=True,
+        verbose_name=_("Handphone / WhatsApp Number 1"),
+        help_text=_("Don't forget with country code. Example: 6281234567890"),
+    )
+    handphone_number_2 = models.BigIntegerField(
+        null=True,
+        blank=True,
+        verbose_name=_("Handphone / WhatsApp Number 2"),
+        help_text=_("Don't forget with country code. Example: 6281234567890"),
+    )
+    copyright_year = models.IntegerField(
+        null=True, blank=True, verbose_name=_("Copyright Year")
+    )
+    address = models.CharField(max_length=511, blank=True, verbose_name=_("Address"))
+
+    panels = [
+        MultiFieldPanel(
+            [
+                FieldPanel("company_name"),
+                FieldPanel("email"),
+                FieldPanel("telephone_number"),
+                FieldPanel("handphone_number_1"),
+                FieldPanel("handphone_number_2"),
+                FieldPanel("address"),
+                FieldPanel("copyright_year"),
+            ],
+            _("Profile"),
+        )
     ]
 
 
