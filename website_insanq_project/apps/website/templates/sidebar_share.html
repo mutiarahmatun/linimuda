@@ -3,7 +3,7 @@
 
         <div class="d-block share-button">
             <!-- Facebook -->
-            <a href="http://www.facebook.com/sharer.php?u={{page.get_full_url|urlencode}}" target="_blank">
+            <a href="http://www.facebook.com/sharer.php?u={{page.get_full_url|urlencode}}" aria-label="Share facebook" rel="noopener" target="_blank">
                 <div class="vertical-center">
                     <div class="mar-auto">
                         <span class="fa fa-facebook fa-lg"></span>
@@ -14,7 +14,7 @@
 
         <div class="d-block share-button">
             <!-- Twitter -->
-            <a href="https://twitter.com/share?url={{page.get_full_url|urlencode}}&amp;text={{page.title|urlencode}}{% if settings.website.Profile.company_name %}%20-%20{{settings.website.Profile.company_name|urlencode}}{% endif %}&amp;hashtags=insanqcilegon" target="_blank">
+            <a href="https://twitter.com/share?url={{page.get_full_url|urlencode}}&amp;text={{page.title|urlencode}}{% if settings.website.Profile.company_name %}%20-%20{{settings.website.Profile.company_name|urlencode}}{% endif %}&amp;hashtags=insanqcilegon" aria-label="Share twitter" rel="noopener" target="_blank">
                 <div class="vertical-center">
                     <div class="mar-auto">
                         <span class="fa fa-twitter fa-lg"></span>
@@ -25,7 +25,7 @@
 
         <div class="d-block share-button">
             <!-- LinkedIn -->
-            <a href="http://www.linkedin.com/shareArticle?mini=true&amp;url={{page.get_full_url|urlencode}}" target="_blank">
+            <a href="http://www.linkedin.com/shareArticle?mini=true&amp;url={{page.get_full_url|urlencode}}" aria-label="Share linkedin" rel="noopener" target="_blank">
                 <div class="vertical-center">
                     <div class="mar-auto">
                         <span class="fa fa-linkedin fa-lg"></span>
@@ -36,7 +36,7 @@
 
         <div class="d-block share-button">
             <!-- WhatsApp -->
-            <a href="https://api.whatsapp.com/send?text={{page.title}}%20-%20{{page.get_full_url|urlencode}}" target="_blank">
+            <a href="https://api.whatsapp.com/send?text={{page.title}}%20-%20{{page.get_full_url|urlencode}}" rel="noopener" target="_blank">
                 <div class="vertical-center">
                     <div class="mar-auto">
                         <span class="fa fa-whatsapp fa-lg"></span>

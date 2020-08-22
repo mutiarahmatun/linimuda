@@ -40,12 +40,21 @@ class ContactUsPage(CoderedFormPage):
         self.save()
         return ""
 
-    search_fields = [
-        index.FilterField("title"),
-    ]
-
     template = "contact_us/contact_us_page.html"
     landing_page_template = "thank_you_page.html"
+
+    # Friend panels
+    promote_panels = [
+        MultiFieldPanel(
+            [
+                FieldPanel("slug"),
+                FieldPanel("seo_title"),
+                FieldPanel("search_description"),
+                ImageChooserPanel("og_image"),
+            ],
+            _("Page Meta Data"),
+        ),
+    ]
 
     content_panels = Page.content_panels + [
         ImageChooserPanel("main_image"),

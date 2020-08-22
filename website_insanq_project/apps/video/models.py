@@ -13,7 +13,7 @@ from wagtail.search import index
 from wagtail.core.fields import RichTextField
 from wagtail.core.models import Page
 from wagtail.utils.decorators import cached_classmethod
-
+from wagtail.images.edit_handlers import ImageChooserPanel
 from website_insanq_project.apps.website.models import ReadOnlyPanel
 
 
@@ -29,7 +29,7 @@ class VideoPage(CoderedArticlePage):
         verbose_name=_("Publish date"), default=timezone.now
     )
 
-    link_thumbnail_embed_video = models.URLField(max_length=511)
+    link_youtube = models.URLField(max_length=511)
 
     # Additional attribute
     hits = models.IntegerField(default=0, editable=False)
@@ -65,6 +65,19 @@ class VideoPage(CoderedArticlePage):
     # Override to become empty
     layout_panels = []
 
+    # Friend panels
+    promote_panels = [
+        MultiFieldPanel(
+            [
+                FieldPanel("slug"),
+                FieldPanel("seo_title"),
+                FieldPanel("search_description"),
+                ImageChooserPanel("og_image"),
+            ],
+            _("Page Meta Data"),
+        ),
+    ]
+
     # Override to become empty
     body_content_panels = []
 
@@ -74,7 +87,7 @@ class VideoPage(CoderedArticlePage):
     # Override with additional hits attribute
     content_panels = (
         Page.content_panels
-        + [FieldPanel("link_thumbnail_embed_video")]
+        + [FieldPanel("link_youtube")]
         + [
             MultiFieldPanel(
                 [
@@ -139,10 +152,19 @@ class VideoIndexPage(CoderedArticleIndexPage):
         self.save()
         return ""
 
-    search_fields = [
-        index.FilterField("title"),
-    ]
     # Panel
+    # Friend panels
+    promote_panels = [
+        MultiFieldPanel(
+            [
+                FieldPanel("slug"),
+                FieldPanel("seo_title"),
+                FieldPanel("search_description"),
+                ImageChooserPanel("og_image"),
+            ],
+            _("Page Meta Data"),
+        ),
+    ]
 
     # Override to not contain template form
     layout_panels = []

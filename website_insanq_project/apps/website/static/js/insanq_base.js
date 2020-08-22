@@ -40,12 +40,11 @@ $(document).ready(function () {
     obj.innerHTML = replaceLast(",", ".", text);
   });
 
-  $("p").each(function (i, obj) {
-    if (obj.innerHTML.indexOf("###") !== -1) {
+  $(".artikel-konten").each(function (i, obj) {
+    if (obj.innerHTML.indexOf("##!") !== -1) {
       var text = obj.innerHTML;
-      text = text.replace(/###/g, "<span id=");
-      text = text.replace(/!##/g, ">");
-      obj.outerHTML = text.replace(/!##\n/g, ">");
+      text = text.replace(/##!/g, "<span id=");
+      obj.innerHTML = text.replace(/!##/g, "></>");
     }
   });
 

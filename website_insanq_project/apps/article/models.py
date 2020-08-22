@@ -46,7 +46,6 @@ class ArticlePage(CoderedArticlePage):
         context = super().get_context(request)
         context["recent_articles"] = []
         try:
-
             parent_article = ArticleIndexPage.objects.parent_of(self)[0]
             plus_one_recent_articles = (
                 ArticlePage.objects.child_of(parent_article)
@@ -89,6 +88,19 @@ class ArticlePage(CoderedArticlePage):
 
     # Override to become empty
     layout_panels = []
+
+    # Friend panels
+    promote_panels = [
+        MultiFieldPanel(
+            [
+                FieldPanel("slug"),
+                FieldPanel("seo_title"),
+                FieldPanel("search_description"),
+                ImageChooserPanel("og_image"),
+            ],
+            _("Page Meta Data"),
+        ),
+    ]
 
     # Override to become empty
     body_content_panels = []
@@ -174,9 +186,6 @@ class ArticleIndexPage(CoderedArticleIndexPage):
         self.save()
         return ""
 
-    search_fields = [
-        index.FilterField("title"),
-    ]
     # Panel
 
     # Override to not contain template form
@@ -187,6 +196,19 @@ class ArticleIndexPage(CoderedArticleIndexPage):
 
     # Override without content walls
     settings_panels = Page.settings_panels
+
+    # Friend panels
+    promote_panels = [
+        MultiFieldPanel(
+            [
+                FieldPanel("slug"),
+                FieldPanel("seo_title"),
+                FieldPanel("search_description"),
+                ImageChooserPanel("og_image"),
+            ],
+            _("Page Meta Data"),
+        ),
+    ]
 
     # Override with additional hits attribute
     content_panels = Page.content_panels + [

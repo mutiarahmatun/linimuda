@@ -13,7 +13,7 @@ from wagtail.search import index
 from wagtail.core.fields import RichTextField
 from wagtail.core.models import Page
 from wagtail.utils.decorators import cached_classmethod
-
+from wagtail.images.edit_handlers import ImageChooserPanel
 from website_insanq_project.apps.website.models import ReadOnlyPanel
 
 
@@ -59,6 +59,19 @@ class InformationPage(CoderedArticlePage):
         return ""
 
     template = "information/information_page.html"
+
+    # Friend panels
+    promote_panels = [
+        MultiFieldPanel(
+            [
+                FieldPanel("slug"),
+                FieldPanel("seo_title"),
+                FieldPanel("search_description"),
+                ImageChooserPanel("og_image"),
+            ],
+            _("Page Meta Data"),
+        ),
+    ]
 
     # Override to become empty
     layout_panels = []
@@ -115,10 +128,6 @@ class InformationPage(CoderedArticlePage):
             )
 
         return TabbedInterface(panels).bind_to(model=cls)
-
-    search_fields = [
-        index.FilterField("title"),
-    ]
 
     # Only allow this page to be created beneath an ArticleIndexPage.
     parent_page_types = ["home.HomePage"]

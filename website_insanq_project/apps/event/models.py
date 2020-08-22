@@ -13,6 +13,7 @@ from wagtail.admin.edit_handlers import (
     ObjectList,
     FieldRowPanel,
 )
+from wagtail.images.edit_handlers import ImageChooserPanel
 from wagtail.search import index
 from website_insanq_project.apps.website.models import ReadOnlyPanel
 from coderedcms.forms import CoderedFormField
@@ -70,6 +71,19 @@ class EventPage(CoderedFormPage):
 
     template = "event/event_page.html"
     landing_page_template = "thank_you_page.html"
+
+    # Friend panels
+    promote_panels = [
+        MultiFieldPanel(
+            [
+                FieldPanel("slug"),
+                FieldPanel("seo_title"),
+                FieldPanel("search_description"),
+                ImageChooserPanel("og_image"),
+            ],
+            _("Page Meta Data"),
+        ),
+    ]
 
     body_content_panels = (
         [
@@ -224,11 +238,19 @@ class EventIndexPage(CoderedWebPage):
         self.save()
         return ""
 
-    search_fields = [
-        index.FilterField("title"),
-    ]
-
     # Panel
+    # Friend panels
+    promote_panels = [
+        MultiFieldPanel(
+            [
+                FieldPanel("slug"),
+                FieldPanel("seo_title"),
+                FieldPanel("search_description"),
+                ImageChooserPanel("og_image"),
+            ],
+            _("Page Meta Data"),
+        ),
+    ]
 
     # Override to not contain template form
     layout_panels = []

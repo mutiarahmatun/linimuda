@@ -46,7 +46,7 @@ Open All External Link in New Tab: settings.coderedcms.GeneralSettings.external_
 {% endfor %}
 
 ----- API Video for template --
-- page.link_thumbnail_embed_video
+- page.link_youtube
 
 ----- API Search --
 - URL ?s=haha&p=1 (sesarch and page)
@@ -121,8 +121,8 @@ children:
       - article.title
       - article.specific.url
       - article.specific.main_image
-        - {% image article.specific.cover_image fill-1000x500 as cover_image %}
-          <img src="{{cover_image.url}}" class="w-100" alt="{{article.title}}" />      
+        - {% image article.specific.main_image fill-1000x500 as main_image %}
+          <img src="{{main_image.url}}" class="w-100" alt="{{article.title}}" />      
         - alt text nya article.title
         - Jadiin gini aja
           {% image article.specific.main_image fill-100x100 as main_image %}

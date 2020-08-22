@@ -50,7 +50,7 @@
 {% if settings.coderedcms.SeoSettings.struct_meta %}
     {% block struct_seo_extra %}
     <script type="application/ld+json">
-        {% include "coderedcms/includes/struct_data_article.json" with page=self %}
+        {% include "includes/struct_data_article.json" with page=page settings=settings %}
     </script>
     {% endblock %}
 {% endif %}

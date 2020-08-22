@@ -19,12 +19,12 @@
 {% endblock %}
 
 {% block cover %}
-    {% if "youtube" in page.link_thumbnail_embed_video %}
+    {% if "youtube" in page.link_youtube %}
         <iframe class="fill-kontainer-wide"
-        {% if "watch?v=" in page.link_thumbnail_embed_video %}
-            src="{{ page.link_thumbnail_embed_video|watch_to_embed }}"
-        {% elif "embed" in page.link_thumbnail_embed_video %}
-            src="{{ page.link_thumbnail_embed_video }}"
+        {% if "watch?v=" in page.link_youtube %}
+            src="{{ page.link_youtube|watch_to_embed }}"
+        {% elif "embed" in page.link_youtube %}
+            src="{{ page.link_youtube }}"
         {% endif %}
             frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
             allowfullscreen>
@@ -42,7 +42,7 @@
 {% if settings.coderedcms.SeoSettings.struct_meta %}
     {% block struct_seo_extra %}
     <script type="application/ld+json">
-        {% include "coderedcms/includes/struct_data_article.json" with page=self %}
+        {% include "includes/struct_data_article.json" with page=page settings=settings %}
     </script>
     {% endblock %}
 {% endif %}

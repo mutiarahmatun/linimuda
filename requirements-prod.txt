@@ -22,7 +22,4 @@ phonenumbers==8.12.8
 # Don't forget specify appropriate version.
 mysqlclient==2.0.1
 
-# PENGGANTI django-compressor==2.4
-# pip install rcssmin --install-option="--without-c-extensions"
-# pip install rjsmin --install-option="--without-c-extensions"
-# pip install django-compressor --upgrade
+django-compressor==2.4

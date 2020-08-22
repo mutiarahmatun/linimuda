@@ -65,6 +65,8 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "django.contrib.sitemaps",
+    # Compressor
+    "compressor",
 ]
 
 MIDDLEWARE = [
@@ -160,6 +162,7 @@ USE_TZ = True
 STATICFILES_FINDERS = [
     "django.contrib.staticfiles.finders.FileSystemFinder",
     "django.contrib.staticfiles.finders.AppDirectoriesFinder",
+    "compressor.finders.CompressorFinder",
 ]
 
 # ManifestStaticFilesStorage is recommended in production, to prevent outdated
@@ -187,7 +190,7 @@ WAGTAIL_ENABLE_UPDATE_CHECK = False
 
 # Base URL to use when referring to full URLs within the Wagtail admin backend -
 # e.g. in notification emails. Don't include '/admin' or a trailing slash
-BASE_URL = "https://www.insanq.co.id"
+BASE_URL = "insanq.co.id"
 
 # Search
 ROOT_DIR = os.path.abspath(os.path.dirname(__name__))
@@ -213,3 +216,6 @@ BOOTSTRAP4 = {
 
 # Tags
 TAGGIT_CASE_INSENSITIVE = True
+
+# Compressor
+COMPRESS_ENABLED = True

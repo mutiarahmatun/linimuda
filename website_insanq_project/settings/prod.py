@@ -2,7 +2,11 @@ from .base import *  # noqa
 import os
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+# TODO PAS AKHIR NANTI BARU DIGANTI
+DEBUG = True
+
+# TODO NANTI DIGANTI
+BASE_URL = "newwebsite.insanq.co.id"
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = os.environ["SECRET_KEY"]

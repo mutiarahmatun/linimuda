@@ -9,7 +9,6 @@ from wagtail.admin.edit_handlers import (
     FieldPanel,
     PageChooserPanel,
 )
-from wagtail.search import index
 from wagtail.core import blocks
 from wagtail.core.fields import StreamField
 from wagtail.core.models import Page
@@ -59,9 +58,6 @@ class HomePage(CoderedWebPage):
             print(e)
         return context
 
-    search_fields = [
-        index.FilterField("title"),
-    ]
     ###############
     # Panels
     ###############
@@ -70,7 +66,7 @@ class HomePage(CoderedWebPage):
     body_content_panels = []
     # section layanan
     section_layanan = StreamField([("Layanan", LayananBlock())], blank=True)
-    home_company_name = models.CharField(max_length=255, blank=True)
+    home_company_name = models.CharField(max_length=255)
     home_description = models.CharField(max_length=1023, blank=True)
     home_image = models.ForeignKey(
         "wagtailimages.Image",
@@ -95,6 +91,19 @@ class HomePage(CoderedWebPage):
         on_delete=models.SET_NULL,
         related_name="+",
     )
+
+    # Friend panels
+    promote_panels = [
+        MultiFieldPanel(
+            [
+                FieldPanel("slug"),
+                FieldPanel("seo_title"),
+                FieldPanel("search_description"),
+                ImageChooserPanel("og_image"),
+            ],
+            _("Page Meta Data"),
+        ),
+    ]
 
     content_panels = Page.content_panels + [
         MultiFieldPanel(
@@ -152,3 +161,4 @@ class HomePage(CoderedWebPage):
 
         return TabbedInterface(panels).bind_to(model=cls)
 
+    parent_page_types = ["wagtailcore.page"]

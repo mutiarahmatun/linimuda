@@ -5,12 +5,12 @@
 {% block video_cover %}
     <div class="ratio-16-9">
         <div class="fill-ratio">
-            {% if "youtube" in article.specific.link_thumbnail_embed_video %}
+            {% if "youtube" in article.specific.link_youtube %}
                 <iframe class="fill-kontainer-wide"
-                {% if "watch?v=" in article.specific.link_thumbnail_embed_video %}
-                    src="{{ article.specific.link_thumbnail_embed_video|watch_to_embed }}"
-                {% elif "embed" in article.specific.link_thumbnail_embed_video %}
-                    src="{{ article.specific.link_thumbnail_embed_video }}"
+                {% if "watch?v=" in article.specific.link_youtube %}
+                    src="{{ article.specific.link_youtube|watch_to_embed }}"
+                {% elif "embed" in article.specific.link_youtube %}
+                    src="{{ article.specific.link_youtube }}"
                 {% endif %}
                     frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
                     allowfullscreen>

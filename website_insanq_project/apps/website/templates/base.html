@@ -1,4 +1,4 @@
-{% load static coderedcms_tags i18n wagtailcore_tags wagtailimages_tags wagtailsettings_tags wagtailuserbar %}
+{% load static compress coderedcms_tags i18n wagtailcore_tags wagtailimages_tags wagtailsettings_tags wagtailuserbar %}
 {% get_settings %}
 {% load i18n %}
 {% get_current_language as LANGUAGE_CODE %}
@@ -35,7 +35,7 @@
         {# HTML SEO #}
         {% block html_seo_base %}
         <title>{% block title %}{% if self.seo_title %}{{ self.seo_title }}{% else %}{{ self.title }}{% endif %}{% endblock %}{% block title_suffix %}{% if not self.seo_title %} - {{site.site_name}}{% endif %}{% endblock %}</title>
-        <meta name="description" content="{% block description %}{% if self.search_description %}{{ self.search_description }}{% endif %}{% endblock %}" />
+        <meta name="description" content="{% block description %}{% if page.search_description %}{{page.search_description}}{% else %}{{settings.website.SeoDefault.search_description}}{% endif %}{% endblock %}" />
         <link rel="canonical" href="{% block canonical %}{{self.get_full_url}}{% endblock %}">
         {% endblock %}
         {% block html_seo_extra %}{% endblock %}
@@ -44,7 +44,7 @@
         {% if settings.coderedcms.SeoSettings.og_meta %}
             {% block og_seo_base %}
             <meta property="og:title" content="{% block og_title %}{% if self.seo_title %}{{self.seo_title}}{% else %}{{self.title}}{% endif %}{% endblock %}" />
-            <meta property="og:description" content="{% block og_description %}{% if self.search_description %}{{ self.search_description }}{% endif %}{% endblock %}" />
+            <meta property="og:description" content="{% block og_description %}{% if settings.website.SeoDefault.search_description %}{{ settings.website.SeoDefault.search_description }}{% endif %}{% endblock %}" />
             <meta property="og:site_name" content="{% block og_site_name %}{{self.get_site.site_name}}{% endblock %}" />
             <meta property="og:type" content="{% block og_type %}website{% endblock %}" />
             <meta property="og:url" content="{% block og_url %}{{self.get_full_url}}{% endblock %}" />
@@ -67,22 +67,30 @@
         {% endif %}
 
         {% block frontend_assets %}
-            <link rel="stylesheet" href="{% static 'coderedcms/vendor/bootstrap/dist/css/bootstrap.min.css' %}" />
+            {% compress css inline %}
+                <link rel="stylesheet" href="{% static 'coderedcms/vendor/bootstrap/dist/css/bootstrap.min.css' %}" />
+            {% endcompress %}
         {% endblock %}
 
         {% block coderedcms_assets %}
         {% if "DEBUG"|django_settings %}
-        <link rel="stylesheet" type="text/css" href="{% static 'coderedcms/css/codered-front.css' %}">
+        {% compress css inline %}
+            <link rel="stylesheet" type="text/css" href="{% static 'coderedcms/css/codered-front.css' %}">
+        {% endcompress %}
         {% else %}
-        <link rel="stylesheet" type="text/css" href="{% static 'coderedcms/css/codered-front.min.css' %}">
+        {% compress css inline %}
+            <link rel="stylesheet" type="text/css" href="{% static 'coderedcms/css/codered-front.min.css' %}">
+        {% endcompress %}
         {% endif %}
         {% endblock %}
 
         {% block extra_css %}
         {% endblock %}
 
-        <link rel="stylesheet" type="text/css" href="{% static 'css/insanq_base.css' %}">
-
+        {% compress css inline %}
+            <link rel="stylesheet" type="text/css" href="{% static 'css/insanq_base.css' %}">
+        {% endcompress %}
+        
         {% block favicon %}
             {% if settings.coderedcms.LayoutSettings.favicon %}
                 {# See https://developer.apple.com/design/human-interface-guidelines/ios/icons-and-images/app-icon/ #}
@@ -160,16 +168,22 @@
         {% block required_scripts %}
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" async></script>
         <script src="https://kit.fontawesome.com/44f32f35d2.js" crossorigin="anonymous"></script>
-        <script src="{% static 'coderedcms/vendor/jquery/jquery-3.5.1.min.js' %}" ></script>
-        <script src="{% static 'js/insanq_base.js' %}"></script>
+        {% compress js inline %}
+            <script src="{% static 'coderedcms/vendor/jquery/jquery-3.5.1.min.js' %}" ></script>
+            <script src="{% static 'js/insanq_base.js' %}"></script>
+        {% endcompress %}
         {% endblock %}
 
         {% block frontend_scripts %}
-        <script src="{% static 'coderedcms/vendor/bootstrap/dist/js/bootstrap.min.js' %}"></script>
+        {% compress js inline %}
+            <script src="{% static 'coderedcms/vendor/bootstrap/dist/js/bootstrap.min.js' %}"></script>
+        {% endcompress %}
         {% endblock %}
 
         {% block coderedcms_scripts %}
-        <script type="text/javascript" src="{% static 'coderedcms/js/codered-front.js' %}"></script>
+        {% compress js inline %}
+            <script type="text/javascript" src="{% static 'coderedcms/js/codered-front.js' %}"></script>
+        {% endcompress %}
         {% endblock %}
 
         {% block extra_js %}
@@ -179,9 +193,9 @@
         {# Structured data JSON-LD #}
         {% if settings.coderedcms.SeoSettings.struct_meta %}
             {% block struct_seo_base %}
-                {% if self.struct_org_type %}
+                {% if settings.website.SeoDefault.struct_org_type %}
                 <script type="application/ld+json">
-                    {% include "coderedcms/includes/struct_data_org.json" with page=self %}
+                    {% include "includes/struct_data_org.json" with page=page settings=settings %}
                 </script>
                 {% endif %}
             {% endblock %}

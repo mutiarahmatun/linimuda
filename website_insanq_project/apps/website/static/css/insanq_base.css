@@ -408,7 +408,7 @@ br {
 }
 
 .artikel-konten p {
-  text-indent: 2em;
+  text-indent: 0;
 }
 
 .no-indent > p,
@@ -520,13 +520,19 @@ p.no-indent {
   display: flex;
   flex-flow: column;
   text-align: left;
-  max-width: 27rem;
+  width: 27rem;
+  max-width: 90vw;
   align-self: center;
   transition: all 0.2s;
 }
 
+.artikel-card.other-artikel {
+  width: auto;
+  max-width: 27rem;
+}
+
 .artikel-card.card-video {
-  max-width: 40rem;
+  width: 40rem;
 }
 
 .artikel-card::after {
@@ -876,7 +882,7 @@ p.no-indent {
 
 .artikel-konten a:not(.btn) {
   color: var(--warna-secondary);
-  font-weight: 800;
+  font-weight: 700;
 }
 
 .btn {
