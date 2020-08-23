@@ -1,6 +1,6 @@
 {% extends "article/article_base.html" %}
 
-{% load wagtailadmin_tags wagtailcore_tags wagtailimages_tags coderedcms_tags watch_to_embed %}
+{% load wagtailadmin_tags wagtailcore_tags wagtailimages_tags coderedcms_tags watch_to_embed get_video_id %}
 
 {% block description %}{{self.get_description}}{% endblock %}
 {% block html_seo_extra %}
@@ -31,6 +31,8 @@
         </iframe>
     {% endif %}
 {% endblock %}
+
+{% block og_image %}{% if page.link_youtube %}https://img.youtube.com/vi/{{ page.link_youtube|get_video_id }}/mqdefault.jpg{% endif %}{% endblock %}
 
 {% block isi_artikel %}
     {{ self.body|richtext }}

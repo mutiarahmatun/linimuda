@@ -25,6 +25,8 @@
     {% endif %}
 {% endblock %}
 
+{% block og_image %}{% if self.main_image %}{% image self.main_image max-600x600 as main_image %}{{ main_image.url }}{% endif %}{% endblock %}
+
 {% block isi_artikel %}
     {{ self.body|richtext }}
 {% endblock %}
