@@ -1,0 +1,10 @@
+User-agent: *
+Disallow: /admin/
+
+User-agent: *
+Disallow: /django-admin/
+
+User-agent: *
+Allow: /
+
+Sitemap: https://insanq.co.id/sitemap.xml

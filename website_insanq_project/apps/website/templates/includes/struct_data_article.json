@@ -1,0 +1,49 @@
+{% load wagtailimages_tags %}
+
+{% comment %} argument page= settings= default_og_image= {% endcomment %}
+{
+  "@context": "http://schema.org",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "{{page.get_full_url}}"
+  },
+  "headline": "{{page.title}}",
+  "description": "{% if page.search_description %}{{page.search_description}}{% else %}{{settings.website.SeoDefault.search_description}}{% endif %}",
+
+  {# Get different aspect ratios. Use huge numbers because wagtail will not upscale, #}
+  {# but will max out at the image's original resultion using the specified aspect ratio. #}
+  {# Google wants them high resolution. #}
+  {% if page.og_image %}
+    {% image page.og_image fill-10000x10000 as img_11 %}
+    {% image page.og_image fill-40000x30000 as img_21 %}
+    {% image page.og_image fill-16000x9000 as img_169 %}
+    "image": [
+        "{{self.get_site.root_url}}{{img_11.url}}",
+        "{{self.get_site.root_url}}{{img_21.url}}",
+        "{{self.get_site.root_url}}{{img_169.url}}"
+    ],
+  {% elif default_og_image %}
+    {% image default_og_image fill-10000x10000 as img_11 %}
+    {% image default_og_image fill-40000x30000 as img_21 %}
+    {% image default_og_image fill-16000x9000 as img_169 %}
+    "image": [
+        "{{self.get_site.root_url}}{{img_11.url}}",
+        "{{self.get_site.root_url}}{{img_21.url}}",
+        "{{self.get_site.root_url}}{{img_169.url}}"
+    ],
+  {% endif %}
+
+  "datePublished": "{{page.get_pub_date|date:'c'}}",
+  "dateModified": "{{page.last_published_at|date:'c'}}",
+
+  "author": {
+    "@type": "Person",
+    "name": "{{page.get_author_name}}"
+  },
+
+  {% if settings.website.SeoDefault.struct_org_type %}
+  "publisher": {% include "includes/struct_data_org.json" with page=page settings=settings org_mode=True %},
+  {% endif %}
+
+  "@type": "Article"
+}

@@ -1,0 +1,174 @@
+{% extends "base.html" %}
+
+{% load wagtailcore_tags wagtailimages_tags coderedcms_tags subtract update_variable %}
+
+{% if settings.coderedcms.SeoSettings.og_meta %}
+    {% block og_description %}{{self.get_description}}{% endblock %}
+    {% block og_type %}article{% endblock %}
+    {% block og_seo_extra %}
+        <meta property="og:article:published_time" content="{{self.get_pub_date}}" />
+        <meta property="og:article:modified_time" content="{{self.last_published_at}}" />
+        {% if self.author_display %}
+        <meta property="og:article:author" content="{{self.author_display}}" />
+        {% elif self.author %}
+        <meta property="og:article:author:first_name" content="{{self.author.first_name}}" />
+        <meta property="og:article:author:last_name" content="{{self.author.last_name}}" />
+        {% endif %}
+    {% endblock %}
+{% endif %}
+
+{% if settings.coderedcms.SeoSettings.twitter_meta %}
+    {% block twitter_card %}{% if self.main_image %}summary_large_image{% else %}{{block.super}}{% endif %}{% endblock %}
+    {% block twitter_seo_extra %}
+        {% if self.caption %}
+        <meta name="twitter:description" content="{{ self.caption }}">
+        {% endif %}
+        {% if self.author.twitter %}
+            <meta name="twitter:creator" content="{{self.author.twitter}}" />
+        {% endif %}
+    {% endblock %}
+{% endif %}
+
+{% block isi_page %}
+    <div class="section-fluid gray-text">
+        {% include 'navbar-primary.html' %}
+        <div class="navbar-space"></div>
+    </div>
+    <div class="section-fluid gray-text">
+        <div class="content-width">
+
+            <div class="section-kontainer">
+                <div class="content-kontainer">
+                    <div class="warna-teks-secondary d-inline-block">
+                        <h2>
+                            {% block judul_index %}
+                                {{page.title}}
+                            {% endblock %}
+                        </h2>
+                        <div class="underline-long ul-secondary-light ul-normal"></div>
+                    </div>
+                </div>
+                {% block searchbox %}
+                {% endblock %}
+                <div class="content-kontainer">
+
+                    {% block index_result_w_num %}
+
+                        {% block index_result %}
+
+                        <div class="d-flex flex-wrap justify-content-center white-text">
+
+                            {% for article in index_paginated %}
+
+                                <div class="px-4 ---">
+                                    <a href="{{article.specific.url}}">
+                                        <div class="artikel-card {% if article.specific.link_youtube %}card-video{% endif %} align-self-start mx-auto">
+                                            {% block video_cover %}
+                                                <div class="ratio-1-1">
+                                                    <div class="fill-ratio">
+                                                        <div class="fill-kontainer-tall">
+                                                            {% block cover %}
+                                                                {% image article.specific.main_image max-600x600 as main_image %}
+                                                                <img src="{{main_image.url}}" alt="{{article.title}}" class="h-100"/>
+                                                            {% endblock %}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            {% endblock %}
+                                            <div class="artikel-teksboks">
+                                                <div class="artikel-tanggal">
+                                                    <!-- TANGGAL ARTIKEL 1 DI SINI -->
+                                                    <p>{{article.specific.get_pub_date}}</p>
+                                                </div>
+                                                <div class="artikel-judul">
+                                                    <!-- JUDUL ARTIKEL 1 DI SINI -->
+                                                    <h5>{{article.title}}</h5>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </a>
+                                    <div class="p-4"></div>
+                                </div>
+                            
+                            {% endfor %}
+
+                        </div>
+
+                        {% endblock %}
+
+                        <div class="list-page-num text-center mar-vertical-sm">
+
+                            {% if index_paginated.number > 1 %}
+                                <a href="?p={{ index_paginated.number|subtract:1 }}{% block par_lain_previous %}{% endblock %}" id="page-previous">
+                                    <div class="page-num-block">
+                            {% else %}
+                                <a href="#" id="page-previous">
+                                    <div class="page-num-block disabled">
+                            {% endif %}
+                                    <div class="vertical-center">
+                                        <div class="mar-auto">
+                                            <span class="fa fa-angle-left fa-sm"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                            {% with start="0" %}
+                                {% if index_paginated.paginator.num_pages >= 9 %}
+                                    {{index_paginated.number}}
+                                    {% if index_paginated.number < 5 %}
+                                        {{start}}
+                                    {% elif index_paginated.paginator.num_pages|subtract:index_paginated.number < 5 %}
+                                        {% update_variable index_paginated.paginator.num_pages|subtract:9 as start %}
+                                        {{start}}
+                                    {% else %}
+                                        {% update_variable index_paginated.number|subtract:5 as start %}
+                                        {{start}}
+                                    {% endif %}
+                                {% endif %}
+                                
+                                {% for i in '012345678'|make_list %}
+                                    {% if forloop.counter|add:start > index_paginated.paginator.num_pages %}
+                                    {% else %}
+                                        {% if forloop.counter|add:start == index_paginated.number %}
+                                            <a href="#" page="{{ forloop.counter|add:start }}" id="page-button-{{ forloop.counter }}">
+                                            <div class="page-num-block current-page">
+                                        {% else %}
+                                            <a href="?p={{ forloop.counter|add:start }}{% block par_lain %}{% endblock %}" page="{{ forloop.counter|add:start }}" id="page-button-{{ forloop.counter }}">
+                                            <div class="page-num-block">
+                                        {% endif %}
+                                                <div class="vertical-center">
+                                                    <div class="mar-auto">
+                                                        <span class="isi-page-button">
+                                                            {{ forloop.counter|add:start }}
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </a>
+                                    {% endif %}
+                                    
+                                {% endfor %}
+                            {% endwith %}
+                            {% if index_paginated.number < index_paginated.paginator.num_pages %}
+                                <a href="?p={{ index_paginated.number|add:1 }}{% block par_lain_next %}{% endblock %}" id="page-next">
+                                    <div class="page-num-block">
+                            {% else %}
+                                <a href="#" id="page-next">
+                                    <div class="page-num-block disabled">
+                            {% endif %}
+                                    <div class="vertical-center">
+                                        <div class="mar-auto">
+                                            <span class="fa fa-angle-right fa-sm"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+
+                        </div>
+
+                    {% endblock %}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

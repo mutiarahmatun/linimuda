@@ -1,0 +1,56 @@
+{% extends "information/information_base.html" %}
+
+{% load wagtailadmin_tags wagtailcore_tags wagtailimages_tags coderedcms_tags %}
+
+{% block description %}{{self.get_description}}{% endblock %}
+{% block html_seo_extra %}
+{% if self.get_author_name %}<meta name="author" content="{{self.get_author_name}}" />{% endif %}
+<meta name="created" content="{{self.get_pub_date|date:'c'}}" />
+<meta name="revised" content="{{self.last_published_at|date:'c'}}" />
+{% comment %} {% if settings.coderedcms.SeoSettings.amp_pages %}
+<link rel="amphtml" href="{{self.get_full_url}}?amp">
+{% endif %} {% endcomment %}
+{% endblock %}
+
+{% if settings.coderedcms.SeoSettings.og_meta %}
+    {% block og_description %}{{self.get_description}}{% endblock %}
+    {% block og_type %}business.business{% endblock %}
+    {% block og_seo_extra %}
+        <meta property="og:article:published_time" content="{{self.get_pub_date}}" />
+        <meta property="og:article:modified_time" content="{{self.last_published_at}}" />
+        {% if self.author_display %}
+        <meta property="og:article:author" content="{{self.author_display}}" />
+        {% elif self.author %}
+        <meta property="og:article:author:first_name" content="{{self.author.first_name}}" />
+        <meta property="og:article:author:last_name" content="{{self.author.last_name}}" />
+        {% endif %}
+    {% endblock %}
+{% endif %}
+
+{% if settings.coderedcms.SeoSettings.twitter_meta %}
+    {% block twitter_card %}{% if self.main_image %}summary_large_image{% else %}{{block.super}}{% endif %}{% endblock %}
+    {% block twitter_seo_extra %}
+        {% if self.caption %}
+        <meta name="twitter:description" content="{{ self.caption }}">
+        {% endif %}
+        {% if self.author.twitter %}
+            <meta name="twitter:creator" content="{{self.author.twitter}}" />
+        {% endif %}
+    {% endblock %}
+{% endif %}
+
+{% block sidebar %}
+    {% include 'sidebar_share.html' %}
+{% endblock %}
+
+{% block isi_info %}
+    {{ self.body|richtext }}
+{% endblock %}
+
+{% if settings.coderedcms.SeoSettings.struct_meta %}
+    {% block struct_seo_extra %}
+    <script type="application/ld+json">
+        {% include "includes/struct_data_article.json" with page=page settings=settings %}
+    </script>
+    {% endblock %}
+{% endif %}

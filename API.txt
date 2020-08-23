@@ -1,0 +1,196 @@
+-- API Setting for template --
+Company Name: settings.website.Profile.company_name
+Email: settings.website.Profile.email
+Telephone Number: settings.website.Profile.telephone_number
+Handphone / WA Number 1: settings.website.Profile.handphone_number_1
+Handphone / WA Number 2: settings.website.Profile.handphone_number_2
+Alamat: settings.website.Profile.address
+
+
+Link FB: settings.coderedcms.SocialMediaSettings.facebook
+Link Twitter: settings.coderedcms.SocialMediaSettings.twitter
+Handle Instagram: settings.coderedcms.SocialMediaSettings.instagram
+Link Youtube: settings.coderedcms.SocialMediaSettings.youtube
+Link Linkedin: settings.coderedcms.SocialMediaSettings.linkedin
+Link Googleplus: settings.coderedcms.SocialMediaSettings.googleplus
+
+Logo: settings.coderedcms.LayoutSettings.logo
+Favicon: settings.coderedcms.LayoutSettings.favicon
+
+GA Tracking ID: settings.coderedcms.AnalyticsSettings.ga_tracking_id
+
+From Email Address: settings.coderedcms.GeneralSettings.from_email_address
+Number Result per Page on Search: settings.coderedcms.GeneralSettings.search_num_results
+Open All External Link in New Tab: settings.coderedcms.GeneralSettings.external_new_tab
+# YANG PANEL SEO BELUM DI LISTING
+
+---- Navbar --
+- 
+{% load get_first_navbar %}
+{% get_first_navbar as navbar %}
+
+{% for link in navbar.navigation_links %}
+  {% if link.block_type == "NonDropdown"%}
+    link.value.display_text
+    link.value.page.url => /<path>
+    link.value.page.get_full_url -> www.insanq.co.id/<path>
+  {% endif %}
+  {% if link.block_retype == "Dropdown"%}
+    link.value.display_text
+    {% for sub_link in link.value.sub_links%}
+      sub_link.value.display_text
+      sub_link.value.page.url => /<path>
+      sub_link.value.page.get_full_url -> www.insanq.co.id/<path>
+    {% endfor %}
+  {% endif %}
+{% endfor %}
+
+----- API Video for template --
+- page.link_youtube
+
+----- API Search --
+- URL ?s=haha&p=1 (sesarch and page)
+
+- results_paginated.paginator.num_pages (banyaknya page)
+- results_paginated.number (sekarang page berapa)
+Query
+  {% if not form.s.value %}
+      {% trans 'Search' %}
+  {% else %}
+      {% trans 'Search for' %} “{{form.s.value}}”
+  {%endif%}
+- <form action="{% url 'codered_search'k %}" method="GET">
+- {% bootstrap_form form size='large|medium|small (pilih)' layout='inline' %}
+- 
+{% if results_paginated.object_list %}
+    {% for page in results_paginated %}
+        {% with page=page.specific %}
+            - page.title
+            - page.main_image
+            - dll
+        {% endwith %}
+    {% endfor %}
+    
+{% else %}
+    {% if form.s.value %}
+      <p>{% trans 'No results found.' %}</p>
+    {% else %}
+      empty state sebelum search
+    {% endif %}
+{% endif %}
+
+---- API Home Page for template --
+main_images: 
+  - page.landing_articles.url
+  - page.landing_events.url
+
+
+  - page.home_company_name
+  - page.home_description
+  - page.home_image
+  - {% for article in recent_articles %}
+    - article.title
+    - article.main_image
+    - article.url => /<path>
+    - article.get_full_url -> www.insanq.co.id/<path>
+  - {% endfor %}
+  - {% for event in recent_events %}
+    - event.short_description
+    - event.title
+    - event.url => /<path>
+    - event.get_full_url -> www.insanq.co.id/<path>
+  - {% endfor %}
+
+layanan:
+  - {% for layanan in page.section_layanan %}
+      - layanan.value.title
+      - layanan.value.content|richtext
+      - layanan.value.thumbnail
+      - layanan.value.related_page.url => /<path>
+      - layanan.value.related_page.get_full_url -> www.insanq.co.id/<path>
+    {% endfor %}
+
+---- API Article Landing Page for template --
+children:
+  - page.add_hits
+
+  - paginated pake query ?p=
+  - index_paginated.paginator.num_pages (banyaknya page)
+  - index_paginated.number (sekarang page berapa)
+  - {% for article in index_paginated %}
+      - article.title
+      - article.specific.url
+      - article.specific.main_image
+        - {% image article.specific.main_image fill-1000x500 as main_image %}
+          <img src="{{main_image.url}}" class="w-100" alt="{{article.title}}" />      
+        - alt text nya article.title
+        - Jadiin gini aja
+          {% image article.specific.main_image fill-100x100 as main_image %}
+          <img src="{{main_image.url}}" alt="{{article.title}}" />
+      - article.specific.get_pub_date
+    {% endfor %}
+  
+---- API Article Page for template --
+  - page.url => /<path>
+  - page.get_full_url -> www.insanq.co.id/<path>
+  - page.title
+  - page.main_image
+  - page.get_author_name
+  - page.get_pub_date
+  - page.body|richtext
+  - page.add_hits && page.hits
+
+  - page.get_parent.specific.is_company_articles
+
+  - {% for article in recent_articles %}
+      article.main_image
+      article.title
+      article.url => /<path>
+      article.get_full_url -> www.insanq.co.id/<path>
+    {% endfor %}
+
+---- API Contact Us Page for template --
+  - page.title
+  - page.main_image
+  - page.html_embedded_maps
+  - page.add_hits && page.hits
+
+form_fields: 
+  - <form action ="{% pageurl self %} method="POST" {% if form|is_file_form %}enctype="multipart/form-data"{% endif %}>
+        {% csrf_token %}
+        
+    </form>
+  - {% bootstrap_form form layout='vertical' %}
+                OR
+  - page.form_fields.all
+    {% for field in page.get_form_fields %}
+      - field.field_type
+      - field.label
+      - field.help_text
+      - field.choices
+      - field.default_value
+    {% endfor %}
+
+form_submissions:
+  - page.thank_you_page
+  - page.save_from_submissions
+  - . 
+    . 
+    .
+
+confirmation_emails:
+  - SAMA (MIRIP) DENGAN FORM_FIELD
+
+---- API Event Landing Page for template -- 
+- Mirip Article Landing Page
+
+---- API Event Page for template --
+- MIRIP Contact Page
+        + 
+- page.get_start_date
+- page.get_end_date
+- page.get_start_time_each_day
+- page.get_end_time_each_day
+...
+- page.monday, page.tuesday, ..., page.sunday
+- page.short_description|richtext, page.long_description|richtext
