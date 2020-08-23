@@ -103,11 +103,11 @@ function cekDesktop() {
 
   if (is_desktop) {
     $(".navbar-white").toggleClass("navbar-white navbar-transparan");
-    $(".full-height").height("");
+    $(".h-mobile-auto").height("");
   } else {
     $(".navbar-transparan").toggleClass("navbar-transparan navbar-white");
     $("#navbar").addClass("small-navbar");
-    $(".full-height").height("auto");
+    $(".h-mobile-auto").height("auto");
   }
 }
 

@@ -14,7 +14,7 @@ MEDIA_ROOT = os.environ["MEDIA_ROOT"]
 ALLOWED_HOSTS = ["*"]
 # ALLOWED_HOSTS = ["www.insanq.co.id"]
 
-WAGTAIL_CACHE = True
+WAGTAIL_CACHE = False
 
 # To send email from the server, we recommend django_sendmail_backend
 # Or specify your own email backend such as an SMTP server.
