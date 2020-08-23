@@ -1,9 +1,12 @@
 #!/usr/bin/env python
 import os
 import sys
+import environ
 
 if __name__ == "__main__":
-    if os.getenv("PYTHON_ENV"):
+    env = environ.Env()
+    environ.Env.read_env()
+    if env("PYTHON_ENV") == "production":
         os.environ.setdefault(
             "DJANGO_SETTINGS_MODULE", "website_insanq_project.settings.prod"
         )
