@@ -59,7 +59,10 @@ class PageLinkBlock(blocks.StructBlock):
     """
 
     display_text = blocks.CharBlock(max_length=255)
-    page = blocks.PageChooserBlock()
+    page = blocks.PageChooserBlock(required=False)
+    external_url = blocks.URLBlock(
+        required=False, help_text="External URL will be prioritized over page link"
+    )
 
 
 class BlockPageLinkBlock(blocks.StructBlock):

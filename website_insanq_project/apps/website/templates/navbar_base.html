@@ -30,14 +30,14 @@
             {% for link in navbar.navigation_links %}
                 {% if link.block_type == "NonDropdown" %}
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ link.value.page.url }}">{{ link.value.display_text }}</a>
+                        <a class="nav-link" href="{% if link.value.external_url %}{{ link.value.external_url }}{% else %}{{ link.value.page.url }}{% endif %}">{{ link.value.display_text }}</a>
                     </li>
                 {% else %}
                     <li class="nav-item dropdown">
                         <a class="nav-link  dropdown-toggle" href="#" data-toggle="dropdown">{{ link.value.display_text }}</a>
                         <ul class="dropdown-menu">
                             {% for sub_link in link.value.sub_links %}
-                                <li><a class="dropdown-item" href="{{ sub_link.value.page.url }}">{{ sub_link.value.display_text }}</a></li>
+                                <li><a class="dropdown-item" href="{% if sub_link.value.external_url %}{{ sub_link.value.external_url }}{% else %}{{ sub_link.value.page.url }}{% endif %}">{{ sub_link.value.display_text }}</a></li>
                             {% endfor %}
                         </ul>
                     </li>
