@@ -3,15 +3,7 @@ Creatable pages used in CodeRed CMS.
 """
 from django.db import models
 from django.utils.translation import gettext_lazy as _
-from modelcluster.fields import ParentalKey
-from coderedcms.forms import CoderedFormField
-from coderedcms.models import (
-    CoderedArticlePage,
-    CoderedArticleIndexPage,
-    CoderedEmail,
-    CoderedFormPage,
-    CoderedWebPage
-)
+from django.utils.html import format_html
 from wagtail.admin.edit_handlers import (
     FieldPanel,
     EditHandler,
@@ -21,75 +13,46 @@ from wagtail.admin.edit_handlers import (
 from wagtail.core import blocks
 from wagtail.core.fields import StreamField
 
+class ReadOnlyPanel(EditHandler):
+    def __init__(self, attr, *args, **kwargs):
+        self.attr = attr
+        super().__init__(*args, **kwargs)
 
+    def clone(self):
+        return self.__class__(
+            attr=self.attr,
+            heading=self.heading,
+            classname=self.classname,
+            help_text=self.help_text,
+        )
 
-class ArticlePage(CoderedArticlePage):
-    """
-    Article, suitable for news or blog content.
-    """
-    class Meta:
-        verbose_name = 'Article'
-        ordering = ['-first_published_at']
+    def render(self):
+        value = getattr(self.instance, self.attr)
+        if callable(value):
+            value = value()
+        return format_html(
+            '<div style="padding-top: 0.3em; font-size: 16px;">{}</div>', value,
+        )
 
-    # Only allow this page to be created beneath an ArticleIndexPage.
-    parent_page_types = ['website.ArticleIndexPage']
+    def render_as_object(self):
+        return format_html(
+            "<fieldset><legend>{}</legend>"
+            '<ul class="fields"><li><div class="field">{}</div></li></ul>'
+            "</fieldset>",
+            self.heading,
+            self.render(),
+        )
 
-    template = 'coderedcms/pages/article_page.html'
-    amp_template = 'coderedcms/pages/article_page.amp.html'
-    search_template = 'coderedcms/pages/article_page.search.html'
-
-
-class ArticleIndexPage(CoderedArticleIndexPage):
-    """
-    Shows a list of article sub-pages.
-    """
-    class Meta:
-        verbose_name = 'Article Landing Page'
-
-    # Override to specify custom index ordering choice/default.
-    index_query_pagemodel = 'website.ArticlePage'
-
-    # Only allow ArticlePages beneath this page.
-    subpage_types = ['website.ArticlePage']
-
-    template = 'coderedcms/pages/article_index_page.html'
-
-
-class FormPage(CoderedFormPage):
-    """
-    A page with an html <form>.
-    """
-    class Meta:
-        verbose_name = 'Form'
-
-    template = 'coderedcms/pages/form_page.html'
-
-
-class FormPageField(CoderedFormField):
-    """
-    A field that links to a FormPage.
-    """
-    class Meta:
-        ordering = ['sort_order']
-
-    page = ParentalKey('FormPage', related_name='form_fields')
-
-
-class FormConfirmEmail(CoderedEmail):
-    """
-    Sends a confirmation email after submitting a FormPage.
-    """
-    page = ParentalKey('FormPage', related_name='confirmation_emails')
-
-
-class WebPage(CoderedWebPage):
-    """
-    General use page with featureful streamfield and SEO attributes.
-    """
-    class Meta:
-        verbose_name = 'Web Page'
-
-    template = 'coderedcms/pages/web_page.html'
+    def render_as_field(self):
+        return format_html(
+            '<div class="field">'
+            "<label>{}{}</label>"
+            '<div class="field-content">{}</div>'
+            "</div>",
+            self.heading,
+            ":",
+            self.render(),
+        )
 
 class PageLinkBlock(blocks.StructBlock):
     """

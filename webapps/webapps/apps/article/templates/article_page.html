@@ -1,0 +1,18 @@
+{% extends "article/article_base.html" %} {% load wagtailadmin_tags wagtailcore_tags wagtailimages_tags coderedcms_tags %} {% block description %}{{self.get_description}}{% endblock %} {% block html_seo_extra %} {% if self.get_author_name %}
+<meta name="author"
+    content="{{self.get_author_name}}" />{% endif %}
+<meta name="created" content="{{self.get_pub_date|date:'c'}}" />
+<meta name="revised" content="{{self.last_published_at|date:'c'}}" /> {% comment %} {% if settings.coderedcms.SeoSettings.amp_pages %}
+<link rel="amphtml" href="{{self.get_full_url}}?amp"> {% endif %} {% endcomment %} {% endblock %} {% block sidebar %} {% include 'sidebar_share.html' %} {% endblock %} {% block cover %} {% if self.main_image %}
+<div class="fill-kontainer-wide">
+    {% image self.main_image max-1600x900 as main_image %}
+    <img src="{{main_image.url}}" alt="self.title" class="w-100" />
+</div>
+{% endif %} {% endblock %} {% block og_image %}{% if self.main_image %}{% image self.main_image max-600x600 as main_image %}{{ main_image.url }}{% endif %}{% endblock %} {% block isi_artikel %} {{ self.body|richtext }} {% endblock %} {% block other_article
+%} {% if not page.get_parent.specific.is_company_articles %} {% include "article/article_other.html" %} {% endif %} {% endblock %} {% if settings.coderedcms.SeoSettings.struct_meta %} {% block struct_seo_extra %}
+<script type="application/ld+json">
+    { % include "includes/struct_data_article.json"
+        with page = page settings = settings default_og_image = page.main_image %
+    }
+</script>
+{% endblock %} {% endif %}

@@ -28,6 +28,7 @@ INSTALLED_APPS = [
     # This project
     'webapps.apps.website',
     'webapps.apps.article',
+    'webapps.apps.home',
 
     # CodeRed CMS
     'coderedcms',
