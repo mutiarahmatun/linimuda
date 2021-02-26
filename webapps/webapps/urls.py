@@ -14,6 +14,8 @@ urlpatterns = [
     path("docs/", include(wagtaildocs_urls)),
     # Search
     path("pencarian/", include(coderedsearch_urls)),
+    # Django Allauth
+    path('accounts/', include('allauth.urls')),
     # For anything not caught by a more specific rule above, hand over to
     # the page serving mechanism. This should be the last pattern in
     # the list:
