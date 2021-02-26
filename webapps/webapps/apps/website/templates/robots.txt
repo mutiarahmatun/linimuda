@@ -7,4 +7,4 @@ Disallow: /django-admin/
 User-agent: *
 Allow: /
 
-Sitemap: https://insanq.co.id/sitemap.xml
+Sitemap: https://linimuda.id/sitemap.xml

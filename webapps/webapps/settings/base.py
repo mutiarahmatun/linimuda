@@ -185,12 +185,12 @@ LOGIN_REDIRECT_URL = "wagtailadmin_home"
 
 # Wagtail settings
 
-WAGTAIL_SITE_NAME = "INSAN-Q Psychological Services"
+WAGTAIL_SITE_NAME = "LiniMuda"
 WAGTAIL_ENABLE_UPDATE_CHECK = False
 
 # Base URL to use when referring to full URLs within the Wagtail admin backend -
 # e.g. in notification emails. Don't include '/admin' or a trailing slash
-BASE_URL = "insanq.co.id"
+BASE_URL = "linimuda.co.id"
 
 # Search
 ROOT_DIR = os.path.abspath(os.path.dirname(__name__))
