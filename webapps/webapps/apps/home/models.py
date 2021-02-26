@@ -18,6 +18,7 @@ from wagtail.utils.decorators import cached_classmethod
 from wagtail.core.blocks import PageChooserBlock
 from webapps.apps.website.models import ReadOnlyPanel
 from webapps.apps.article.models import ArticleIndexPage, ArticlePage
+from webapps.apps.event.models import EventIndexPage, EventPage
 
 
 class LayananBlock(blocks.StructBlock):
@@ -41,11 +42,17 @@ class HomePage(CoderedWebPage):
     def get_context(self, request):
         context = super().get_context(request)
         context["recent_articles"] = []
+        context["recent_events"] = []
         try:
             context["recent_articles"] = (
                 ArticlePage.objects.child_of(self.landing_articles)
                 .live()
                 .order_by(self.landing_articles.index_order_by)[:3]
+            )
+            context["recent_events"] = (
+                EventPage.objects.child_of(self.landing_events)
+                .live()
+                .order_by(self.landing_events.index_order_by)[:4]
             )
         except Exception as e:
             print(e)
@@ -77,7 +84,14 @@ class HomePage(CoderedWebPage):
         on_delete=models.SET_NULL,
         related_name="+",
     )
-    
+    landing_events_title = models.CharField(max_length=255, blank=True)
+    landing_events = models.ForeignKey(
+        EventIndexPage,
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name="+",
+    )
 
     # Friend panels
     promote_panels = [
@@ -109,7 +123,10 @@ class HomePage(CoderedWebPage):
             ],
             _("Section Landing Articles"),
         ),
-        
+        MultiFieldPanel(
+            [FieldPanel("landing_events_title"), PageChooserPanel("landing_events")],
+            _("Section Landing Events"),
+        ),
         MultiFieldPanel(
             [ReadOnlyPanel("hits", heading="Hits"),], _("Publication Info"),
         ),

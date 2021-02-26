@@ -4,13 +4,14 @@ from .base import *  # noqa
 DEBUG = True
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'zmxi08lr8(8z$0dre8yz=%ag7rv7_l1v7w$mtot)srw)@!8h+('
+SECRET_KEY = "tbenf5(vmr1c60k)p#u9pbc_iv4l%o1ck6xx#4mq3$l(_-6pda"
 
-ALLOWED_HOSTS = ['*']
-
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+ALLOWED_HOSTS = ["*"]
 
 WAGTAIL_CACHE = False
+
+EMAIL_BACKEND = "django.core.mail.backends.filebased.EmailBackend"
+EMAIL_FILE_PATH = "/tmp/app-messages"
 
 try:
     from .local_settings import *  # noqa

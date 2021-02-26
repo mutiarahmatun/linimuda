@@ -1,0 +1,100 @@
+{% extends 'base.html' %}
+
+
+{% load static coderedcms_tags i18n wagtailcore_tags wagtailimages_tags wagtailsettings_tags wagtailuserbar bootstrap4 %}
+    
+{% block extra_css %}
+    {% include 'datepicker_style.html' %}
+{% endblock %}
+
+{% block extra_js %}
+    {% include 'datepicker_script.html' %}
+{% endblock %}
+
+{% block isi_page %}
+    <div class="section-fluid gray-text">
+        {% include 'navbar-primary.html' %}
+        <div class="navbar-space"></div>
+    </div>
+    <div class="section-fluid gray-text">
+        <div class="content-width">
+            <div class="section-kontainer">
+                <div class="content-kontainer warna-teks-primary-dark">
+                    <div class="align-items-center text-center mar-auto">
+                        <div class="d-inline-block">
+                            <h2>Daftar Acara</h2>
+                            <div class="underline-short ul-primary ul-normal mar-auto"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="content-kontainer">
+                    <div class="mar-auto par-max-width">
+                        <div class="kegiatan-card card-wide m-0">
+                            <div class="kegiatan-judul">
+                                <h3>{{ page.title }}</h3>
+                            </div>
+                            <div class="my-3">
+                                <div class="underline-exact ul-secondary-light ul-mid mar-auto"></div>
+                            </div>
+                            <div class="kegiatan-deskripsi">
+                                {{ page.short_description|richtext }}
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="content-kontainer">
+                    <div class="artikel-konten mar-auto par-max-width">
+                        {{ page.long_description|richtext }}
+                        <div class="no-indent">
+                            <p>
+                                <b>Tanggal : </b>
+                                {{ page.get_start_date }}
+                                -
+                                {{ page.get_end_date }}
+                            </p>
+
+                            <p>
+                                <b>Waktu : </b>
+                                {{ page.get_start_time_each_day }}
+                                -
+                                {{ page.get_end_time_each_day }}
+                            </p>
+
+                            <p class="replace-koma">
+                                <b>Hari : </b>
+                                {% if page.sunday %} Minggu, {% endif %}
+                                {% if page.monday %} Senin, {% endif %}
+                                {% if page.tuesday %} Selasa, {% endif %}
+                                {% if page.wednesday %} Rabu, {% endif %}
+                                {% if page.thursday %} Kamis, {% endif %}
+                                {% if page.friday %} Jumat, {% endif %}
+                                {% if page.saturday %} Sabtu, {% endif %}
+                                (Pilih salah satu hari)
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="content-kontainer">
+                    <div class="artikel-konten mar-auto par-max-width small-br">
+                        <div class="fill-space-kontainer">
+                            <div class="py-4 pr-4 warna-teks-secondary">
+                                <h4>Daftar</h4>
+                            </div>
+                            <div class="fill-space">
+                                <div class="underline-short ul-secondary-light ul-thin mar-auto"></div>
+                            </div>
+                        </div>
+                        <form class="" action ="{% pageurl self %}" method="POST" {% if form|is_file_form %}enctype="multipart/form-data"{% endif %}>
+                            {% csrf_token %}
+                            {% bootstrap_form form layout='vertical' %}
+                            <div class="py-4 d-flex justify-content-end">
+                                <button type="submit" class="btn btn-secondary">Daftar</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
