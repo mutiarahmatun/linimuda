@@ -55,7 +55,7 @@ staticfiles/*
 
 search_index
 
-.vs_code/
+.vscode
 media
 tmp
 

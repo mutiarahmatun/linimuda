@@ -1,6 +1,0 @@
-[flake8]
-ignore = E501, E302, W391, W503, F405, F403, E113, E231
-exclude = .git,.hg,.mypy_cache,.tox,.venv,.env,venv,env,_build,buck-out,build,dist,migrations
-max-line-length = 88
-max-complexity = 18
-select = B,C,E,F,W,T4,B9
