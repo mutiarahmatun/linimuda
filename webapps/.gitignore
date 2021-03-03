@@ -296,6 +296,7 @@ venv/
 ENV/
 env.bak/
 venv.bak/
+staticfiles/
 
 # Spyder project settings
 .spyderproject

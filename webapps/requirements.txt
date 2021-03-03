@@ -1,4 +1,5 @@
 coderedcms==0.20.*
+django-compressor==2.4
 
 # django_sendmail_backend enables sending email from your web host server.
 # Remove this if using a different email backend.
