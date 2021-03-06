@@ -52,7 +52,7 @@ class InformationPage(CoderedArticlePage):
         """
         Gets published date.
         """
-        locale.setlocale(locale.LC_ALL, "id_ID")
+        locale.setlocale(locale.LC_ALL, "en_US")
         if hasattr(self, "date_display") and self.date_display:
             return self.date_display.strftime("%d %B %Y")
         return ""

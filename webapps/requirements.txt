@@ -1,11 +1,30 @@
-coderedcms==0.20.*
+coderedcms==0.19.0
 django-compressor==2.4
+black==19.10b0
+flake8==3.8.3
+gunicorn==20.0.4
+whitenoise==5.1.0
+coverage==5.1
+django-environ==0.4.5
+django-allauth==0.44.0
 
-# django_sendmail_backend enables sending email from your web host server.
-# Remove this if using a different email backend.
-# django_sendmail_backend
+# Heroku
+# django-toolbelt==0.0.1
+# psycopg2-binary==2.8.5
+# dj-database-url==0.5.0
+# South==1.0.2
 
-# To use with MariaDB or MySQL, uncomment the line below:
-#mysqlclient
-# To use with PostgreSQL, uncomment the line below:
-#psycopg2
+# search
+# wagtail-whoosh==0.2.4
+
+# other
+phonenumbers==8.12.8
+
+# To use with a MySQL database.
+# Don't forget specify appropriate version.
+# mysqlclient==2.0.1
+
+# PENGGANTI django-compressor==2.4
+# pip install rcssmin --install-option="--without-c-extensions"
+# pip install rjsmin --install-option="--without-c-extensions"
+# pip install django-compressor --upgrade

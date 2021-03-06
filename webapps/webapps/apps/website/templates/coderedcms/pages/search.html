@@ -1,5 +1,20 @@
-{% extends "article/article_index_page.html" %} {% load wagtailcore_tags wagtailimages_tags coderedcms_tags subtract update_variable watch_to_embed %} {% block title %} Pencarian {% if form.s.value %} : {{ form.s.value }} {% endif %} {% endblock %} {%
-block judul_index %} Pencarian {% if form.s.value %} : {{ form.s.value }} {% endif %} {% endblock %} {% block searchbox %}
+{% extends "article/article_index_page.html" %}
+
+{% load wagtailcore_tags wagtailimages_tags coderedcms_tags subtract update_variable watch_to_embed %}
+
+{% block title %}
+Pencarian 
+{% if form.s.value %} : {{ form.s.value }} 
+{% endif %} 
+{% endblock %}
+
+{% block judul_index %} 
+Pencarian 
+{% if form.s.value %} : {{ form.s.value }} 
+{% endif %} 
+{% endblock %}
+
+{% block searchbox %}
 <form action="{% url 'codered_search' %}" method="GET">
     <div class="content-kontainer">
         <div class="form-group has-search searchbox">
@@ -9,11 +24,15 @@ block judul_index %} Pencarian {% if form.s.value %} : {{ form.s.value }} {% end
         </div>
     </div>
 </form>
-{% endblock %} {% block index_result_w_num %} {% if results_paginated.object_list %}
+{% endblock %} 
 
+{% block index_result_w_num %}
+{% if results_paginated.object_list %}
 <div class="d-flex flex-wrap justify-content-center black-text">
-
-    {% for page in results_paginated %} {% if page.specific.home_company_name or page.get_parent.specific.home_company_name %} {% else %} {% if page.specific.short_description %}
+    {% for page in results_paginated %} 
+    {% if page.specific.home_company_name or page.get_parent.specific.home_company_name %} 
+    {% else %}
+    {% if page.specific.short_description %}
     <div class="px-4 ---">
         <div class="kegiatan-card gray-text m-0">
             <div class="kegiatan-judul">
@@ -38,9 +57,15 @@ block judul_index %} Pencarian {% if form.s.value %} : {{ form.s.value }} {% end
                 <div class="ratio-16-9">
                     <div class="fill-ratio">
                         {% if "youtube" in page.specific.link_youtube %}
-                        <iframe class="fill-kontainer-wide" {% if "watch?v=" in page.specific.link_youtube %} src="{{ page.specific.link_youtube|watch_to_embed }}" {% elif "embed" in page.specific.link_youtube %} src="{{ page.specific.link_youtube }}" {% endif %} frameborder="0"
-                            allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
-                                                </iframe> {% endif %}
+                        <iframe class="fill-kontainer-wide" 
+                        {% if "watch?v=" in page.specific.link_youtube %} 
+                        src="{{ page.specific.link_youtube|watch_to_embed }}" 
+                        {% elif "embed" in page.specific.link_youtube %} 
+                        src="{{ page.specific.link_youtube }}" 
+                        {% endif %} 
+                        frameborder="0"; allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
+                        </iframe> 
+                        {% endif %}
                     </div>
                 </div>
                 <div class="artikel-teksboks">
@@ -103,10 +128,13 @@ block judul_index %} Pencarian {% if form.s.value %} : {{ form.s.value }} {% end
                     </div>
                 </div>
             </a>
-            {% with start="0" %} {% if results_paginated.paginator.num_pages >= 9 %} {{results_paginated.number}} {% if results_paginated.number
-            < 5 %} {{start}} {% elif results_paginated.paginator.num_pages|subtract:results_paginated.number < 5 %} {%
-                update_variable results_paginated.paginator.num_pages|subtract:9 as start %} {{start}} {% else %} {% update_variable results_paginated.number|subtract:5 as start %} {{start}} {% endif %} {% endif %} {% for i in '012345678'|make_list %} {%
-                if forloop.counter|add:start> results_paginated.paginator.num_pages %} {% else %} {% if forloop.counter|add:start == results_paginated.number %}
+            {% with start="0" %} 
+            {% if results_paginated.paginator.num_pages >= 9 %}
+            {{results_paginated.number}} 
+            {% if results_paginated.number < 5 %} 
+            {{start}} 
+            {% elif results_paginated.paginator.num_pages|subtract:results_paginated.number < 5 %}
+            {% update_variable results_paginated.paginator.num_pages|subtract:9 as start %} {{start}} {% else %} {% update_variable results_paginated.number|subtract:5 as start %} {{start}} {% endif %} {% endif %} {% for i in '012345678'|make_list %} {% if forloop.counter|add:start > results_paginated.paginator.num_pages %} {% else %} {% if forloop.counter|add:start == results_paginated.number %}
                 <a href="#" page="{{ forloop.counter|add:start }}" id="page-button-{{ forloop.counter }}">
                     <div class="page-num-block current-page">
                         {% else %}
@@ -122,8 +150,8 @@ block judul_index %} Pencarian {% if form.s.value %} : {{ form.s.value }} {% end
                                 </div>
                             </div>
                         </a>
-                        {% endif %} {% endfor %} {% endwith %} {% if results_paginated.number
-                        < results_paginated.paginator.num_pages %} <a href="?p={{ results_paginated.number|add:1 }}&s={{ form.s.value|urlencode }}" id="page-next">
+                        {% endif %} {% endfor %} {% endwith %} {% if results_paginated.number < results_paginated.paginator.num_pages %} 
+                        <a href="?p={{ results_paginated.number|add:1 }}&s={{ form.s.value|urlencode }}" id="page-next">
                             <div class="page-num-block">
                                 {% else %}
                                 <a href="#" id="page-next">

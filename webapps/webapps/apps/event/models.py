@@ -70,7 +70,7 @@ class EventPage(CoderedFormPage):
         return ""
 
     def format(self, attr_name, format):
-        locale.setlocale(locale.LC_ALL, "id_ID")
+        locale.setlocale(locale.LC_ALL, "en_US")
         attr_value = getattr(self, attr_name, None)
         return attr_value.strftime(format) if attr_value else ""
 
