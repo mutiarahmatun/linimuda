@@ -8,11 +8,11 @@ Code for site at: https://linimuda.id
 Make sure Python 3.5 or higher is installed on your system.
 Open `webapps` directory in a command prompt, then:
 
-1. Install the software, upgrade django compressor and do migraton:
+1. Install the software, check, then do migraton:
    ```
-   pip install -r requirements-dev.txt
-   pip install django-compressor --upgrade
-   python manage.py migrate
+   pip install -r requirements.txt
+   python manage.py check
+   python manage.py 
    ```
 
 2. Run the development server:
@@ -20,7 +20,14 @@ Open `webapps` directory in a command prompt, then:
    python manage.py runserver
    ```
 
-3. Go to http://localhost:8000/ in your browser, or http://localhost:8000/admin/
+3. Create an admin user with:
+
+```
+python manage.py createsuperuser
+```
+and follow the instruction on terminal.
+
+4. Go to http://localhost:8000/ in your browser, or http://localhost:8000/admin/
    to log in and get to work!
 
 ## Documentation links
