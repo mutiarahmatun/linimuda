@@ -7,8 +7,7 @@ DEBUG = False
 BASE_URL = "linimuda.id"
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ["SECRET_KEY"]
-MEDIA_ROOT = os.environ["MEDIA_ROOT"]
+SECRET_KEY = os.environ.get("SECRET_KEY")
 
 # Add your site's domain name(s) here.
 ALLOWED_HOSTS = ["*"]
@@ -22,16 +21,16 @@ WAGTAIL_CACHE = False
 
 
 EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
-EMAIL_HOST = os.environ["EMAIL_HOST"]
-EMAIL_PORT = os.environ["EMAIL_PORT"]
-EMAIL_HOST_USER = os.environ["EMAIL_HOST_USER"]
-EMAIL_HOST_PASSWORD = os.environ["EMAIL_HOST_PASSWORD"]
+EMAIL_HOST = os.environ.get("EMAIL_HOST")
+EMAIL_PORT = os.environ.get("EMAIL_PORT")
+EMAIL_HOST_USER = os.environ.get("EMAIL_HOST_USER")
+EMAIL_HOST_PASSWORD = os.environ.get("EMAIL_HOST_PASSWORD")
 EMAIL_USE_SSL = True
-DEFAULT_FROM_EMAIL = os.environ["DEFAULT_FROM_EMAIL"]
+DEFAULT_FROM_EMAIL = os.environ.get("DEFAULT_FROM_EMAIL")
 
 # A list of people who get error notifications.
 ADMINS = [
-    ("Administrator", os.environ["EMAIL_HOST"]),
+    ("Administrator", os.environ.get("EMAIL_HOST")),
 ]
 
 # A list in the same format as ADMINS that specifies who should get broken link
@@ -43,7 +42,7 @@ SERVER_EMAIL = DEFAULT_FROM_EMAIL
 
 DATABASES = {
     "default": {
-        "ENGINE": "django.db.backends.mysql",
+        "ENGINE": "django.db.backends.postgresql_psycopg2",
         "HOST": os.environ.get("DATABASE_HOST"),
         "NAME": os.environ.get("DATABASE_NAME"),
         "USER": os.environ.get("DATABASE_USER"),

@@ -7,6 +7,7 @@ whitenoise==5.1.0
 coverage==5.1
 django-environ==0.4.5
 django-allauth==0.44.0
+psycopg2-binary==2.8.6
 
 # Heroku
 # django-toolbelt==0.0.1

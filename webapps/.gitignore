@@ -398,3 +398,4 @@ protected/
 # replace "media/" with "media/images/"
 media/
 #media/images/
+static/
