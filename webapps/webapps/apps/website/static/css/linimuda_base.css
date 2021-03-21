@@ -95,6 +95,10 @@ body {
     background-color: var(--warna-gray-dark);
 }
 
+.bg-warna-gray-light-3 {
+    background-color: var(--warna-gray-light-3);
+}
+
 .full-height {
     height: 100vh;
     min-height: 640px;
@@ -171,11 +175,11 @@ body {
 }
 
 .section-kontainer {
-    padding: 6rem 0rem;
+    padding: 2rem 0rem;
 }
 
 .section-kontainer-sm {
-    padding: 4rem 0rem;
+    padding: 1rem 0rem;
 }
 
 .content-kontainer {
@@ -287,7 +291,7 @@ p {
 }
 
 p.teks-footer {
-    color: var(--warna-gray-light-3);
+    color: var(--warna-gray-dark);
     font-size: 1.5rem;
     font-weight: 400;
     letter-spacing: 0.1rem;
@@ -616,10 +620,7 @@ p.no-indent {
 }
 
 .kontainer-logo-footer {
-    padding: 1rem 2rem 2rem 2rem;
-    background-color: white;
-    border-radius: 0rem 0rem 1rem 1rem;
-    box-shadow: 0 10px 10px 0 rgba(0, 0, 0, 0.25);
+    padding: 0.5rem;
 }
 
 .kontainer-logo-footer img {
@@ -967,7 +968,6 @@ p.no-indent {
     width: 200%;
     height: 40px;
     transform: translateX(-50%);
-    box-shadow: inset 0 20px 20px 0 rgba(0, 0, 0, 0.25);
 }
 
 .ui-datepicker {

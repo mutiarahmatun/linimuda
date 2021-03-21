@@ -12,7 +12,7 @@
         </a>
     </div>
     {% endif %}
-    <div class="section-fluid bg-warna-gray-dark black-text overflow-hidden" id="footer">
+    <div class="section-fluid bg-warna-gray-light-3 black-text overflow-hidden" id="footer">
         <div class="inner-shadow-vertical">
             <div class="content-width">
                 <div class="pl-4 pl-md-0">
@@ -31,21 +31,32 @@
                                 {% if settings.coderedcms.LayoutSettings.logo %}
                                 <div class="footer-space"></div>
                                 {% endif %}
-                                <p class="teks-footer">
+                                <!-- <p class="teks-footer">
                                     {% if settings.website.Profile.company_name %} {{settings.website.Profile.company_name}}
                                     <br> {% endif %} {{settings.website.Profile.address}}
-                                </p>
+                                </p> -->
                             </div>
 
                             <div class="col-md-8 text-center text-md-right">
-                                <p class="teks-footer">
-
+                                <!-- <p class="teks-footer">
                                     {% if settings.website.Profile.telephone_number %}
-                                    <span class="fa fa-phone px-2"></span> {% format_phone settings.website.Profile.telephone_number %} {% endif %} {% if settings.website.Profile.handphone_number_1 %}
+                                    <span class="fa fa-phone px-2"></span> 
+                                    {% format_phone settings.website.Profile.telephone_number %} 
+                                    {% endif %} 
+                                    {% if settings.website.Profile.handphone_number_1 %}
                                     <br>
-                                    <span class="fa fa-mobile px-2"></span> {% format_phone settings.website.Profile.handphone_number_1 %} {% endif %} {% if settings.website.Profile.handphone_number_2 %}
+                                    <span class="fa fa-mobile px-2"></span> 
+                                    {% format_phone settings.website.Profile.handphone_number_1 %} 
+                                    {% endif %} 
+                                    {% if settings.website.Profile.handphone_number_2 %}
                                     <br>
-                                    <span class="fa fa-mobile px-2"></span> {% format_phone settings.website.Profile.handphone_number_2 %} {% endif %}
+                                    <span class="fa fa-mobile px-2"></span> 
+                                    {% format_phone settings.website.Profile.handphone_number_2 %} 
+                                    {% endif %}
+                                    <br>
+                                </p> -->
+                                <p class="teks-footer">
+                                    Ikuti Kami
                                 </p>
                                 <div class="row justify-content-center justify-content-md-end">
                                     <div class="social-button">

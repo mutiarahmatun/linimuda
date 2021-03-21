@@ -68,7 +68,7 @@ class HomePage(CoderedWebPage):
     # section layanan
     section_layanan = StreamField([("Layanan", LayananBlock())], blank=True)
     home_company_name = models.CharField(max_length=255)
-    home_description = models.CharField(max_length=1023, blank=True)
+    home_description = models.CharField(max_length=1023, blank=True, null=True)
     home_image = models.ForeignKey(
         "wagtailimages.Image",
         null=True,
@@ -84,7 +84,7 @@ class HomePage(CoderedWebPage):
         on_delete=models.SET_NULL,
         related_name="+",
     )
-    landing_events_title = models.CharField(max_length=255, blank=True)
+    landing_events_title = models.CharField(max_length=255, blank=True, null=True)
     landing_events = models.ForeignKey(
         EventIndexPage,
         null=True,

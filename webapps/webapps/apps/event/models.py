@@ -43,13 +43,13 @@ class EventPage(CoderedFormPage):
     hits = models.IntegerField(default=0, editable=False)
 
     short_description = RichTextField()
-    long_description = RichTextField(blank=True)
+    long_description = RichTextField(blank=True, null=True)
 
     start_date = models.DateField(null=True, blank=True, default=date.today)
     end_date = models.DateField(null=True, blank=True, default=date.today)
     start_time_each_day = models.TimeField(null=True, blank=True, default=time(8, 0, 0))
     end_time_each_day = models.TimeField(null=True, blank=True, default=time(16, 0, 0))
-    location = models.CharField(blank=True, max_length=1023, default="Insan-Q Cilegon")
+    location = models.CharField(blank=True, max_length=1023, default="LiniMuda", null=True)
     [monday, tuesday, wednesday, thursday, friday, saturday, sunday,] = [
         models.BooleanField(default=True) for _ in range(7)
     ]
@@ -57,6 +57,7 @@ class EventPage(CoderedFormPage):
     to_address = models.CharField(
         max_length=255,
         blank=True,
+        null=True,
         default=get_email,
         verbose_name=_("Email form submissions to"),
         help_text=_(

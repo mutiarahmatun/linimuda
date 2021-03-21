@@ -1,40 +1,21 @@
-{% extends 'base.html' %} {% load static coderedcms_tags i18n wagtailcore_tags wagtailimages_tags wagtailsettings_tags wagtailuserbar %} {% block isi_page %}
-<div class="section-fluid black-text blob-parent">
-    {% include 'navbar-transparan.html' %}
-    <div class="navbar-space d-block d-md-none"></div>
-    <div class="content-width full-height h-mobile-auto pt-5 pt-md-0">
-        <div class="row vertical-center content-kontainer">
-            <div class="col-md-6">
-                <h1 class="smaller">Selamat Datang di</h1>
-                <h1>{{ page.home_company_name }}</h1>
-                <p class="deskripsi">
-                    {{ page.home_description }}
-                </p>
-                <div class="my-4">
-                    <a class="btn btn-secondary btn-lg btn-wide" href="{{ page.landing_events.url }}" role="button">Daftar Acara</a>
-                </div>
-            </div>
-            <div class="col-md-6">
-                <div class="img-placeholder">
-                    {% image page.home_image max-900x900 as main_image %}
-                    <img src="{{main_image.url}}" alt="{{ page.home_company_name }}" class="w-100" />
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+{% extends 'base.html' %} 
+{% load static coderedcms_tags i18n wagtailcore_tags wagtailimages_tags wagtailsettings_tags wagtailuserbar %} 
+{% block isi_page %}
+{% include 'navbar-transparan.html' %}
 <div class="section-fluid gray-text" id="layanan">
     <div class="content-width">
         <div class="section-kontainer">
             <div class="content-kontainer warna-teks-primary-dark">
                 <div class="align-items-center text-center mar-auto">
                     <div class="d-inline-block">
-                        <h2>Layanan</h2>
-                        <div class="underline-short ul-primary ul-normal mar-auto"></div>
+                        <h2>Artikel</h2>
+                        <div class="underline-long ul-primary ul-normal mar-auto"></div>
                     </div>
                 </div>
             </div>
-            {% for layanan in page.section_layanan %} {% cycle 'kanan' 'kiri' as align silent %} {% if align == 'kanan' %}
+            {% for layanan in page.section_layanan %} 
+            {% cycle 'kanan' 'kiri' as align silent %} 
+            {% if align == 'kanan' %}
             <div class="row content-kontainer warna-teks-primary-dark pad-vertical align-items-center">
                 <div class="col-md-6 order-2 order-md-1">
                     <a href="{{ layanan.value.related_page.url }}">
@@ -68,7 +49,8 @@
                     </div>
                 </div>
             </div>
-            {% endif %} {% endfor %}
+            {% endif %} 
+            {% endfor %}
         </div>
     </div>
 </div>
@@ -117,7 +99,7 @@
         </div>
     </div>
 </div>
-<div class="section-fluid gray-text" id="jadwal">
+<div class="section-fluid black-text" id="jadwal">
     <div class="content-width">
         <div class="section-kontainer">
             <div class="content-kontainer warna-teks-secondary-dark">

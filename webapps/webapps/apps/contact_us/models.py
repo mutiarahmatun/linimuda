@@ -35,7 +35,7 @@ class ContactUsPage(CoderedFormPage):
         verbose_name = "Contact Us Page"
 
     hits = models.IntegerField(default=0, editable=False)
-    html_embedded_maps = models.CharField(max_length=511, blank=True)
+    html_embedded_maps = models.CharField(max_length=511, blank=True, null=True)
     main_image = models.ForeignKey(
         "wagtailimages.Image", null=True, on_delete=models.SET_NULL, related_name="+",
     )
@@ -43,6 +43,7 @@ class ContactUsPage(CoderedFormPage):
     to_address = models.CharField(
         max_length=255,
         blank=True,
+        null=True,
         default=get_email,
         verbose_name=_("Email form submissions to"),
         help_text=_(

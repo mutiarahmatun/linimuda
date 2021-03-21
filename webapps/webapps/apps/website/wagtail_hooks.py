@@ -53,7 +53,7 @@ class SeoDefault(BaseSetting):
     # SEO fields
     ###############
 
-    search_description = models.CharField(blank=True, max_length=1023,)
+    search_description = models.CharField(blank=True, max_length=1023)
 
     struct_org_type = models.CharField(
         default="",
