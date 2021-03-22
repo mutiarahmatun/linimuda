@@ -98,6 +98,8 @@ COMPRESS_CSS_FILTERS = [
 COMPRESS_CSS_HASHING_METHOD = "content"
 SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
 SECURE_SSL_REDIRECT = True
+SESSION_COOKIE_SECURE = True
+SECURE_REFERRER_POLICY = 'same-origin'
 
 try:
     from .local_settings import *  # noqa
