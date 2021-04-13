@@ -3,8 +3,12 @@
 {% load static coderedcms_tags i18n wagtailcore_tags wagtailimages_tags wagtailsettings_tags wagtailuserbar %}
 
 {% if settings.coderedcms.SeoSettings.og_meta %}
-    {% block og_description %}{{self.get_description}}{% endblock %}
-    {% block og_type %}article{% endblock %}
+    {% block og_description %}
+    {{self.get_description}}
+    {% endblock %}
+    {% block og_type %}
+    article
+    {% endblock %}
     {% block og_seo_extra %}
         <meta property="og:article:published_time" content="{{self.get_pub_date}}" />
         <meta property="og:article:modified_time" content="{{self.last_published_at}}" />
@@ -18,7 +22,13 @@
 {% endif %}
 
 {% if settings.coderedcms.SeoSettings.twitter_meta %}
-    {% block twitter_card %}{% if self.main_image %}summary_large_image{% else %}{{block.super}}{% endif %}{% endblock %}
+    {% block twitter_card %}
+    {% if self.main_image %}
+    summary_large_image
+    {% else %}
+    {{block.super}}
+    {% endif %}
+    {% endblock %}
     {% block twitter_seo_extra %}
         {% if self.caption %}
         <meta name="twitter:description" content="{{ self.caption }}">

@@ -63,3 +63,4 @@ prod.env
 .env
 .vscode/
 .DS_Store
+webapps/webapps/settings/wsgi.py
